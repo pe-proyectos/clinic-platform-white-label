@@ -3,90 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina web</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Dr.Cristian Joel Chapoñan Bances Cardiologo</title>
 </head>
 <body>
-    <section>
-        <header>
-        <nav class="bg-white max-w-7xl mx-auto p-6 flex justify-between px-6 py-4">
-
-            <div class="flex items-center gap-10">
-                <div class=" flex gap-row">
-                    <svg class="w-10 h-10 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z"/>
-                    </svg>
-                </div>
-
-                <div class="flex flex-col">
-                    <h1 class="text-2xl font-bold text-center text-gray-900" >Dr<span class="text-red-300 text-3xl">.</span> CRISTIAN BANCES</h1>
-                    <p class="text-sm text-center -mt-1 text-gray-700 ">CARDIOLOGO CERTIFICADO</p>
-                </div>
-
-            </div>
-
-
-            <div class="flex gap-10">
-                <div class="text-xl text-black  cursor-pointe"><p class="border-b-2  border-red-400 hover:border-purple-500  hover:scale-125  transition duration-300 ease-in-out">Perfil medico</p></div>
-                <div class="text-xl text-black border-b-2 border-red-400 cursor-pointer">procedimientos</div>
-            </div>
-
+    <header class="shadow-xl">
+        <nav class="bg-white max-w-7xl mx-auto flex items-center justify-between px-1 py-6">
+            <div class="flex items-center gap-8">
             <div>
-                <button>PEDIR CITA
-                </button>
+                <svg class="w-12 h-12 text-red-700" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
+                        4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
+                        14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+                        6.86-8.55 11.54L12 21.35z" />
+                </svg>
+            </div>
+
+            <div class="flex flex-col">
+                <h1 class="text-3xl font-bold text-gray-900">
+                Dr<span class="text-red-700">.</span> CRISTIAN BANCES
+                </h1>
+                <p class="text-base text-gray-700 -mt-1 text-center">
+                CARDIOLOGO CERTIFICADO
+                </p>
+            </div>
+            </div>
+
+            <div class="hidden sm:flex gap-12 items-center">
+            <div id="perfilMedico" class="text-lg font-semibold text-black cursor-pointer">
+                <p class="border-b-3 border-red-700 hover:border-red-600 hover:scale-105 transition duration-200">
+                Perfil Médico
+                </p>
+            </div>
+            <div id="procedimientos" class="text-lg font-semibold text-black border-b-4 border-red-700 cursor-pointer hover:border-red-600 hover:scale-105 transition duration-200">
+                Procedimientos
+            </div>
+            </div>
+
+            <div id="pedirCita" class="bg-red-700 hover:bg-red-600 text-white text-lg font-semibold py-3 px-6 rounded-full flex items-center gap-3 cursor-pointer transition duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
+                        4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
+                        14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+                        6.86-8.55 11.54L12 21.35z" />
+            </svg>
+            PEDIR UNA CITA 🡢
             </div>
 
         </nav>
     </header>
+    <section>
         <div class="flex">
             <!-- Información -->
-            <div class="w-1/2 pl-30 py-20">
+            <div class="w-1/2 pl-30 py-14">
                 <!-- Introduccioón -->
                 <div class>
-                    <h1 class="text-5xl font-bold text-red-800 mb-7">Perfil Profesional:</h1>
-                    <p class="text-base text-gray-600 mb-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit optio natus nihil voluptatem id earum totam odit, tempore aspernatur esse consequatur numquam dolores delectus necessitatibus deserunt tempora odio dolorum provident?</p>
+                    <h1 class="text-5xl font-bold text-red-700 mb-7">Perfil Profesional:</h1>
+                    <p class="text-base text-gray-600 mb-7 text-left">El Dr. Cristian Chapoñan Bances es un cardiólogo con sólida formación académica y experiencia en el campo de la medicina cardiovascular. Graduado en Medicina Humana por la Universidad Nacional Pedro Ruiz Gallo, se especializó en Cardiología con énfasis en diagnóstico cardiovascular y manejo de pacientes críticos. Ha desarrollado su carrera en importantes instituciones de salud como el Hospital Nacional Almanzor Aguinaga Asenjo y actualmente en la Unidad de Cuidados Cardiacos Agudos del Hospital Regional Lambayeque.</p>
                 </div>
                 <!-- Valores -->
-                 <div class="flex flex-wrap">
+                 <div class="flex flex-wrap f mb-7">
                     <!-- Cuadro1 -->
-                     <div class="flex items-center gap-3 w-1/2 mb-3">
-                        <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-500"></div>
-                        <p class="grow">Lorem ipsum dolor sit.</p>
+                     <div class="flex items-start gap-3 w-1/2 mb-3">
+                        <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5"></div>
+                        <p class="text-red-700 font-medium w-40">Compromiso con la Excelencia Médica</p>
 
                      </div>
                      <!-- Cuadro2 -->
-                     <div class="flex items-center gap-3 w-1/2 mb-3">
-                        <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-500"></div>
-                        <p>Lorem ipsum dolor sit.</p>
+                     <div class="flex items-start gap-3 w-1/2 mb-3">
+                        <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5"></div>
+                        <p class="text-red-700 font-medium w-40">Atención Humanizada y Personalizada</p>
 
                      </div>
                      <!-- Cuadro3 -->
-                     <div class="flex items-center gap-3 w-1/2 mb-3">
-                        <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-500"></div>
-                        <p>Lorem ipsum dolor sit.</p>
+                     <div class="flex items-start gap-3 w-1/2">
+                        <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5"></div>
+                        <p class="text-red-700 font-medium w-40">Integridad y Ética Profesional</p>
 
                      </div>
                      <!-- Cuadro4 -->
-                     <div class="flex items-center gap-3 w-1/2 mb-3">
-                        <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-500"></div>
-                        <p>Lorem ipsum dolor sit.</p>
-
+                     <div class="flex items-start gap-3 w-1/2 ">
+                        <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5"></div>
+                        <p class="text-red-700 font-medium w-40">Actualización Científica Permanente</p>
                      </div>
-
                  </div>
                  <!-- call to action -->
-                  <div>
-                        
-                  </div>
+                    <div class="flex justify-center">
+                        <a  class="bg-rose-700 text-white p-4 rounded-3xl w-57 text-center mt-2" href="#formulario">Solicitar una Cita 🡢</a>
+                    </div>
+                 
 
             </div>
 
           <!-- Imagen -->
             <div class="w-1/2 justify-items-center">
-                <img src="https://static.vecteezy.com/system/resources/thumbnails/024/585/326/small_2x/3d-happy-cartoon-doctor-cartoon-doctor-on-transparent-background-generative-ai-png.png" alt="">
+                <img class="py-12"src="https://static.vecteezy.com/system/resources/thumbnails/024/585/326/small_2x/3d-happy-cartoon-doctor-cartoon-doctor-on-transparent-background-generative-ai-png.png" alt="">
             </div>
         </div>
+        <hr>
     </section>
-    
 </body>
 </html>
