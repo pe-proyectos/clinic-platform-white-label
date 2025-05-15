@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,141 +9,410 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <title>Dr.Cristian Joel Chapoñan Bances Cardiologo</title>
 </head>
+
 <body>
-    <header class="shadow-xl">
-        <nav class="bg-white max-w-7xl mx-auto flex items-center justify-between px-1 py-6">
-            <div class="flex items-center gap-8">
-            <div>
-                <svg class="w-12 h-12 text-red-700" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
-                        4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
-                        14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
-                        6.86-8.55 11.54L12 21.35z" />
-                </svg>
-            </div>
-
-            <div class="flex flex-col">
-                <h1 class="text-3xl font-bold text-gray-900">
-                Dr<span class="text-red-700">.</span> CRISTIAN BANCES
-                </h1>
-                <p class="text-base text-gray-700 -mt-1 text-center">
-                CARDIOLOGO CERTIFICADO
-                </p>
-            </div>
-            </div>
-
-            <div class="hidden sm:flex gap-12 items-center">
-            <div id="perfilMedico" class="text-lg font-semibold text-black cursor-pointer">
-                <p class="border-b-3 border-red-700 hover:border-red-600 hover:scale-105 transition duration-200">
-                Perfil Médico
-                </p>
-            </div>
-            <div id="procedimientos" class="text-lg font-semibold text-black border-b-4 border-red-700 cursor-pointer hover:border-red-600 hover:scale-105 transition duration-200">
-                Procedimientos
-            </div>
-            </div>
-
-            <div id="pedirCita" class="bg-red-700 hover:bg-red-600 text-white text-lg font-semibold py-3 px-6 rounded-full flex items-center gap-3 cursor-pointer transition duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
-                        4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
-                        14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
-                        6.86-8.55 11.54L12 21.35z" />
-            </svg>
-            PEDIR UNA CITA 🡢
-            </div>
-
-        </nav>
-    </header>
-    <section>
-        <div class="flex">
-            <!-- Información -->
-            <div class="w-1/2 pl-30 py-14">
-                <!-- Introduccioón -->
-                <div class>
-                    <h1 class="text-5xl font-bold text-red-700 mb-7">Perfil Profesional:</h1>
-                    <p class="text-base text-gray-600 mb-7 text-left">El Dr. Cristian Chapoñan Bances es un cardiólogo con sólida formación académica y experiencia en el campo de la medicina cardiovascular. Graduado en Medicina Humana por la Universidad Nacional Pedro Ruiz Gallo, se especializó en Cardiología con énfasis en diagnóstico cardiovascular y manejo de pacientes críticos. Ha desarrollado su carrera en importantes instituciones de salud como el Hospital Nacional Almanzor Aguinaga Asenjo y actualmente en la Unidad de Cuidados Cardiacos Agudos del Hospital Regional Lambayeque.</p>
-                </div>
-                <!-- Valores -->
-                 <div class="flex flex-wrap f mb-7">
-                    <!-- Cuadro1 -->
-                     <div class="flex items-start gap-3 w-1/2 mb-3">
-                        <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5"></div>
-                        <p class="text-red-700 font-medium w-40">Compromiso con la Excelencia Médica</p>
-
-                     </div>
-                     <!-- Cuadro2 -->
-                     <div class="flex items-start gap-3 w-1/2 mb-3">
-                        <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5"></div>
-                        <p class="text-red-700 font-medium w-40">Atención Humanizada y Personalizada</p>
-
-                     </div>
-                     <!-- Cuadro3 -->
-                     <div class="flex items-start gap-3 w-1/2">
-                        <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5"></div>
-                        <p class="text-red-700 font-medium w-40">Integridad y Ética Profesional</p>
-
-                     </div>
-                     <!-- Cuadro4 -->
-                     <div class="flex items-start gap-3 w-1/2 ">
-                        <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5"></div>
-                        <p class="text-red-700 font-medium w-40">Actualización Científica Permanente</p>
-                     </div>
-                 </div>
-                 <!-- call to action -->
-                    <div class="flex justify-center">
-                        <a  class="bg-rose-700 text-white p-4 rounded-3xl w-57 text-center mt-2" href="#formulario">Solicitar una Cita 🡢</a>
+    <div class="min-h-screen bg-gray-50">
+        <header class="fixed w-full transition-all duration-300 bg-white shadow-md py-2 z-50">
+            <nav class="flex max-w-7xl mx-auto  items-center justify-between px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center gap-2">
+                    <div>
+                        <svg class="w-9 h-9 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
+                            4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
+                            14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+                            6.86-8.55 11.54L12 21.35z" />
+                        </svg>
                     </div>
-                 
 
-            </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Dr<span class="text-red-600">.</span> CRISTIAN CHAPOÑAN
+                        </h1>
+                        <p class="text-xs text-gray-700 -mt-1 ">
+                            CARDIÓLOGO CLÍNICO
+                        </p>
+                    </div>
+                </div>
 
-          <!-- Imagen -->
-            <div class="w-1/2 justify-items-center">
-                <img class="py-12"src="https://static.vecteezy.com/system/resources/thumbnails/024/585/326/small_2x/3d-happy-cartoon-doctor-cartoon-doctor-on-transparent-background-generative-ai-png.png" alt="">
-            </div>
-        </div>
-    </section>
-    <section class="flex bg-red-700  w-full justify-center py-16">
-        <div class="p-6 bg-white text-black rounded-xl">
-            <h2 class="text-3xl font-bold mb-3">Contactanos y reserva tu cita</h2>
-            <div class="flex mb-4">
-                <input id="form-nombre"type="text" placeholder="NOMBRES Y APELLIDOS" class="text-black w-full p-2 border rounded-lg border-red-400">
-            </div>
+                <div class="hidden md:flex gap-8 items-center">
+                    <a href="#perfil"
+                        class="text-gray-800 hover:text-red-600 font-medium transition duration-300">Perfil medico</a>
+                    <a href="#procedimientos"
+                        class="text-gray-800 hover:text-red-600 font-medium transition duration-300">Procedimientos</a>
+                    <a href="#formulario"
+                        class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-full flex items-center gap-2 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
+                            4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
+                            14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+                            6.86-8.55 11.54L12 21.35z" />
+                        </svg>
+                        Agendar Cita
+                    </a>
+                </div>
+            </nav>
+        </header>
+        <!-- INICIO -->
+        <section>
+            <div class="pt-24 md:pt-29 pb-16 bg-gradient-to-br from-white bg-gray-100 min-h-screen">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex items-center">
+                        <!-- IZQUIERDA -->
+                        <div class="w-1/2 transition-all duration-1000 translate-x-0 pr-18">
+                            <h1 class="text-6xl font-bold text-gray-900 mb-5">
+                                Salud cardíaca <span class="text-red-600">Avanzada</span> a tu Alcance
+                            </h1>
+                            <p class="text-XL text-gray-600 mb-10">Diagnóstico preciso, tratamiento personalizado y
+                                tecnología de vanguardia para el cuidado integral de tu corazón</p>
+                            <!-- CALL TO ACTION -->
+                            <div>
+                                <a href="#formulario"
+                                    class="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6 rounded-full text-center duration-300">📅
+                                    Solicitar Consulta</a>
+                            </div>
+                            <!-- Puntos -->
+                            <div class="flex mt-13 gap-10">
+                                <!-- punto1 -->
+                                <div class="flex text-center gap-2">
+                                    <svg class="w-6 h-6 text-gray-800" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 7h1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h11.5M7 14h6m-6 3h6m0-10h.5m-.5 3h.5M7 7h3v3H7V7Z" />
+                                    </svg>
+                                    <p class="text-gray-800 text-[14px]">
+                                        Certificado
+                                    </p>
+                                </div>
+                                <!-- punto2-->
+                                <div class="flex gap-2">
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-green-600" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 20a16.405 16.405 0 0 1-5.092-5.804A16.694 16.694 0 0 1 5 6.666L12 4l7 2.667a16.695 16.695 0 0 1-1.908 7.529A16.406 16.406 0 0 1 12 20Z" />
+                                    </svg>
 
-            <div class=" flex mb-4">
-                <input id="form-celular"type="text" placeholder="CELULAR" class="text-black w-full p-2 border rounded-lg border-red-400">
-            </div>
+                                    <p class="text-gray-800 text-[14px]">Atención segura</p>
+                                </div>
+                                <!-- punto3 -->
+                                <div class="flex gap-2">
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-red-600" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                            d="M7.58209 8.96025 9.8136 11.1917l-1.61782 1.6178c-1.08305-.1811-2.23623.1454-3.07364.9828-1.1208 1.1208-1.32697 2.8069-.62368 4.1363.14842.2806.42122.474.73509.5213.06726.0101.1347.0133.20136.0098-.00351.0666-.00036.1341.00977.2013.04724.3139.24069.5867.52125.7351 1.32944.7033 3.01552.4971 4.13627-.6237.8375-.8374 1.1639-1.9906.9829-3.0736l4.8107-4.8108c1.0831.1811 2.2363-.1454 3.0737-.9828 1.1208-1.1208 1.3269-2.80688.6237-4.13632-.1485-.28056-.4213-.474-.7351-.52125-.0673-.01012-.1347-.01327-.2014-.00977.0035-.06666.0004-.13409-.0098-.20136-.0472-.31386-.2406-.58666-.5212-.73508-1.3294-.70329-3.0155-.49713-4.1363.62367-.8374.83741-1.1639 1.9906-.9828 3.07365l-1.7788 1.77875-2.23152-2.23148-1.41419 1.41424Zm1.31056-3.1394c-.04235-.32684-.24303-.61183-.53647-.76186l-1.98183-1.0133c-.38619-.19746-.85564-.12345-1.16234.18326l-.86321.8632c-.3067.3067-.38072.77616-.18326 1.16235l1.0133 1.98182c.15004.29345.43503.49412.76187.53647l1.1127.14418c.3076.03985.61628-.06528.8356-.28461l.86321-.8632c.21932-.21932.32446-.52801.2846-.83561l-.14417-1.1127ZM19.4448 16.4052l-3.1186-3.1187c-.7811-.781-2.0474-.781-2.8285 0l-.1719.172c-.7811.781-.7811 2.0474 0 2.8284l3.1186 3.1187c.7811.781 2.0474.781 2.8285 0l.1719-.172c.7811-.781.7811-2.0474 0-2.8284Z" />
+                                    </svg>
 
-            <div class="mb-4">
-                <select id="opcion-select" class="text-black w-full p-2 border rounded-lg border-red-400">
-                    <option disabled selected>ELIGE TU PROCEDIMIENTO</option>
-                    <option>DIAGNOSTICO</option>
-                    <option>CIRUGIA DE AHORTA</option>
-                    <option>CIRUGIA DE </option>
-                </select>
+                                    <p class="text-gray-800 text-[14px]">tecnología Avanzada</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- IMAGEN DERECHA -->
+                        <div class="w-1/2 h-110 justify-items-center">
+                            <img class="max-h-full rounded-3xl shadow-md "
+                                src="https://www.ama.com.co/wp-content/uploads/2020/11/doctor-marvin-robbins.jpg"
+                                alt="Doctor Sonriente">
+                        </div>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="mb-4">
-                <textarea id="form-consulta" placeholder="Dejanos tus consultas o dudas" class="text-black w-full p-2 h-24 border rounded-lg border-red-400"></textarea>
-            </div>
 
-            <button id="btn-enviar" class="bg-red-600 hover:bg-red-200 rounded-xl px-4 py-2 text-white">ENVIAR POR WHATSAPP</button>
+        <section>
+            <div>
+                <div class="flex flex-col items-center mt-10">
+                    <h1 class="text-3xl font-bold text-gray-900">Conoce a Tu <span
+                            class="text-red-600">Cardiólogo</span></h1>
+                    <div class="h-1 w-30 bg-red-600 mt-3"></div>
+                </div>
+                <div class="flex flex-row-reverse">
+                    <!-- Información -->
+                    <div class="w-1/2 pr-30 py-10">
+                        <!-- Introducción -->
+                        <div class>
+                            <h1 class="text-2xl font-bold text-gray-900 mb-1 ">Dr. Cristian Chapoñan Bances:</h1>
+                            <h2 class="text-red-700 font-medium text-[1.1rem] mb-4">Cardiólogo Clínico</h2>
+                            <p class="text-base text-gray-700 mb-7 text-left ">El Dr. Cristian Chapoñan Bances es un
+                                cardiólogo con sólida formación académica y experiencia en el campo de la medicina
+                                cardiovascular. Graduado en Medicina Humana por la Universidad Nacional Pedro Ruiz
+                                Gallo, se especializó en Cardiología con énfasis en diagnóstico cardiovascular y manejo
+                                de pacientes críticos.</p>
+                        </div>
+                        <!-- Valores -->
+                        <div class="flex flex-wrap f mb-7">
+                            <!-- Cuadro1 -->
+                            <div class="flex items-start gap-3 w-1/2 mb-3 ">
+                                <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5 ">
+                                </div>
+                                <p class="text-red-700 font-medium w-40">Compromiso con la Excelencia Médica</p>
 
-            <div class=" flex mt-3 gap-3 flex-col">
-                <span>📞 +51 904425498</span>
-                <span>📧 tudoctorcitocaliente@gmail.com</span>
-                <span>📍 Av. Balta</span>
+                            </div>
+                            <!-- Cuadro2 -->
+                            <div class="flex items-start gap-3 w-1/2 mb-3">
+                                <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5">
+                                </div>
+                                <p class="text-red-700 font-medium w-40">Atención Humanizada y Personalizada</p>
+
+                            </div>
+                            <!-- Cuadro3 -->
+                            <div class="flex items-start gap-3 w-1/2">
+                                <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5">
+                                </div>
+                                <p class="text-red-700 font-medium w-40">Integridad y Ética Profesional</p>
+
+                            </div>
+                            <!-- Cuadro4 -->
+                            <div class="flex items-start gap-3 w-1/2 ">
+                                <div class="w-[0.9rem] h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5">
+                                </div>
+                                <p class="text-red-700 font-medium w-40">Actualización Científica Permanente</p>
+                            </div>
+                        </div>
+                        <!-- call to action -->
+                        <div class="flex justify-start">
+                            <a class="bg-red-600 hover:bg-red-700 duration-300 text-white p-4 rounded-3xl w-57 text-center mt-2"
+                                href="#formulario">Solicitar una Cita 🡢</a>
+                        </div>
+                    </div>
+
+                    <!-- Imagen -->
+                    <div class="relative w-1/2 justify-items-center content-center">
+                        <img class="py-12 relative z-40"
+                            src="https://static.vecteezy.com/system/resources/thumbnails/024/585/326/small_2x/3d-happy-cartoon-doctor-cartoon-doctor-on-transparent-background-generative-ai-png.png"
+                            alt="">
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="flex w-1/2 pl-30">
-                <div id="map" class="w-full h-[400px] rounded-4xl"></div>
+        </section>
+        <!-- SERVICIOS -->
+        <section class="bg-gray-100">
+            <div class="flex flex-col items-center">
+                <div class="flex flex-col items-center mt-15 px-90 text-center mb-0">
+                    <h1 class="text-3xl font-bold"><span class="text-gray-900">Nuestros</span><span
+                            class="text-red-600"> Servicios</span></h1>
+                    <p class="mt-3 text-gray-700">Ofrecemos una amplia gama de servicios cardiológicos utilizando
+                        tecnología de vanguardia para garantizar la mejor atención</p>
+                    <div class="h-1 w-20 bg-red-600 mt-3"></div>
+                </div>
+                <!-- grid -->
+                <div
+                    class="grid grid-rows-2 grid-cols-2 w-3/4 items-center justify-items-center  text-center mb-10 mt-10">
+                    <!-- tarjeta1 -->
+                    <div class="flex flex-col items-center bg-white p-8 rounded-3xl mb-3 ml-22">
+                        <div class="bg-red-200 rounded-full h-10 w-10 justify-items-center  ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-activity w-6 h-6 mt-2 text-red-600">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl p-3 font-semibold">ElectroCardiograma</h3>
+                        <p class="w-80 ">Registra la actividad eléctrica del corazón para detectar arritmias e infartos
+                            de manera rápida y no invasiva.</p>
+                    </div>
+                    <!-- tarjeta2 -->
+                    <div class="flex flex-col items-center bg-white p-8 rounded-3xl mb-3  mr-22">
+                        <div class="bg-red-200 rounded-full h-10 w-10 justify-items-center  ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-activity w-6 h-6 mt-2 text-red-600">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl p-3 font-semibold">Ecocardiograma Doppler Color</h3>
+                        <p class="w-80 ">Utiliza ultrasonido para visualizar el corazón en tiempo real, evaluando su
+                            estructura y el flujo sanguíneo sin ningún dolor.</p>
+                    </div>
+                    <!-- tarjeta3 -->
+                    <div class="flex flex-col items-center bg-white p-8 rounded-3xl ml-22">
+                        <div class="bg-red-200 rounded-full h-10 w-10 justify-items-center  ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-activity w-6 h-6 mt-2 text-red-600">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl p-3 font-semibold">Holter de 24 o 48 hrs</h3>
+                        <p class="w-80 ">Monitorea el corazón durante uno o dos días continuos para identificar
+                            arritmias que ocurren ocasionalmente.</p>
+                    </div>
+                    <!-- tarjeta4 -->
+                    <div class="flex flex-col items-center bg-white p-8 rounded-3xl mr-22">
+                        <div class="bg-red-200 rounded-full h-10 w-10 justify-items-center  ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-activity w-6 h-6 mt-2 text-red-600">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl p-3 font-semibold">Mapa de 24 hrs</h3>
+                        <p class="w-80 ">Mide automáticamente la presión arterial durante 24 horas para evaluar patrones
+                            día/noche y efectividad del tratamiento.</p>
+                    </div>
+                </div>
+                <div class="flex justify-center w-full">
+                    <a class="bg-red-600 hover:bg-red-700 duration-300 text-white p-4 rounded-3xl w-40 text-center mb-15"
+                        href="#formulario">Descubre Más.. </a>
+                </div>
+
+
+        </section>
+
+        <!-- UBICACIÓN -->
+        <section class="my-10">
+            <div class="flex flex-col items-center mt-10">
+                    <h1 class="text-3xl font-bold text-gray-900">Nuestra <span
+                            class="text-red-600">Ubicación</span></h1>
+                    <div class="h-1 w-30 bg-red-600 mt-3"></div>
+                </div>
+            <div class="flex flex-row-reverse flex-wrap">
+                <div class="flex w-1/2 items-center p-10 ">
+                    <div
+                        class="flex flex-col h-[30rem] bg-white pl-12 pr-48 py-7 rounded-4xl shadow-md shadow-gray-300">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900 text-center mb-7">Información de Contacto</h2>
+                        </div>
+                        <div>
+                            <!-- DIRECCIÓN -->
+                            <div class="mb-8 flex gap-6 items-start">
+                                <div class="bg-red-100 rounded-full h-11 w-11 justify-items-center ">
+                                    <svg class="w-7 h-7 text-red-600 mt-2" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z" />
+                                    </svg>
+
+                                </div>
+                                <div>
+                                    <h1 class="font-medium text-[1.1rem] text-gray-900">Dirección</h1>
+                                    <p class="text-gray-600">Río Chotano 641, Chiclayo 14008</p>
+                                </div>
+                            </div>
+                            <!-- HORARIO DE ATENCIÓN -->
+                            <div class="mb-8 flex gap-6 items-start">
+                                <div class="bg-red-100 rounded-full h-11 w-11 justify-items-center ">
+                                    <svg class="w-7 h-7 text-red-600 mt-2" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path fill="currentColor"
+                                            d="M4 9.05H3v2h1v-2Zm16 2h1v-2h-1v2ZM10 14a1 1 0 1 0 0 2v-2Zm4 2a1 1 0 1 0 0-2v2Zm-3 1a1 1 0 1 0 2 0h-2Zm2-4a1 1 0 1 0-2 0h2Zm-2-5.95a1 1 0 1 0 2 0h-2Zm2-3a1 1 0 1 0-2 0h2Zm-7 3a1 1 0 0 0 2 0H6Zm2-3a1 1 0 1 0-2 0h2Zm8 3a1 1 0 1 0 2 0h-2Zm2-3a1 1 0 1 0-2 0h2Zm-13 3h14v-2H5v2Zm14 0v12h2v-12h-2Zm0 12H5v2h14v-2Zm-14 0v-12H3v12h2Zm0 0H3a2 2 0 0 0 2 2v-2Zm14 0v2a2 2 0 0 0 2-2h-2Zm0-12h2a2 2 0 0 0-2-2v2Zm-14-2a2 2 0 0 0-2 2h2v-2Zm-1 6h16v-2H4v2ZM10 16h4v-2h-4v2Zm3 1v-4h-2v4h2Zm0-9.95v-3h-2v3h2Zm-5 0v-3H6v3h2Zm10 0v-3h-2v3h2Z" />
+                                    </svg>
+
+                                </div>
+                                <div>
+                                    <h1 class="font-medium text-[1.1rem] text-gray-900">Horario de Atención</h1>
+                                    <p class="text-gray-600">Lunes a Viernes: 8:00 am - 8:00 pm<br>Sábados: 8:00 am -
+                                        2:00 pm</p>
+                                </div>
+                            </div>
+                            <!-- TELÉFONO -->
+                            <div class="mb-8 flex gap-6 items-start">
+                                <div class="bg-red-100 rounded-full h-11 w-11 justify-items-center ">
+                                    <svg class="w-7 h-7 text-red-600 mt-2" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M18.427 14.768 17.2 13.542a1.733 1.733 0 0 0-2.45 0l-.613.613a1.732 1.732 0 0 1-2.45 0l-1.838-1.84a1.735 1.735 0 0 1 0-2.452l.612-.613a1.735 1.735 0 0 0 0-2.452L9.237 5.572a1.6 1.6 0 0 0-2.45 0c-3.223 3.2-1.702 6.896 1.519 10.117 3.22 3.221 6.914 4.745 10.12 1.535a1.601 1.601 0 0 0 0-2.456Z" />
+                                    </svg>
+
+
+                                </div>
+                                <div>
+                                    <h1 class="font-medium text-[1.1rem] text-gray-900">Teléfono</h1>
+                                    <p class="text-gray-600">+51 904 425 498</p>
+                                </div>
+                            </div>
+                            <!-- CORREO -->
+                            <div class="mb-8 flex gap-6 items-start  ">
+                                <div class="bg-red-100 rounded-full h-11 w-11 justify-items-center ">
+                                    <svg class="w-7 h-7 text-red-600 mt-2" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M11 16v-5.5A3.5 3.5 0 0 0 7.5 7m3.5 9H4v-5.5A3.5 3.5 0 0 1 7.5 7m3.5 9v4M7.5 7H14m0 0V4h2.5M14 7v3m-3.5 6H20v-6a3 3 0 0 0-3-3m-2 9v4m-8-6.5h1" />
+                                    </svg>
+
+                                </div>
+                                <div>
+                                    <h1 class="font-medium text-[1.1rem] text-gray-900">Correo Electrónico</h1>
+                                    <p class="text-gray-600">cchapoban12@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- MAPA -->
+                <div class="flex w-1/2 pl-20 items-center">
+                    <div id="map" class="w-full h-[30rem] rounded-4xl z-0 shadow-md shadow-gray-300"></div>
+                </div>
             </div>
-        </div>
+        </section>
+
+
+
+        <section id="formulario" class="flex  bg-red-700  w-full justify-center py-16">
+            <div class>
+                <div class="flex flex-col items-center mt-1 mb-4">
+                    <h1 class="text-3xl font-bold text-white">Agenda Tu Consulta</h1>
+                    <div class="h-1 w-30 bg-white mt-3"></div>
+                </div>
+                <div class="p-6 bg-white text-black rounded-xl">
+                    <h2 class="text-3xl font-bold mb-3">Solicita tu cita</h2>
+                    <div class="flex mb-4">
+                        <input id="form-nombre" type="text" placeholder="NOMBRES Y APELLIDOS"
+                            class="text-black w-full p-2 border rounded-lg border-red-400">
+                    </div>
+
+                    <div class=" flex mb-4">
+                        <input id="form-celular" type="text" placeholder="CELULAR"
+                            class="text-black w-full p-2 border rounded-lg border-red-400">
+                    </div>
+
+                    <div class="mb-4">
+                        <select id="opcion-select" class="text-black w-full p-2 border rounded-lg border-red-400">
+                            <option disabled selected>ELIGE TU PROCEDIMIENTO</option>
+                            <option>DIAGNOSTICO</option>
+                            <option>CIRUGIA DE AHORTA</option>
+                            <option>CIRUGIA DE </option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <textarea id="form-consulta" placeholder="Dejanos tus consultas o dudas"
+                            class="text-black w-full p-2 h-24 border rounded-lg border-red-400"></textarea>
+                    </div>
+
+                    <button id="btn-enviar" class="bg-red-600 hover:bg-red-200 rounded-xl px-4 py-2 text-white">ENVIAR
+                        POR
+                        WHATSAPP</button>
+
+                    <div class=" flex mt-3 gap-3 flex-col">
+                        <span>📞 +51 904425498</span>
+                        <span>📧 tudoctorcitocaliente@gmail.com</span>
+                        <span>📍 Av. Balta</span>
+                    </div>
+                </div>
+            </div>
+    </div>
     </section>
     <script src="form.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
