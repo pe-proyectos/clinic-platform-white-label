@@ -1,6 +1,6 @@
 document.getElementById("btn-enviar").addEventListener("click", function(){
     const nombre = document.getElementById("form-nombre").value;
-    const celular = document.getElementById("form-celular").value;
+    const dni = document.getElementById("form-dni").value;
     const procedimiento = document.getElementById("opcion-select").value;
     const consulta = document.getElementById("form-consulta").value;
 
@@ -9,7 +9,7 @@ document.getElementById("btn-enviar").addEventListener("click", function(){
         return;
     }
 
-    const mensaje = `Hola, soy ${nombre}.%0AMi número es: ${celular}.%0AQuisiera agendar una cita para: ${procedimiento}.%0AMis dudas o consulta: ${consulta}`;
+    const mensaje = `Hola, soy ${nombre}.%0AMi número de DNI es: ${dni}.%0AQuisiera agendar una cita para: ${procedimiento}.%0AMis dudas o consulta: ${consulta}`;
 
     const numeroWhatsApp = "904425498";
 
