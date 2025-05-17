@@ -4,7 +4,7 @@ document.getElementById("btn-enviar").addEventListener("click", function(){
     const procedimiento = document.getElementById("opcion-select").value;
     const consulta = document.getElementById("form-consulta").value;
 
-    if(!nombre || !celular || procedimiento === "ELIGE TU PROCEDIMIENTO" || !consulta){
+    if(!nombre || !dni || procedimiento === "ELIGE TU PROCEDIMIENTO" || !consulta){
         alert("RELLENA TODOS LOS CAMPOS QUE SE REQUIEREN")
         return;
     }

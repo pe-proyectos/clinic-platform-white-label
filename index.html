@@ -8,18 +8,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <title>Dr.Cristian Joel Chapoñan Bances Cardiologo</title>
+    <title>Dr.Cristian Chapoñan Bances Cardiologo</title>
 </head>
 
-<body>
+
+<body class>
     <div class="min-h-screen bg-gray-50">
-        <header class="fixed w-full transition-all duration-300 bg-white shadow-md py-2 z-50">
-            <nav class="flex max-w-7xl mx-auto  items-center justify-between px-4 sm:px-6 lg:px-8">
+        <header class="fixed h-auto w-full transition-all duration-300 bg-white shadow-md py-2 z-50">
+            <nav class="flex max-w-7xl mx-auto items-center justify-between px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center gap-2">
                     <div>
                         <svg class="w-9 h-9 text-red-600" fill="currentColor" viewBox="0 0 24 24">
@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="flex flex-col">
-                        <h1 class=" text-[0.8rem] md:text-xl font-bold text-gray-900">
+                        <h1 class=" text-[0.7rem] md:text-xl font-bold text-gray-900">
                             Dr<span class="text-red-600">.</span> CRISTIAN CHAPOÑAN
                         </h1>
                         <p class="text-[0.6rem] md:text-xs text-gray-700 -mt-1 ">
@@ -40,14 +40,16 @@
                     </div>
                 </div>
 
-                <div class="hidden sm:flex gap-8 items-center">
+                <div class="flex gap-8 items-center">
                     <a href="#Perfil"
-                        class="text-gray-800 hover:text-red-600 font-medium transition duration-300">Perfil medico</a>
+                        class="text-gray-800 hover:text-red-600 font-medium transition duration-300 md:block hidden">Perfil
+                        medico</a>
                     <a href="#procedimientos"
-                        class="text-gray-800 hover:text-red-600 font-medium transition duration-300">Procedimientos</a>
+                        class="text-gray-800 hover:text-red-600 font-medium transition duration-300 md:block hidden">Procedimientos</a>
                     <a href="#formulario"
-                        class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-full flex items-center gap-2 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4" viewBox="0 0 24 24">
+                        class="md:text-base  text-xs bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-full flex items-center gap-2 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="md:w-5 md:h-5 w-3 h-3"
+                            viewBox="0 0 24 24">
                             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
                             4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
                             14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
@@ -58,15 +60,17 @@
                 </div>
             </nav>
         </header>
+
+
         <!-- INICIO -->
         <section>
-            <div class="pt-24 md:pt-29 pb-10 bg-gradient-to-br from-white bg-gray-100 mibx-w-max min-h-screen">
+            <div class="pt-24 md:pt-29 pb-10 bg-gradient-to-br from-white bg-gray-100  md:h-screen ">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex flex-col md:flex-row items-center">
                         <!-- IZQUIERDA -->
                         <div class="w-full md:w-1/2 transition-all duration-1000 translate-x-0 pr-4 md:pr-18">
                             <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-5">
-                                Salud cardíaca <span class="text-red-600">Avanzada</span> a tu Alcance
+                                Un corazón <span class="text-red-600">sano late</span> por más Tiempo
                             </h1>
                             <p class="text-XL text-gray-600 mb-10">Diagnóstico preciso, tratamiento personalizado y
                                 tecnología de vanguardia para el cuidado integral de tu corazón</p>
@@ -77,50 +81,51 @@
                                     Solicitar Consulta</a>
                             </div>
                             <!-- Puntos -->
-                            <div class="flex mt-13 gap-10">
+                            <div class="flex flex-wrap mt-11 md:mt-13 gap-10 md:gap-y-0 gap-y-4">
                                 <!-- punto1 -->
                                 <div class="flex text-center gap-2">
-                                    <svg class="w-6 h-6 text-gray-800" aria-hidden="true"
+                                    <svg class="md:w-6 md:h-6 w-4 h-4 text-gray-800" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                         viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="2"
                                             d="M19 7h1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h11.5M7 14h6m-6 3h6m0-10h.5m-.5 3h.5M7 7h3v3H7V7Z" />
                                     </svg>
-                                    <p class="text-gray-800 text-[14px]">
+                                    <p class="text-gray-800 text-xs md:text-[0.875rem]">
                                         Certificado
                                     </p>
                                 </div>
                                 <!-- punto2-->
                                 <div class="flex gap-2">
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-green-600" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
+                                    <svg class="md:w-6 md:h-6 w-4 h-4 text-gray-800 dark:text-green-600"
+                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="2"
                                             d="M12 20a16.405 16.405 0 0 1-5.092-5.804A16.694 16.694 0 0 1 5 6.666L12 4l7 2.667a16.695 16.695 0 0 1-1.908 7.529A16.406 16.406 0 0 1 12 20Z" />
                                     </svg>
 
-                                    <p class="text-gray-800 text-[14px]">Atención segura</p>
+                                    <p class="text-gray-800 text-xs md:text-[0.875rem]">Atención segura</p>
                                 </div>
                                 <!-- punto3 -->
                                 <div class="flex gap-2">
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-red-600" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
+                                    <svg class="md:w-6 md:h-6 w-4 h-4 text-gray-800 dark:text-red-600"
+                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
                                             d="M7.58209 8.96025 9.8136 11.1917l-1.61782 1.6178c-1.08305-.1811-2.23623.1454-3.07364.9828-1.1208 1.1208-1.32697 2.8069-.62368 4.1363.14842.2806.42122.474.73509.5213.06726.0101.1347.0133.20136.0098-.00351.0666-.00036.1341.00977.2013.04724.3139.24069.5867.52125.7351 1.32944.7033 3.01552.4971 4.13627-.6237.8375-.8374 1.1639-1.9906.9829-3.0736l4.8107-4.8108c1.0831.1811 2.2363-.1454 3.0737-.9828 1.1208-1.1208 1.3269-2.80688.6237-4.13632-.1485-.28056-.4213-.474-.7351-.52125-.0673-.01012-.1347-.01327-.2014-.00977.0035-.06666.0004-.13409-.0098-.20136-.0472-.31386-.2406-.58666-.5212-.73508-1.3294-.70329-3.0155-.49713-4.1363.62367-.8374.83741-1.1639 1.9906-.9828 3.07365l-1.7788 1.77875-2.23152-2.23148-1.41419 1.41424Zm1.31056-3.1394c-.04235-.32684-.24303-.61183-.53647-.76186l-1.98183-1.0133c-.38619-.19746-.85564-.12345-1.16234.18326l-.86321.8632c-.3067.3067-.38072.77616-.18326 1.16235l1.0133 1.98182c.15004.29345.43503.49412.76187.53647l1.1127.14418c.3076.03985.61628-.06528.8356-.28461l.86321-.8632c.21932-.21932.32446-.52801.2846-.83561l-.14417-1.1127ZM19.4448 16.4052l-3.1186-3.1187c-.7811-.781-2.0474-.781-2.8285 0l-.1719.172c-.7811.781-.7811 2.0474 0 2.8284l3.1186 3.1187c.7811.781 2.0474.781 2.8285 0l.1719-.172c.7811-.781.7811-2.0474 0-2.8284Z" />
                                     </svg>
 
-                                    <p class="text-gray-800 text-[14px]">tecnología Avanzada</p>
+                                    <p class="text-gray-800 text-xs md:text-[0.875rem]">tecnología Avanzada</p>
                                 </div>
                             </div>
                         </div>
                         <!-- IMAGEN DERECHA -->
-                        <div class="w-full md:w-1/2 h-100 md:h-110 mt-9 md:mt-0 justify-items-center">
-                            <img class="max-h-full rounded-3xl shadow-md "
-                                src="https://www.ama.com.co/wp-content/uploads/2020/11/doctor-marvin-robbins.jpg"
-                                alt="Doctor Sonriente">
+                        <div class="w-full md:w-1/2 h-95 mt-9 md:mt-0 justify-items-center">
+                            <div class=" bg-slate-300 shadow-md rounded-3xl">
+                                <img class="h-90 md:max-h-full rounded-3xl" src="Resources/png.png"
+                                    alt="Doctor Sonriente">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -129,71 +134,81 @@
 
 
         <section id="Perfil">
-            <div class="md:h-full content-center">
+            <div class="md:h-screen h-full mb-13 content-center">
                 <div class="flex flex-col items-center mt-13">
-                    <h1 class="text-3xl font-bold text-gray-900">Conoce a Tu <span
+                    <h1 class="text-[1.5rem] md:text-3xl font-bold text-gray-900">Conoce a Tu <span
                             class="text-red-600">Cardiólogo</span></h1>
-                    <div class="h-1 w-30 bg-red-600 mt-3"></div>
+                    <div class="h-1 w-16 md:w-30 bg-red-600 mt-3"></div>
                 </div>
                 <div class="flex flex-col md:flex-row-reverse">
                     <!-- Información -->
                     <div class="w-full md:w-1/2 px-4 md:pr-30 py-10">
                         <!-- Introducción -->
                         <div class>
-                            <h1 class="text-2xl font-bold text-gray-900 mb-1 ">Dr. Cristian Chapoñan Bances:</h1>
+                            <h1 class="text-[1.4rem] md:text-2xl font-bold text-gray-900 mb-1 ">Dr. Cristian Chapoñan
+                                Bances:</h1>
                             <h2 class="text-red-700 font-medium text-[1.1rem] mb-4">Cardiólogo Clínico</h2>
                             <p class="text-base text-gray-700 mb-7 text-left ">El Dr. Cristian Chapoñan Bances es un
                                 cardiólogo con sólida formación académica y experiencia en el campo de la medicina
-                                cardiovascular. Graduado en Medicina Humana por la Universidad Nacional Pedro Ruiz
-                                Gallo, se especializó en Cardiología con énfasis en diagnóstico cardiovascular y manejo
-                                de pacientes críticos.</p>
+                                cardiovascular. Graduado como médico cirujano en la Universidad Nacional Pedro Ruiz
+                                Gallo, Se especializó en Cardiología Clínica en el Hospital Nacional Almanzor Aguinaga
+                                Asenjo con énfasis en prevención, diagnóstico y manejo de pacientes cardiopatas.</p>
                         </div>
                         <!-- Valores -->
                         <div class="flex flex-wrap f mb-7">
                             <!-- Cuadro1 -->
                             <div class="flex items-start gap-3 w-1/2 mb-3 ">
                                 <div
-                                    class="w-[0.8rem] h-[0.7rem] md:w-[0.9rem] md:h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5 ">
+                                    class="w-[0.7rem] h-[0.7rem] md:w-[0.9rem] md:h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5 ">
                                 </div>
-                                <p class="text-red-700 font-medium w-40">Compromiso con la Excelencia Médica</p>
+                                <p class="md:text-base text-[0.9rem] text-red-700 font-medium w-40">Compromiso con la
+                                    Excelencia Médica</p>
 
                             </div>
                             <!-- Cuadro2 -->
                             <div class="flex items-start gap-3 w-1/2 mb-3">
                                 <div
-                                    class="w-[0.8rem] h-[0.7rem] md:w-[0.9rem] md:h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5">
+                                    class="w-[0.7rem] h-[0.7rem] md:w-[0.9rem] md:h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5">
                                 </div>
-                                <p class="text-red-700 font-medium w-40">Atención Humanizada y Personalizada</p>
+                                <p class="md:text-base text-[0.9rem] text-red-700 font-medium w-40">Atención Humanizada
+                                    y Personalizada</p>
 
                             </div>
                             <!-- Cuadro3 -->
                             <div class="flex items-start gap-3 w-1/2">
                                 <div
-                                    class="w-[0.8rem] h-[0.7rem] md:w-[0.9rem] md:h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5">
+                                    class="w-[0.7rem] h-[0.7rem] md:w-[0.9rem] md:h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5">
                                 </div>
-                                <p class="text-red-700 font-medium w-40">Integridad y Ética Profesional</p>
+                                <p class="md:text-base text-[0.9rem] text-red-700 font-medium w-40">Integridad y Ética
+                                    Profesional</p>
 
                             </div>
                             <!-- Cuadro4 -->
                             <div class="flex items-start gap-3 w-1/2 ">
                                 <div
-                                    class="w-[0.8rem] h-[0.7rem] md:w-[0.9rem] md:h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5">
+                                    class="w-[0.7rem] h-[0.7rem] md:w-[0.9rem] md:h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5">
                                 </div>
-                                <p class="text-red-700 font-medium w-40">Actualización Científica Permanente</p>
+                                <p class="md:text-base text-[0.9rem] text-red-700 font-medium w-40">Actualización
+                                    Científica Permanente</p>
                             </div>
                         </div>
                         <!-- call to action -->
                         <div class="flex justify-start">
-                            <a class="bg-red-600 hover:bg-red-700 duration-300 text-white p-4 rounded-3xl w-57 text-center mt-2"
-                                href="#formulario">Solicitar una Cita 🡢</a>
+                            <a class="bg-red-600 hover:bg-red-700 duration-300 text-white px-1 py-4 md:p-4 rounded-3xl w-57 text-center mt-2 flex gap-2 justify-center"
+                                href="#formulario">Solicitar una Cita <svg class="w-6 h-6 text-gray-800 dark:text-white"
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
+                                </svg>
+                            </a>
                         </div>
                     </div>
 
                     <!-- Imagen -->
-                    <div class="relative md:w-1/2 justify-items-center content-center">
-                        <img class="py-4 md:py-12 relative z-40"
-                            src="https://static.vecteezy.com/system/resources/thumbnails/024/585/326/small_2x/3d-happy-cartoon-doctor-cartoon-doctor-on-transparent-background-generative-ai-png.png"
-                            alt="">
+                    <div class=" md:w-1/2 justify-items-center content-center">
+                        <img class="py-0 z-40 h-110 rounded-3xl shadow-md "
+                            src="Resources/Imagen de WhatsApp 2025-05-15 a las 19.53.27_e959a5f9.jpg" alt="">
                     </div>
                 </div>
             </div>
@@ -201,16 +216,16 @@
         <!-- SERVICIOS -->
         <section class="bg-gray-100">
             <div class="flex flex-col items-center">
-                <div class="flex flex-col items-center mt-15 px-30 md:px-90 text-center mb-0">
-                    <h1 class="text-3xl font-bold"><span class="text-gray-900">Nuestros</span><span
+                <div class="flex flex-col items-center mt-15 px-20 md:px-90 text-center mb-0">
+                    <h1 class="text-[1.5rem] md:text-3xl font-bold"><span class="text-gray-900">Nuestros</span><span
                             class="text-red-600"> Servicios</span></h1>
                     <p class="mt-3 text-gray-700">Ofrecemos una amplia gama de servicios cardiológicos utilizando
                         tecnología de vanguardia para garantizar la mejor atención</p>
-                    <div class="h-1 w-20 bg-red-600 mt-3"></div>
+                    <div class="h-1 w-20 md:w-30 bg-red-600 mt-3"></div>
                 </div>
                 <!-- grid -->
                 <div
-                    class="flex flex-col md:grid grid-rows-2 grid-cols-2 w-3/4 items-center justify-items-center  text-center mb-10 mt-10">
+                    class="flex flex-col md:grid grid-rows-2 grid-cols-2 md:w-3/4 items-center justify-items-center  text-center mb-10 mt-10">
                     <!-- tarjeta1 -->
                     <div
                         class="flex flex-col items-center bg-white p-8 rounded-3xl mb-3 md:ml-22 hover:-translate-y-1 hover:scale-105 duration-300 delay-75">
@@ -221,7 +236,7 @@
                                 <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                             </svg>
                         </div>
-                        <h3 class="text-xl p-3 font-semibold">ElectroCardiograma</h3>
+                        <h3 class="text-xl p-3 font-semibold">Electrocardiograma (ECG)</h3>
                         <p class="w-80 ">Registra la actividad eléctrica del corazón para detectar arritmias e infartos
                             de manera rápida y no invasiva.</p>
                     </div>
@@ -243,7 +258,7 @@
                     </div>
                     <!-- tarjeta3 -->
                     <div
-                        class="flex flex-col items-center bg-white p-8 rounded-3xl mb-3 md:ml-22 hover:-translate-y-1 hover:scale-105 duration-300 delay-75">
+                        class="flex flex-col items-center bg-white p-8 rounded-3xl mb-3 md:mb-0 md:ml-22 hover:-translate-y-1 hover:scale-105 duration-300 delay-75">
                         <div class="bg-red-200 rounded-full h-10 w-10 justify-items-center  ">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -283,21 +298,24 @@
         <!-- UBICACIÓN -->
         <section class="my-10">
             <div class="flex flex-col items-center mt-10">
-                <h1 class="text-3xl font-bold text-gray-900">Nuestra <span class="text-red-600">Ubicación</span></h1>
-                <div class="h-1 w-30 bg-red-600 mt-3"></div>
+                <h1 class="text-[1.5rem] md:text-3xl font-bold text-gray-900">Nuestra <span
+                        class="text-red-600">Ubicación</span></h1>
+                <div class="h-1 w-20 md:w-30 bg-red-600 mt-3"></div>
             </div>
-            <div class="flex flex-row-reverse flex-wrap">
-                <div class="flex w-1/2 items-center p-10 ">
+            <div class="flex md:flex-row-reverse flex-col-reverse items-center flex-wrap content-center">
+                <div class="flex md:w-1/2 items-center px-4 p-0 md:p-10 w-full h-full ">
                     <div
-                        class="flex flex-col h-[30rem] bg-white pl-12 pr-48 py-7 rounded-4xl shadow-md shadow-gray-300">
+                        class="flex flex-col w-full h-full md:h-[30rem] bg-white pl-12 md:pr-48 py-7 rounded-4xl shadow-md shadow-gray-300">
                         <div>
-                            <h2 class="text-2xl font-bold text-gray-900 text-center mb-7">Información de Contacto</h2>
+                            <h2 class="text-lg m:text-2xl font-bold text-gray-900 mn:text-center mb-7 text-left">
+                                Información de
+                                Contacto</h2>
                         </div>
-                        <div>
+                        <div class="">
                             <!-- DIRECCIÓN -->
                             <div class="mb-8 flex gap-6 items-start">
-                                <div class="bg-red-100 rounded-full h-11 w-11 justify-items-center ">
-                                    <svg class="w-7 h-7 text-red-600 mt-2" aria-hidden="true"
+                                <div class="bg-red-100 rounded-full w-10 h-10 md:h-11 md:w-11 justify-items-center ">
+                                    <svg class="w-6 h-6 md:w-7 md:h-7 text-red-600 mt-2" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                         viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -309,14 +327,14 @@
 
                                 </div>
                                 <div>
-                                    <h1 class="font-medium text-[1.1rem] text-gray-900">Dirección</h1>
-                                    <p class="text-gray-600">Río Chotano 641, Chiclayo 14008</p>
+                                    <h1 class="font-medium text-base md:text-[1.1rem] text-gray-900">Dirección</h1>
+                                    <p class="text-sm md:text-base text-gray-600">Río Chotano 641, Chiclayo 14008</p>
                                 </div>
                             </div>
                             <!-- HORARIO DE ATENCIÓN -->
                             <div class="mb-8 flex gap-6 items-start">
-                                <div class="bg-red-100 rounded-full h-11 w-11 justify-items-center ">
-                                    <svg class="w-7 h-7 text-red-600 mt-2" aria-hidden="true"
+                                <div class="bg-red-100 rounded-full w-10 h-10 md:h-11 md:w-11 justify-items-center">
+                                    <svg class="w-6 h-6 md:w-7 md:h-7 text-red-600 mt-2" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                         viewBox="0 0 24 24">
                                         <path fill="currentColor"
@@ -325,15 +343,17 @@
 
                                 </div>
                                 <div>
-                                    <h1 class="font-medium text-[1.1rem] text-gray-900">Horario de Atención</h1>
-                                    <p class="text-gray-600">Lunes a Viernes: 8:00 am - 8:00 pm<br>Sábados: 8:00 am -
+                                    <h1 class="font-medium text-base md:text-[1.1rem] text-gray-900">Horario de Atención
+                                    </h1>
+                                    <p class="text-sm md:text-base text-gray-600">Lunes a Viernes: 8:00 am - 8:00
+                                        pm<br>Sábados: 8:00 am -
                                         2:00 pm</p>
                                 </div>
                             </div>
                             <!-- TELÉFONO -->
                             <div class="mb-8 flex gap-6 items-start">
-                                <div class="bg-red-100 rounded-full h-11 w-11 justify-items-center ">
-                                    <svg class="w-7 h-7 text-red-600 mt-2" aria-hidden="true"
+                                <div class="bg-red-100 rounded-full w-10 h-10 md:h-11 md:w-11 justify-items-center ">
+                                    <svg class="w-6 h-6 md:w-7 md:h-7 text-red-600 mt-2" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                         viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -344,14 +364,14 @@
 
                                 </div>
                                 <div>
-                                    <h1 class="font-medium text-[1.1rem] text-gray-900">Teléfono</h1>
-                                    <p class="text-gray-600">+51 904 425 498</p>
+                                    <h1 class="font-medium text-base md:text-[1.1rem] text-gray-900">Teléfono</h1>
+                                    <p class="text-sm md:text-base text-gray-600">+51 904 425 498</p>
                                 </div>
                             </div>
                             <!-- CORREO -->
                             <div class="mb-8 flex gap-6 items-start  ">
-                                <div class="bg-red-100 rounded-full h-11 w-11 justify-items-center ">
-                                    <svg class="w-7 h-7 text-red-600 mt-2" aria-hidden="true"
+                                <div class="bg-red-100 rounded-full w-10 h-10 md:h-11 md:w-11 justify-items-center">
+                                    <svg class="w-6 h-6 md:w-7 md:h-7 text-red-600 mt-2" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                         viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -361,21 +381,396 @@
 
                                 </div>
                                 <div>
-                                    <h1 class="font-medium text-[1.1rem] text-gray-900">Correo Electrónico</h1>
-                                    <p class="text-gray-600">cchapoban12@gmail.com</p>
+                                    <h1 class="font-medium text-base md:text-[1.1rem] text-gray-900">Correo Electrónico
+                                    </h1>
+                                    <p class="text-sm md:text-base text-gray-600">cchapoban12@gmail.com</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- MAPA -->
-                <div class="w-full md:w-1/2 p-4 md:pl-20 items-center">
-                    <div id="map" class="w-full h-[30rem] rounded-4xl z-0 shadow-md shadow-gray-300"></div>
+                <div class="w-full md:w-1/2 p-10 md:p-0 md:pl-20 items-center">
+                    <div id="map" class="w-full h-[20rem] md:h-[30rem] rounded-4xl z-0 shadow-md shadow-gray-300"></div>
                 </div>
             </div>
         </section>
 
-        <section id="formulario" class="flex bg-red-700 bg  text-white w-full justify-center py-8">
+
+
+        <!-- PROCEDIMIENTOS -->
+        <section id="procedimientos" class=" md:flex-col z-20 flex py-20 px-4 bg-white">
+            <div class="md:w-auto md:px-20 w-full mx-auto">
+                <div class="text-center mb-12">
+
+                    <h3 class="text-4xl font-bold m-4">Procedimientos <span
+                            class="text-red-500 text-bold text-4xl">Médicos</span></h3>
+
+                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">Utilizamos equipamiento médico de última
+                        generación para brindarle un diagnóstico preciso y oportuno.</p>
+                </div>
+
+                <div class="flex flex-wrap justify-center mb-12 gap-2 md:gap-4">
+                    <button
+                        class="btn-procedimiento flex items-center px-4 py-3 rounded-full transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200">
+                        <span class="mr-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class=" w-6 h-6">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </span>
+                        <span class="ml-2">Electrocardiograma</span>
+                    </button>
+
+                    <button
+                        class=" btn-procedimiento flex items-center px-4 py-3 rounded-full transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200">
+                        <span class="mr-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="w-6 h-6">
+                                <path
+                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
+                                </path>
+                            </svg>
+                        </span>
+                        <span class="ml-2">Ecocadiograma</span>
+                    </button>
+
+                    <button
+                        class="btn-procedimiento flex items-center px-4 py-3 rounded-full transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200">
+                        <span clas="mr-2">
+                            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+
+                        </span>
+                        <span class="ml-2">Holter de 24 o 48 horas</span>
+                    </button>
+
+                    <button
+                        class="btn-procedimiento flex items-center px-4 py-3 rounded-full transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200">
+                        <span class="mr-2">
+                            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667" />
+                            </svg>
+
+                        </span>
+                        <span class="ml-2">M.A.P.A de 24 horas</span>
+                    </button>
+
+                </div>
+
+                <div class="procedimiento-seccion flex flex-col md:flex-row gap-12 items-start px-5 md:px-0">
+
+                    <div class="w-full md:w-1/2 flex flex-col items-center gap-6">
+                        <img src="Resources/ELECTRO1.png"
+                            alt="Electrocardiograma"
+                            class="rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 w-full object-cover max-w-2xl">
+
+                        <img src="Resources/ELECTRO2.png"
+                            alt="Electrocardiograma"
+                            class="rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 w-full object-cover max-w-2xl">
+                    </div>
+
+                    <div class="w-full md:w-1/2 flex flex-col gap-9">
+                        <div class="bg-red-100 p-4 border-l-4 border-red-500 rounded-xl shadow-sm">
+                            <h3 class="text-xl font-bold text-red-600 mb-1">Electrocardiograma</h3>
+                            <p class="text-gray-700">Un electrocardiograma (ECG o EKG) es una prueba no invasiva que
+                                registra la actividad eléctrica del corazón.</p>
+                        </div>
+
+                        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Para qué se utiliza?</h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <svg ...
+                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">...</svg>
+                                    <span class="text-gray-700">Detectar problemas en el ritmo y frecuencia cardíaca:
+                                        Arritmias (latidos irregulares).</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg>
+                                    <span class="text-gray-700">Identificar daño cardíaco: Infartos, miocarditis,
+                                        pericarditis.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg>
+                                    <span class="text-gray-700">Evaluar el tamaño de las cámaras del corazón: Aumentos
+                                        en las aurículas o ventrículos.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg>
+                                    <span class="text-gray-700">Monitoreo después de un infarto o cirugía
+                                        cardíaca.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg>
+                                    <span class="text-gray-700">Evaluar el efecto de medicamentos en el corazón.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white border-l-4 border-red-500 p-4 rounded-xl shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-2">¿Cómo se realiza?</h4>
+                            <p class="text-gray-700">
+                                El paciente se acuesta cómodamente y se le colocan electrodos en el pecho, brazos y
+                                piernas. Se le pide que se relaje y respire normalmente mientras se registra la
+                                actividad eléctrica. La prueba es indolora y rápida.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="procedimiento-seccion flex flex-col md:flex-row gap-12 items-start px-5 md:px-0">
+                    <div class="w-full flex-col lg:w-1/2 flex justify-center items-center gap-3">
+                        <img src="https://clinicaviver.com/wp-content/uploads/2021/02/unnamed-11.jpg"
+                            alt="Ecocadiograma" class="rounded-xl hover:shadow-lg max-w-md object-cover">
+                        <img src="Resources/ECO2.jpg"
+                            alt="Ecocardiograma" class="rounded-xl hover:shadow-lg max-w-md">
+                    </div>
+
+                    <div class="w-full md:w-1/2 flex flex-col gap-9">
+
+                        <div class="bg-red-100 p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
+                            <h3 class="text-xl font-bold text-red-600 mb-1">Ecocardiograma</h3>
+                            <p class="text-gray-700">Un ecocardiograma Doppler es una prueba no invasiva que utiliza
+                                ultrasonido para evaluar la estructura y función del corazón, medir la velocidad y
+                                dirección del flujo sanguíneo, lo que ayuda a diagnosticar diversas enfermedades
+                                cardíacas. </p>
+                        </div>
+
+                        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Para qué se utiliza?</h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg>
+                                    <span class="text-gray-700">Diagnóstico de enfermedades cardíacas como insuficiencia
+                                        cardíaca, problemas de válvulas, miocardiopatías, cardiopatías congénitas, entre
+                                        otras.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg>
+                                    <span class="text-gray-700">Evaluación del flujo sanguíneo y la función de las
+                                        válvulas.</span>
+                                </li>
+                                <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg>
+                                    <span class="text-gray-700">Monitoreo de la evolución de enfermedades
+                                        cardíacas.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-4">Preparación y Duración</h4>
+                            <p class="text-gray-700">Generalmente, no requiere preparación especial. En algunos casos,
+                                el médico puede recomendar ayuno o evitar ciertos medicamentos antes de la prueba. La
+                                prueba suele durar entre 20 y 30 minutos.</p>
+                            <div class="mt-4">
+                                <h5 class="font-medium text-gray-800 mb-2">Beneficios:</h5>
+                                <ul class="space-y-1 list-disc pl-5">
+                                    <li class="text-gray-700">No es invasivo, no causa dolor ni requiere radiación.</li>
+                                    <li class="text-gray-700">Ayuda a diagnosticar y monitorizar enfermedades cardíacas.
+                                    </li>
+                                    <li class="text-gray-700">Es una herramienta fundamental para la evaluación
+                                        cardiovascular.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="procedimiento-seccion flex flex-col md:flex-row gap-12 items-start px-5 md:px-0">
+                    <div class="w-full flex-col lg:w-1/2 flex justify-center items-center gap-3">
+                        <img src="Resources/HOLTER1.png"
+                            alt="Holter" class="rounded-xl hover:shadow-lg max-w-md object-cover">
+                        <img src="Resources/HOLTER2.png"
+                            alt="Holter" class="rounded-xl hover:shadow-lg max-w-md">
+                    </div>
+
+                    <div class="w-full lg:w-1/2 flex flex-col gap-9">
+
+                        <div class="bg-red-100 p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
+                            <h3 class="text-xl font-bold text-red-600 mb-1">Holter de 24 o 48 Horas</h3>
+                            <p class="text-gray-700">Un Holter de 24 horas es un electrocardiograma portátil que
+                                registra la actividad eléctrica del corazón durante un período de 24 o 48 horas.</p>
+                        </div>
+
+                        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Para qué se utiliza?</h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg>
+                                    <span class="text-gray-700">Diagnosticar o monitorear problemas cardíacos, como
+                                        arritmias, palpitaciones, mareos o síncope (pérdida de conciencia) que no es
+                                        posible identificar con el electrocardiograma.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Cómo funciona?</h4>
+                            <p class="text-gray-700">El dispositivo registra la actividad eléctrica del corazón mediante
+                                electrodos que se adhieren a la piel del pecho. Es importante no bañarse ni ducharse
+                                durante el período de registro, ya que el agua puede afectar la adherencia de los
+                                electrodos. También se recomienda no aplicar cremas o lociones en el pecho antes de la
+                                colocación de los electrodos.</p>
+                            <div class="mt-4">
+                                <h5 class="font-medium text-gray-800 mb-2">Beneficios:</h5>
+                                <ul class="space-y-1 list-disc pl-5">
+                                    <li class="text-gray-700">Es un procedimiento seguro y no invasivo.</li>
+                                    <li class="text-gray-700">Permite detectar problemas que no aparecen en un ECG
+                                        estándar.</li>
+                                    <li class="text-gray-700">Proporciona información continua durante las actividades
+                                        diarias normales.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="procedimiento-seccion flex flex-col md:flex-row gap-12 items-start px-5 md:px-0">
+                    <div class="w-full flex-col lg:w-1/2 flex justify-center items-center gap-3">
+                        <img src="https://cirugiacardiovascular.com.mx/wp-content/uploads/MAPA-24-horas-Guadalajara.jpg"
+                            alt="MAPA" class="rounded-xl hover:shadow-lg max-w-md object-cover">
+                        <img src="Resources/MAPA2.png"
+                            alt="MAPA" class="rounded-xl hover:shadow-lg max-w-md">
+                    </div>
+
+                    <div class="w-full lg:w-1/2 flex flex-col gap-9">
+
+                        <div class="bg-red-100 p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
+                            <h3 class="text-xl font-bold text-red-600 mb-1">M.A.P.A de 24 Horas</h3>
+                            <p class="text-gray-700">El Monitoreo Ambulatorio de la Presión Arterial (MAPA) es una
+                                prueba que registra la presión arterial de un paciente durante 24 horas.</p>
+                        </div>
+
+                        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Para qué se utiliza?</h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg>
+                                    <span class="text-gray-700">Evaluación precisa de la presión arterial en diferentes
+                                        momentos del día.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg>
+                                    <span class="text-gray-700">Diagnóstico y control de la hipertensión
+                                        arterial.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg>
+                                    <span class="text-gray-700">Identificar la hipertensión nocturna, relacionada con
+                                        mayor riesgo cardiovascular.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg>
+                                    <span class="text-gray-700">Evaluación de la respuesta a la medicación.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Cómo se realiza?</h4>
+                            <p class="text-gray-700">El dispositivo mide automáticamente la presión arterial cada cierto
+                                tiempo (por ejemplo, cada 15 minutos durante el día y cada 30 minutos durante la noche).
+                            </p>
+                            <div class="mt-4">
+                                <h5 class="font-medium text-gray-800 mb-2">Beneficios:</h5>
+                                <ul class="space-y-1 list-disc pl-5">
+                                    <li class="text-gray-700">Proporciona un registro completo de la presión arterial
+                                        durante un día entero.</li>
+                                    <li class="text-gray-700">Detecta variaciones que no se observan en mediciones
+                                        ocasionales en consulta.</li>
+                                    <li class="text-gray-700">Ayuda a personalizar el tratamiento de la presión
+                                        arterial.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SACAR CITA -->
+        <section id="formulario" class="flex bg-red-700 bg mt-2 text-white w-full justify-center py-8">
             <div class="w-full max-w-6xl mx-4 py-5">
                 <div class="flex flex-col items-center mb-8">
                     <h1 class="text-3xl font-bold ">Agenda Tu Consulta</h1>
@@ -543,377 +938,6 @@
             </div>
         </section>
 
-        <section id="procedimientos" class="z-20 flex py-20 px-4 bg-white">
-            <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-12">
-
-                    <h3 class="text-4xl font-bold m-4">Procedimientos <span
-                            class="text-red-500 text-bold text-4xl">Médicos</span></h3>
-
-                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">Utilizamos equipamiento médico de última
-                        generación para brindarle un diagnóstico preciso y oportuno.</p>
-                </div>
-
-                <div class="flex flex-wrap justify-center mb-12 gap-2 md:gap-4">
-                    <button
-                        class="btn-procedimiento flex items-center px-4 py-3 rounded-full transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200">
-                        <span class="mr-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class=" w-6 h-6">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                            </svg>
-                        </span>
-                        <span class="ml-2">Electrocardiograma</span>
-                    </button>
-
-                    <button
-                        class=" btn-procedimiento flex items-center px-4 py-3 rounded-full transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200">
-                        <span class="mr-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="w-6 h-6">
-                                <path
-                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
-                                </path>
-                            </svg>
-                        </span>
-                        <span class="ml-2">Ecocadiograma</span>
-                    </button>
-
-                    <button
-                        class="btn-procedimiento flex items-center px-4 py-3 rounded-full transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200">
-                        <span clas="mr-2">
-                            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-
-                        </span>
-                        <span class="ml-2">Holter de 24 o 48 horas</span>
-                    </button>
-
-                    <button
-                        class="btn-procedimiento flex items-center px-4 py-3 rounded-full transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200">
-                        <span class="mr-2">
-                            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667" />
-                            </svg>
-
-                        </span>
-                        <span class="ml-2">M.A.P.A de 24 horas</span>
-                    </button>
-
-                </div>
-
-                <div class="procedimiento-seccion flex flex-col-2 gap-8 items-center">
-                    <div class="w-full flex-col lg:w-1/2 flex justify-center items-center gap-3">
-                        <img src="https://cardiavant.com/wp-content/uploads/electrocardiograma.jpg"
-                            alt="Electrocardiograma" class="rounded-xl hover:shadow-lg max-w-md object-cover">
-                        <img src="https://i.ytimg.com/vi/IiZksK2X5D4/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AHkCIAC0AWKAgwIABABGGUgUShIMA8=&rs=AOn4CLDMEJsWGE9Cm0iqMvEYjfJl3MkoCQ"
-                            alt="Electrocardiograma" class="rounded-xl hover:shadow-lg max-w-md">
-                    </div>
-
-                    <div class="w-full lg:w-1/2 flex flex-col gap-9">
-
-                        <div class="bg-red-100 p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
-                            <h3 class="text-xl font-bold text-red-600 mb-1">Electrocardiograma</h3>
-                            <p class="text-gray-700">Un electrocardiograma (ECG o EKG) es una prueba no invasiva que
-                                registra la actividad eléctrica del corazón.</p>
-                        </div>
-
-                        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Para qué se utiliza?</h4>
-                            <ul class="space-y-3">
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Detectar problemas en el ritmo y frecuencia cardíaca:
-                                        Arritmias (latidos irregulares).</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Identificar daño cardíaco: Infartos, miocarditis,
-                                        pericarditis.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Evaluar el tamaño de las cámaras del corazón: Aumentos
-                                        en las aurículas o ventrículos.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Monitoreo después de un infarto o cirugía
-                                        cardíaca.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Evaluar el efecto de medicamentos en el corazón.</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-white border-l-3 border-red-500 p-4 rounded-xl shadow-sm">
-                            <h4 class="text-lg font-semibold text-gray-800 mb-2">¿Cómo se realiza?</h4>
-                            <p class="text-gray-700">
-                                El paciente se recuesta cómodamente y se le colocan electrodos en el pecho, brazos y
-                                piernas. Se le pide que se relaje y respire normalmente mientras se registra la
-                                actividad eléctrica. La prueba es indolora y rápida.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="procedimiento-seccion hidden flex flex-col-2 gap-8 items-center">
-                    <div class="w-full flex-col lg:w-1/2 flex justify-center items-center gap-3">
-                        <img src="https://clinicaviver.com/wp-content/uploads/2021/02/unnamed-11.jpg"
-                            alt="Electrocardiograma" class="rounded-xl hover:shadow-lg max-w-md object-cover">
-                        <img src="https://www.unifetus5d.com/wp-content/uploads/2020/06/ecocardiografia-fetal-ginecologos.png"
-                            alt="Electrocardiograma" class="rounded-xl hover:shadow-lg max-w-md">
-                    </div>
-
-                    <div class="w-full lg:w-1/2 flex flex-col gap-9">
-
-                        <div class="bg-red-100 p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
-                            <h3 class="text-xl font-bold text-red-600 mb-1">Ecocardiograma</h3>
-                            <p class="text-gray-700">Un ecocardiograma Doppler es una prueba no invasiva que utiliza
-                                ultrasonido para evaluar la estructura y función del corazón, medir la velocidad y
-                                dirección del flujo sanguíneo, lo que ayuda a diagnosticar diversas enfermedades
-                                cardíacas. </p>
-                        </div>
-
-                        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Para qué se utiliza?</h4>
-                            <ul class="space-y-3">
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Diagnóstico de enfermedades cardíacas como insuficiencia
-                                        cardíaca, problemas de válvulas, miocardiopatías, cardiopatías congénitas, entre
-                                        otras.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Evaluación del flujo sanguíneo y la función de las
-                                        válvulas.</span>
-                                </li>
-                                <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Monitoreo de la evolución de enfermedades
-                                        cardíacas.</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-white p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">Preparación y Duración</h4>
-                            <p class="text-gray-700">Generalmente, no requiere preparación especial. En algunos casos,
-                                el médico puede recomendar ayuno o evitar ciertos medicamentos antes de la prueba. La
-                                prueba suele durar entre 20 y 30 minutos.</p>
-                            <div class="mt-4">
-                                <h5 class="font-medium text-gray-800 mb-2">Beneficios:</h5>
-                                <ul class="space-y-1 list-disc pl-5">
-                                    <li class="text-gray-700">No es invasivo, no causa dolor ni requiere radiación.</li>
-                                    <li class="text-gray-700">Ayuda a diagnosticar y monitorizar enfermedades cardíacas.
-                                    </li>
-                                    <li class="text-gray-700">Es una herramienta fundamental para la evaluación
-                                        cardiovascular.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="procedimiento-seccion hidden flex flex-col-2 gap-8 items-center">
-                    <div class="w-full flex-col lg:w-1/2 flex justify-center items-center gap-3">
-                        <img src="https://cemde.com/wp-content/uploads/2022/01/HOLTER-24H_CEMDE-1024x683.jpg"
-                            alt="Electrocardiograma" class="rounded-xl hover:shadow-lg max-w-md object-cover">
-                        <img src="https://clinicaviver.com/wp-content/uploads/2022/05/mapa24-iccardio.jpg"
-                            alt="Electrocardiograma" class="rounded-xl hover:shadow-lg max-w-md">
-                    </div>
-
-                    <div class="w-full lg:w-1/2 flex flex-col gap-9">
-
-                        <div class="bg-red-100 p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
-                            <h3 class="text-xl font-bold text-red-600 mb-1">Holte de 24 o 48 Horas</h3>
-                            <p class="text-gray-700">Un Holter de 24 horas es un electrocardiograma portátil que
-                                registra la actividad eléctrica del corazón durante un período de 24 o 48 horas.</p>
-                        </div>
-
-                        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Para qué se utiliza?</h4>
-                            <ul class="space-y-3">
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Diagnosticar o monitorear problemas cardíacos, como
-                                        arritmias, palpitaciones, mareos o síncope (pérdida de conciencia) que no es
-                                        posible identificar con el electrocardiograma.</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-white p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Cómo funciona?</h4>
-                            <p class="text-gray-700">El dispositivo registra la actividad eléctrica del corazón mediante
-                                electrodos que se adhieren a la piel del pecho. Es importante no bañarse ni ducharse
-                                durante el período de registro, ya que el agua puede afectar la adherencia de los
-                                electrodos. También se recomienda no aplicar cremas o lociones en el pecho antes de la
-                                colocación de los electrodos.</p>
-                            <div class="mt-4">
-                                <h5 class="font-medium text-gray-800 mb-2">Beneficios:</h5>
-                                <ul class="space-y-1 list-disc pl-5">
-                                    <li class="text-gray-700">Es un procedimiento seguro y no invasivo.</li>
-                                    <li class="text-gray-700">Permite detectar problemas que no aparecen en un ECG
-                                        estándar.</li>
-                                    <li class="text-gray-700">Proporciona información continua durante las actividades
-                                        diarias normales.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="procedimiento-seccion hidden flex flex-col-2 gap-8 items-center">
-                    <div class="w-full flex-col lg:w-1/2 flex justify-center items-center gap-3">
-                        <img src="https://cirugiacardiovascular.com.mx/wp-content/uploads/MAPA-24-horas-Guadalajara.jpg"
-                            alt="Electrocardiograma" class="rounded-xl hover:shadow-lg max-w-md object-cover">
-                        <img src="https://cirugiacardiovascular.com.mx/wp-content/uploads/MAPA-de-24-Horas-Patron-Dipper-1024x641-1.jpg"
-                            alt="Electrocardiograma" class="rounded-xl hover:shadow-lg max-w-md">
-                    </div>
-
-                    <div class="w-full lg:w-1/2 flex flex-col gap-9">
-
-                        <div class="bg-red-100 p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
-                            <h3 class="text-xl font-bold text-red-600 mb-1">M.A.P.A de 24 Horas</h3>
-                            <p class="text-gray-700">El Monitoreo Ambulatorio de la Presión Arterial (MAPA) es una
-                                prueba que registra la presión arterial de un paciente durante 24 horas.</p>
-                        </div>
-
-                        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Para qué se utiliza?</h4>
-                            <ul class="space-y-3">
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Evaluación precisa de la presión arterial en diferentes
-                                        momentos del día.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Diagnóstico y control de la hipertensión
-                                        arterial.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Identificar la hipertensión nocturna, relacionada con
-                                        mayor riesgo cardiovascular.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Evaluación de la respuesta a la medicación.</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-white p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Cómo se realiza?</h4>
-                            <p class="text-gray-700">El dispositivo mide automáticamente la presión arterial cada cierto
-                                tiempo (por ejemplo, cada 15 minutos durante el día y cada 30 minutos durante la noche).
-                            </p>
-                            <div class="mt-4">
-                                <h5 class="font-medium text-gray-800 mb-2">Beneficios:</h5>
-                                <ul class="space-y-1 list-disc pl-5">
-                                    <li class="text-gray-700">Proporciona un registro completo de la presión arterial
-                                        durante un día entero.</li>
-                                    <li class="text-gray-700">Detecta variaciones que no se observan en mediciones
-                                        ocasionales en consulta.</li>
-                                    <li class="text-gray-700">Ayuda a personalizar el tratamiento de la presión
-                                        arterial.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
 
         <footer class="bg-gray-900 text-white py-8">
             <div class="container mx-auto px-4 md:px-6">
@@ -985,7 +1009,7 @@
 
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div class="text-gray-400 text-xs">
-                        © 2025 Dr. Cristian Bances. Todos los derechos reservados.
+                        © 2025 Dr. Cristian Chapoñan Bances. Todos los derechos reservados.
                     </div>
                     <a href="#top" class="bg-red-600 hover:bg-red-700 rounded-full p-2 text-white mt-4 md:mt-0">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
