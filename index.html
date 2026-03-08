@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -38,7 +38,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
@@ -46,757 +46,710 @@
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <style>
+        body {
+            font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+        }
+        html { scroll-behavior: smooth; }
+
+        /* Custom Shape Divider */
+        .custom-shape-divider-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+        .custom-shape-divider-bottom svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 80px;
+        }
+        .custom-shape-divider-bottom .shape-fill {
+            fill: #F8FAFC;
+        }
+
+        /* Leaflet fix */
+        .leaflet-container { width: 100%; height: 100%; z-index: 1; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: rgba(221,77,77,0.3); border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(221,77,77,0.5); }
+
+        /* Map Pin Pulse */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            80% { transform: scale(2.5); opacity: 0; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        .map-pin-pulse::before {
+            content: '';
+            position: absolute;
+            left: -100%; top: -100%; right: -100%; bottom: -100%;
+            border-radius: 50%;
+            background-color: #dd4d4d;
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            z-index: -1;
+        }
+
+        /* Floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(var(--rotate, 0deg)); }
+            50% { transform: translateY(-15px) rotate(var(--rotate, 0deg)); }
+        }
+        @keyframes float-delayed {
+            0%, 100% { transform: translateY(0px) rotate(var(--rotate, 0deg)); }
+            50% { transform: translateY(-10px) rotate(var(--rotate, 0deg)); }
+        }
+        @keyframes float-delayed-2 {
+            0%, 100% { transform: translateY(0px) rotate(var(--rotate, 0deg)); }
+            50% { transform: translateY(-12px) rotate(var(--rotate, 0deg)); }
+        }
+        .animate-float { transform: rotate(var(--rotate, 0deg)); animation: float 5s ease-in-out infinite; }
+        .animate-float-d1 { transform: rotate(var(--rotate, 0deg)); animation: float-delayed 6s ease-in-out infinite 0.5s; }
+        .animate-float-d2 { transform: rotate(var(--rotate, 0deg)); animation: float-delayed-2 5.5s ease-in-out infinite 1s; }
+        .animate-float-d3 { transform: rotate(var(--rotate, 0deg)); animation: float 7s ease-in-out infinite 1.5s; }
+        .animate-float-d4 { transform: rotate(var(--rotate, 0deg)); animation: float-delayed 6.5s ease-in-out infinite 0.8s; }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Hero entrance animations */
+        @keyframes hero-fade-up {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes hero-fade-left {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes hero-fade-right {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes hero-scale-in {
+            from { opacity: 0; transform: scale(0.7); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .hero-text { opacity: 0; animation: hero-fade-left 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+        .hero-badge { opacity: 0; animation: hero-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
+        .hero-title { opacity: 0; animation: hero-fade-left 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
+        .hero-subtitle { opacity: 0; animation: hero-fade-left 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+        .hero-cta { opacity: 0; animation: hero-fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards; }
+        .hero-photo { opacity: 0; animation: hero-scale-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+        .hero-cards-container { opacity: 0; animation: hero-fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards; }
+    </style>
 </head>
 
+<body class="bg-white text-slate-900 antialiased">
+    <div class="min-h-screen w-full overflow-x-hidden selection:bg-rose-100 selection:text-[#dd4d4d]">
 
+        <!-- HERO SECTION -->
+        <section id="home" class="min-h-screen w-full bg-[#dd4d4d] relative flex flex-col text-white">
+            <!-- Background glow -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[450px] h-[300px] md:h-[450px] bg-white/10 rounded-full blur-[60px] md:blur-[100px] pointer-events-none"></div>
 
-<body class>
-    <div class="min-h-screen bg-gray-50">
-        <header class="fixed h-auto w-full transition-all duration-300 bg-white shadow-md py-2 z-50">
-            <nav class="flex max-w-7xl mx-auto items-center justify-between px-4 sm:px-6 lg:px-8">
-                <div class="flex items-center gap-2">
-                    <div>
-                        <svg class="w-9 h-9 text-red-600" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
-                            4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
-                            14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
-                            6.86-8.55 11.54L12 21.35z" />
-                        </svg>
+            <!-- Navbar -->
+            <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-4 bg-transparent">
+                <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+                    <div class="hidden lg:flex items-center gap-8 flex-1 justify-start">
+                        <a href="#home" class="text-sm font-bold text-white/90 hover:text-white transition-colors">Inicio</a>
+                        <a href="#servicios" class="text-sm font-medium text-white/90 hover:text-white transition-colors">Servicios</a>
+                        <a href="#procedimientos" class="text-sm font-medium text-white/90 hover:text-white transition-colors">Procedimientos</a>
                     </div>
 
-                    <div class="flex flex-col">
-                        <h1 class=" text-[0.7rem] md:text-xl font-bold text-gray-900">
-                            Dr<span class="text-red-600">.</span> CRISTIAN CHAPOÑAN BANCES
-                        </h1>
-                        <p class="text-[0.6rem] md:text-xs text-gray-700 -mt-1 ">
-                            CARDIÓLOGO CLÍNICO
-                        </p>
+                    <a href="#home" class="flex items-center gap-3 px-4">
+                        <div class="w-10 h-10 overflow-hidden flex items-center justify-center">
+                            <img src="Resources/Solo logo Blanco.png" alt="Logo" class="w-[250%] h-[250%] object-contain" style="margin-top: -18%;" />
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-base md:text-lg tracking-tight leading-tight">Dr. Chapoñan</span>
+                            <span class="text-[10px] text-white/70 font-medium uppercase tracking-widest">Cardiólogo</span>
+                        </div>
+                    </a>
+
+                    <div class="hidden lg:flex items-center gap-8 flex-1 justify-end">
+                        <a href="#perfil" class="text-sm font-medium text-white/90 hover:text-white transition-colors">Perfil</a>
+                        <a href="#contacto" class="text-sm font-medium text-white/90 hover:text-white transition-colors">Contacto</a>
+                        <a href="#ubicacion" class="text-sm font-medium text-white/90 hover:text-white transition-colors">Ubicación</a>
                     </div>
+
+                    <button id="mobile-menu-btn" class="lg:hidden p-2">
+                        <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
                 </div>
 
-                <div class="flex gap-8 items-center">
-                    <a href="#Perfil"
-                        class="text-gray-800 hover:text-red-600 font-medium transition duration-300 md:block hidden">Perfil
-                        medico</a>
-                    <a href="#procedimientos"
-                        class="text-gray-800 hover:text-red-600 font-medium transition duration-300 md:block hidden">Procedimientos</a>
-                    <a href="#formulario"
-                        class="md:text-base  text-xs bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-full flex items-center gap-2 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="md:w-5 md:h-5 w-3 h-3"
-                            viewBox="0 0 24 24">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
-                            4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
-                            14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
-                            6.86-8.55 11.54L12 21.35z" />
-                        </svg>
-                        Agendar Cita
-                    </a>
+                <!-- Mobile Menu -->
+                <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-[#b83333] backdrop-blur-xl p-6 shadow-2xl border-t border-white/10 lg:hidden">
+                    <div class="flex flex-col gap-4">
+                        <a href="#home" class="mobile-link text-lg font-medium text-white py-2 border-b border-white/5">Inicio</a>
+                        <a href="#servicios" class="mobile-link text-lg font-medium text-white py-2 border-b border-white/5">Servicios</a>
+                        <a href="#procedimientos" class="mobile-link text-lg font-medium text-white py-2 border-b border-white/5">Procedimientos</a>
+                        <a href="#perfil" class="mobile-link text-lg font-medium text-white py-2 border-b border-white/5">Perfil</a>
+                        <a href="#contacto" class="mobile-link text-lg font-medium text-white py-2 border-b border-white/5">Contacto</a>
+                        <a href="#ubicacion" class="mobile-link text-lg font-medium text-white py-2">Ubicación</a>
+                    </div>
                 </div>
             </nav>
-        </header>
+
+            <!-- Hero Content -->
+            <main class="relative flex-1 flex flex-col lg:flex-row items-center justify-center pt-16 pb-24 px-6 max-w-6xl mx-auto w-full gap-8 lg:gap-16">
+                <!-- Left Text -->
+                <div class="text-center lg:text-left z-10 lg:w-1/2 flex flex-col items-center lg:items-start">
+                    <span class="hero-badge inline-block px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] font-bold uppercase tracking-widest mb-5">
+                        Especialista en Cardiología
+                    </span>
+                    <h1 class="hero-title text-3xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[0.9] mb-4">
+                        Un corazón <span class="text-white/80">sano late</span> por más tiempo
+                    </h1>
+                    <p class="hero-subtitle text-white/80 text-base md:text-lg mb-8 max-w-lg leading-relaxed">
+                        Diagnóstico preciso, tratamiento personalizado y tecnología de vanguardia para el cuidado integral de tu corazón.
+                    </p>
+
+                    <button onclick="openBookingModal()" class="hero-cta group bg-white text-[#dd4d4d] px-7 py-3.5 rounded-full font-black uppercase tracking-widest flex items-center gap-3 hover:bg-rose-50 transition-all shadow-2xl active:scale-95 text-xs md:text-sm cursor-pointer">
+                        Agendar Cita
+                        <div class="w-8 h-8 bg-[#dd4d4d] rounded-full flex items-center justify-center text-white group-hover:rotate-45 transition-transform">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Right - Doctor Photo Circle + Floating Cards -->
+                <div class="relative lg:w-1/2 w-full flex items-center justify-center min-h-[280px] md:min-h-[400px]">
+                    <div class="relative w-56 h-56 md:w-[340px] md:h-[340px] flex items-center justify-center">
+                        <!-- Doctor Photo Circle -->
+                        <div class="hero-photo relative z-10 w-44 h-44 md:w-64 md:h-64 lg:w-[300px] lg:h-[300px] rounded-full border-[8px] border-white/10 overflow-hidden shadow-2xl">
+                            <img src="Resources/doctor.jpg" alt="Dr. Cristian Chapoñan Bances" class="w-full h-full object-cover" style="object-position: center 2%;" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none"></div>
+                        </div>
+
+                        <!-- Floating Specialty Cards -->
+                        <div class="hero-cards-container absolute inset-0 z-20 pointer-events-none">
+                            <!-- ECG -->
+                            <div class="absolute top-[-10%] left-[-5%] md:left-[0%] bg-white/10 backdrop-blur-2xl border border-white/20 p-2 md:p-3 rounded-[1.2rem] md:rounded-[1.8rem] flex flex-col items-center justify-center w-16 h-16 md:w-22 md:h-22 shadow-2xl animate-float-d1" style="--rotate: -15deg">
+                                <svg class="w-4 h-4 md:w-5 md:h-5 text-white mb-0.5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                                <span class="text-[6px] md:text-[8px] font-black uppercase tracking-[0.1em] text-white text-center leading-tight">ECG</span>
+                            </div>
+                            <!-- Ecocardiograma -->
+                            <div class="absolute top-[-10%] right-[-5%] md:right-[0%] bg-white/10 backdrop-blur-2xl border border-white/20 p-2 md:p-3 rounded-[1.2rem] md:rounded-[1.8rem] flex flex-col items-center justify-center w-16 h-16 md:w-22 md:h-22 shadow-2xl animate-float-d2" style="--rotate: 15deg">
+                                <svg class="w-4 h-4 md:w-5 md:h-5 text-white mb-0.5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                                <span class="text-[6px] md:text-[8px] font-black uppercase tracking-[0.1em] text-white text-center leading-tight">Eco</span>
+                            </div>
+                            <!-- Holter -->
+                            <div class="absolute top-[40%] left-[-20%] md:left-[-15%] bg-white/10 backdrop-blur-2xl border border-white/20 p-2 md:p-3 rounded-[1.2rem] md:rounded-[1.8rem] flex flex-col items-center justify-center w-16 h-16 md:w-22 md:h-22 shadow-2xl animate-float-d3" style="--rotate: -10deg">
+                                <svg class="w-4 h-4 md:w-5 md:h-5 text-white mb-0.5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                                <span class="text-[6px] md:text-[8px] font-black uppercase tracking-[0.1em] text-white text-center leading-tight">Holter</span>
+                            </div>
+                            <!-- MAPA -->
+                            <div class="absolute top-[40%] right-[-20%] md:right-[-15%] bg-white/10 backdrop-blur-2xl border border-white/20 p-2 md:p-3 rounded-[1.2rem] md:rounded-[1.8rem] flex flex-col items-center justify-center w-16 h-16 md:w-22 md:h-22 shadow-2xl animate-float-d4" style="--rotate: 10deg">
+                                <svg class="w-4 h-4 md:w-5 md:h-5 text-white mb-0.5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667"/></svg>
+                                <span class="text-[6px] md:text-[8px] font-black uppercase tracking-[0.1em] text-white text-center leading-tight">MAPA</span>
+                            </div>
+                        </div>
+
+                        <!-- Background glow -->
+                        <div class="absolute inset-0 bg-white/5 blur-[100px] rounded-full -z-10"></div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Shape Divider -->
+            <div class="custom-shape-divider-bottom">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V46.35C50.7,56.56,101.2,65.13,152.45,65.13,203.7,65.13,252.38,65.13,321.39,56.44Z" class="shape-fill"></path>
+                </svg>
+            </div>
+        </section>
 
 
-        <!-- INICIO -->
-        <section>
-            <div class="pt-24 md:pt-29 pb-10 bg-gradient-to-br from-white bg-gray-100   ">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex flex-col md:flex-row items-center">
-                        <!-- IZQUIERDA -->
-                        <div class="w-full md:w-1/2 transition-all duration-1000 translate-x-0 pr-4 md:pr-18">
-                            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-5">
-                                Un corazón <span class="text-red-600">sano late</span> por más Tiempo
-                            </h1>
-                            <p class="text-XL text-gray-600 mb-10">Diagnóstico preciso, tratamiento personalizado y
-                                tecnología de vanguardia para el cuidado integral de tu corazón</p>
-                            <!-- CALL TO ACTION -->
+        <!-- MEDICAL PROFILE SECTION -->
+        <section id="perfil" class="min-h-screen flex flex-col justify-center py-12 md:py-16 px-6 md:px-10 lg:px-20 bg-[#F8FAFC]">
+            <div class="max-w-5xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+                <!-- Image -->
+                <div class="reveal-left relative">
+                    <div class="aspect-[4/5] rounded-[2rem] overflow-hidden shadow-[0_24px_48px_-12px_rgba(0,0,0,0.12)] border-[6px] border-white relative z-10">
+                        <img src="Resources/Imagen de WhatsApp 2025-05-15 a las 19.53.27_e959a5f9.jpg" alt="Dr. Cristian Chapoñan Bances" class="w-full h-full object-cover" />
+                    </div>
+                    <!-- Experience Badge -->
+                    <div class="absolute -bottom-6 -right-3 md:-right-8 bg-white p-4 md:p-5 rounded-[1.5rem] shadow-xl border border-slate-100 z-20 hidden md:block">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-rose-50 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
+                            </div>
                             <div>
-                                <a href="#formulario"
-                                    class="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6 rounded-full text-center duration-300">
-                                    Solicitar Consulta</a>
-                            </div>
-                            <!-- Puntos -->
-                            <div class="flex flex-wrap mt-11 md:mt-13 gap-10 md:gap-y-0 gap-y-4">
-                                <!-- punto1 -->
-                                <div class="flex text-center gap-2">
-                                    <svg class="md:w-6 md:h-6 w-4 h-4 text-gray-800" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M19 7h1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h11.5M7 14h6m-6 3h6m0-10h.5m-.5 3h.5M7 7h3v3H7V7Z" />
-                                    </svg>
-                                    <p class="text-gray-800 text-xs md:text-[0.875rem]">
-                                        Certificado
-                                    </p>
-                                </div>
-                                <!-- punto2-->
-                                <div class="flex gap-2">
-                                    <svg class="md:w-6 md:h-6 w-4 h-4 text-gray-800 dark:text-green-600"
-                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M12 20a16.405 16.405 0 0 1-5.092-5.804A16.694 16.694 0 0 1 5 6.666L12 4l7 2.667a16.695 16.695 0 0 1-1.908 7.529A16.406 16.406 0 0 1 12 20Z" />
-                                    </svg>
-
-                                    <p class="text-gray-800 text-xs md:text-[0.875rem]">Atención segura</p>
-                                </div>
-                                <!-- punto3 -->
-                                <div class="flex gap-2">
-                                    <svg class="md:w-6 md:h-6 w-4 h-4 text-gray-800 dark:text-red-600"
-                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
-                                            d="M7.58209 8.96025 9.8136 11.1917l-1.61782 1.6178c-1.08305-.1811-2.23623.1454-3.07364.9828-1.1208 1.1208-1.32697 2.8069-.62368 4.1363.14842.2806.42122.474.73509.5213.06726.0101.1347.0133.20136.0098-.00351.0666-.00036.1341.00977.2013.04724.3139.24069.5867.52125.7351 1.32944.7033 3.01552.4971 4.13627-.6237.8375-.8374 1.1639-1.9906.9829-3.0736l4.8107-4.8108c1.0831.1811 2.2363-.1454 3.0737-.9828 1.1208-1.1208 1.3269-2.80688.6237-4.13632-.1485-.28056-.4213-.474-.7351-.52125-.0673-.01012-.1347-.01327-.2014-.00977.0035-.06666.0004-.13409-.0098-.20136-.0472-.31386-.2406-.58666-.5212-.73508-1.3294-.70329-3.0155-.49713-4.1363.62367-.8374.83741-1.1639 1.9906-.9828 3.07365l-1.7788 1.77875-2.23152-2.23148-1.41419 1.41424Zm1.31056-3.1394c-.04235-.32684-.24303-.61183-.53647-.76186l-1.98183-1.0133c-.38619-.19746-.85564-.12345-1.16234.18326l-.86321.8632c-.3067.3067-.38072.77616-.18326 1.16235l1.0133 1.98182c.15004.29345.43503.49412.76187.53647l1.1127.14418c.3076.03985.61628-.06528.8356-.28461l.86321-.8632c.21932-.21932.32446-.52801.2846-.83561l-.14417-1.1127ZM19.4448 16.4052l-3.1186-3.1187c-.7811-.781-2.0474-.781-2.8285 0l-.1719.172c-.7811.781-.7811 2.0474 0 2.8284l3.1186 3.1187c.7811.781 2.0474.781 2.8285 0l.1719-.172c.7811-.781.7811-2.0474 0-2.8284Z" />
-                                    </svg>
-
-                                    <p class="text-gray-800 text-xs md:text-[0.875rem]">tecnología Avanzada</p>
-                                </div>
+                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">CMP 81644</p>
+                                <p class="text-lg font-black text-slate-900">RNE 45890</p>
                             </div>
                         </div>
-                        <!-- IMAGEN DERECHA -->
-                        <div class="w-full md:w-1/2 h-95 mt-9 md:mt-0 justify-items-center">
-                            <div class=" bg-slate-300 shadow-md rounded-3xl">
-                                <img class="h-90 md:max-h-full rounded-3xl" src="Resources/png.png"
-                                    alt="Doctor Sonriente">
+                    </div>
+                    <div class="absolute -top-10 -left-10 w-40 h-40 bg-[#dd4d4d]/5 rounded-full blur-3xl -z-10"></div>
+                </div>
+
+                <!-- Content -->
+                <div class="reveal-right">
+                    <span class="inline-block px-3 py-1 rounded-full bg-rose-50 text-[#dd4d4d] font-bold tracking-widest uppercase text-[10px] mb-4">
+                        Sobre el Especialista
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-5 text-slate-900 leading-tight">
+                        Excelencia Médica con <span class="text-[#dd4d4d]">Corazón Humano</span>
+                    </h2>
+                    <p class="text-slate-500 text-sm md:text-base mb-6 leading-relaxed">
+                        El Dr. Cristian Chapoñan Bances es un CARDIÓLOGO con sólida formación académica y experiencia en el campo de la medicina cardiovascular. Graduado como Médico Cirujano por la Universidad Nacional Pedro Ruiz Gallo. Se especializó en Cardiología Clínica en el Hospital Nacional Almanzor Aguinaga Asenjo con énfasis en la prevención, diagnóstico y tratamiento recuperativo de los pacientes con enfermedades del corazón.
+                    </p>
+
+                    <div class="grid sm:grid-cols-2 gap-4 mb-6">
+                        <div class="flex gap-3">
+                            <div class="w-5 h-5 rounded-full bg-[#dd4d4d]/10 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-3 h-3 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Compromiso con la Excelencia Médica</h4>
+                                <p class="text-slate-500 text-xs leading-snug">Diagnósticos precisos con tecnología de punta.</p>
                             </div>
                         </div>
+                        <div class="flex gap-3">
+                            <div class="w-5 h-5 rounded-full bg-[#dd4d4d]/10 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-3 h-3 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Atención Humanizada y Personalizada</h4>
+                                <p class="text-slate-500 text-xs leading-snug">Trato cercano para cada paciente.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-5 h-5 rounded-full bg-[#dd4d4d]/10 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-3 h-3 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Integridad y Ética Profesional</h4>
+                                <p class="text-slate-500 text-xs leading-snug">Compromiso total con la salud.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-5 h-5 rounded-full bg-[#dd4d4d]/10 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-3 h-3 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Actualización Científica Permanente</h4>
+                                <p class="text-slate-500 text-xs leading-snug">Formación continua en tendencias.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="openBookingModal()" class="inline-flex items-center gap-2 bg-[#dd4d4d] text-white px-7 py-3.5 rounded-full font-bold text-sm hover:bg-[#b83333] transition-all shadow-lg shadow-rose-200 hover:-translate-y-1 cursor-pointer">
+                        Solicitar una Cita
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SERVICES SECTION -->
+        <section id="servicios" class="min-h-screen flex flex-col justify-center py-12 md:py-16 px-6 md:px-10 lg:px-20 bg-white relative overflow-hidden">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-10 reveal">
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-4 tracking-tighter">
+                        Nuestros <span class="text-[#dd4d4d]">Servicios</span>
+                    </h2>
+                    <p class="text-slate-500 text-sm md:text-base max-w-xl mx-auto font-medium">
+                        Ofrecemos una amplia gama de servicios cardiológicos utilizando tecnología de vanguardia para garantizar la mejor atención.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Service Card 1 -->
+                    <div class="reveal bg-white p-5 rounded-[1.2rem] border border-slate-100 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_-16px_rgba(0,0,0,0.1)] transition-all duration-500 group">
+                        <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-900 mb-4 group-hover:bg-[#dd4d4d] group-hover:text-white transition-colors duration-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <h3 class="text-base font-black text-slate-900 mb-2 group-hover:text-[#dd4d4d] transition-colors">Electrocardiograma</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed font-medium">Registra la actividad eléctrica del corazón para detectar arritmias e infartos de manera rápida y no invasiva.</p>
+                    </div>
+
+                    <!-- Service Card 2 -->
+                    <div class="reveal bg-white p-5 rounded-[1.2rem] border border-slate-100 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_-16px_rgba(0,0,0,0.1)] transition-all duration-500 group" style="transition-delay: 0.1s">
+                        <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-900 mb-4 group-hover:bg-[#dd4d4d] group-hover:text-white transition-colors duration-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                        </div>
+                        <h3 class="text-base font-black text-slate-900 mb-2 group-hover:text-[#dd4d4d] transition-colors">Ecocardiograma Doppler</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed font-medium">Utiliza ultrasonido para visualizar el corazón en tiempo real, evaluando su estructura y el flujo sanguíneo.</p>
+                    </div>
+
+                    <!-- Service Card 3 -->
+                    <div class="reveal bg-white p-5 rounded-[1.2rem] border border-slate-100 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_-16px_rgba(0,0,0,0.1)] transition-all duration-500 group" style="transition-delay: 0.2s">
+                        <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-900 mb-4 group-hover:bg-[#dd4d4d] group-hover:text-white transition-colors duration-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                        </div>
+                        <h3 class="text-base font-black text-slate-900 mb-2 group-hover:text-[#dd4d4d] transition-colors">Holter de 24/48 hrs</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed font-medium">Monitorea el corazón durante uno o dos días continuos para identificar arritmias que ocurren ocasionalmente.</p>
+                    </div>
+
+                    <!-- Service Card 4 -->
+                    <div class="reveal bg-white p-5 rounded-[1.2rem] border border-slate-100 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_-16px_rgba(0,0,0,0.1)] transition-all duration-500 group" style="transition-delay: 0.3s">
+                        <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-900 mb-4 group-hover:bg-[#dd4d4d] group-hover:text-white transition-colors duration-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667"/></svg>
+                        </div>
+                        <h3 class="text-base font-black text-slate-900 mb-2 group-hover:text-[#dd4d4d] transition-colors">M.A.P.A de 24 hrs</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed font-medium">Mide automáticamente la presión arterial durante 24 horas para evaluar patrones y efectividad del tratamiento.</p>
                     </div>
                 </div>
             </div>
         </section>
 
 
-        <section id="Perfil">
-            <div class=" h-full mb-13 content-center">
-                <div class="flex flex-col items-center mt-13">
-                    <h1 class="text-[1.5rem] md:text-3xl font-bold text-gray-900">Conoce a Tu <span
-                            class="text-red-600">Cardiólogo</span></h1>
-                    <div class="h-1 w-16 md:w-30 bg-red-600 mt-3"></div>
-                </div>
-                <div class="flex flex-col md:flex-row-reverse">
-                    <!-- Información -->
-                    <div class="w-full md:w-1/2 px-4 md:pr-30 py-10">
-                        <!-- Introducción -->
-                        <div class>
-                            <h1 class="text-[1.4rem] md:text-2xl font-bold text-gray-900 mb-1 ">Dr. Cristian Chapoñan
-                                Bances:</h1>
-                            <h2 class="text-red-700 font-medium text-[1.1rem] mb-4">Cardiólogo Clínico</h2>
-                            <p class="text-base text-gray-700 mb-7 text-left ">El Dr. Cristian Chapoñan Bances es un
-                                CARDIÓLOGO (CMP 81644 RNE 45890) con sólida formación académica y experiencia en el
-                                campo de la medicina
-                                cardiovascular. Graduado como Médico Cirujano por la Universidad Nacional Pedro Ruiz
-                                Gallo. Se especializó en Cardiología Clínica en el Hospital Nacional Almanzor Aguinaga
-                                Asenjo con énfasis en la prevención, diagnóstico y tratamiento recuperativo de los
-                                pacientes con enfermedades del CORAZÓN.</p>
-                        </div>
-                        <!-- Valores -->
-                        <div class="flex flex-wrap f mb-7">
-                            <!-- Cuadro1 -->
-                            <div class="flex items-start gap-3 w-1/2 mb-3 ">
-                                <div
-                                    class="w-[0.7rem] h-[0.7rem] md:w-[0.9rem] md:h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5 ">
-                                </div>
-                                <p class="md:text-base text-[0.9rem] text-red-700 font-medium w-40">Compromiso con la
-                                    Excelencia Médica</p>
-
-                            </div>
-                            <!-- Cuadro2 -->
-                            <div class="flex items-start gap-3 w-1/2 mb-3">
-                                <div
-                                    class="w-[0.7rem] h-[0.7rem] md:w-[0.9rem] md:h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5">
-                                </div>
-                                <p class="md:text-base text-[0.9rem] text-red-700 font-medium w-40">Atención Humanizada
-                                    y Personalizada</p>
-
-                            </div>
-                            <!-- Cuadro3 -->
-                            <div class="flex items-start gap-3 w-1/2">
-                                <div
-                                    class="w-[0.7rem] h-[0.7rem] md:w-[0.9rem] md:h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5">
-                                </div>
-                                <p class="md:text-base text-[0.9rem] text-red-700 font-medium w-40">Integridad y Ética
-                                    Profesional</p>
-
-                            </div>
-                            <!-- Cuadro4 -->
-                            <div class="flex items-start gap-3 w-1/2 ">
-                                <div
-                                    class="w-[0.7rem] h-[0.7rem] md:w-[0.9rem] md:h-[0.9rem] rounded-3xl bg-white border-3 border-red-600 mt-1.5">
-                                </div>
-                                <p class="md:text-base text-[0.9rem] text-red-700 font-medium w-40">Actualización
-                                    Científica Permanente</p>
-                            </div>
-                        </div>
-                        <!-- call to action -->
-                        <div class="flex justify-start">
-                            <a class="bg-red-600 hover:bg-red-700 duration-300 text-white px-1 py-4 md:p-4 rounded-3xl w-57 text-center mt-2 flex gap-2 justify-center"
-                                href="#formulario">Solicitar una Cita <svg class="w-6 h-6 text-gray-800 dark:text-white"
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Imagen -->
-                    <div class=" md:w-1/2 justify-items-center content-center">
-                        <img class="py-0 z-40 h-110 rounded-3xl shadow-md "
-                            src="Resources/Imagen de WhatsApp 2025-05-15 a las 19.53.27_e959a5f9.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- SERVICIOS -->
-        <section class="bg-gray-100">
-            <div class="flex flex-col items-center">
-                <div class="flex flex-col items-center mt-15 px-20 md:px-90 text-center mb-0">
-                    <h1 class="text-[1.5rem] md:text-3xl font-bold"><span class="text-gray-900">Nuestros</span><span
-                            class="text-red-600"> Servicios</span></h1>
-                    <p class="mt-3 text-gray-700">Ofrecemos una amplia gama de servicios cardiológicos utilizando
-                        tecnología de vanguardia para garantizar la mejor atención</p>
-                    <div class="h-1 w-20 md:w-30 bg-red-600 mt-3"></div>
-                </div>
-                <!-- grid -->
-                <div
-                    class="flex flex-col md:grid grid-rows-2 grid-cols-2 md:w-3/4 items-center justify-items-center  text-center mb-10 mt-10">
-                    <!-- tarjeta1 -->
-                    <div
-                        class="flex flex-col items-center bg-white p-8 rounded-3xl mb-3 md:ml-22 hover:-translate-y-1 hover:scale-105 duration-300 delay-75">
-                        <div class="bg-red-200 rounded-full h-10 w-10 justify-items-center  ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-activity w-6 h-6 mt-2 text-red-600">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl p-3 font-semibold">Electrocardiograma (ECG)</h3>
-                        <p class="w-80 ">Registra la actividad eléctrica del corazón para detectar arritmias e infartos
-                            de manera rápida y no invasiva.</p>
-                    </div>
-                    <!-- tarjeta2 -->
-                    <div
-                        class="flex flex-col items-center bg-white p-8 rounded-3xl mb-3  md:mr-22 hover:-translate-y-1 hover:scale-105 duration-300 delay-75">
-                        <div class="bg-red-200 rounded-full h-10 w-10 justify-items-center  ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-activity w-6 h-6 mt-2 text-red-600">
-                                <path
-                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
-                                </path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl p-3 font-semibold">Ecocardiograma Doppler Color</h3>
-                        <p class="w-80 ">Utiliza ultrasonido para visualizar el corazón en tiempo real, evaluando su
-                            estructura y el flujo sanguíneo sin ningún dolor.</p>
-                    </div>
-                    <!-- tarjeta3 -->
-                    <div
-                        class="flex flex-col items-center bg-white p-8 rounded-3xl mb-3 md:mb-0 md:ml-22 hover:-translate-y-1 hover:scale-105 duration-300 delay-75">
-                        <div class="bg-red-200 rounded-full h-10 w-10 justify-items-center  ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-activity w-6 h-6 mt-2 text-red-600">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl p-3 font-semibold">Holter de 24 o 48 hrs</h3>
-                        <p class="w-80 ">Monitorea el corazón durante uno o dos días continuos para identificar
-                            arritmias que ocurren ocasionalmente.</p>
-                    </div>
-                    <!-- tarjeta4 -->
-                    <div
-                        class="flex flex-col items-center bg-white p-8 rounded-3xl md:mr-22 hover:-translate-y-1 hover:scale-105 duration-300 delay-75">
-                        <div class="bg-red-200 rounded-full h-10 w-10 justify-items-center  ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-activity w-6 h-6 mt-2 text-red-600">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl p-3 font-semibold">M.A.P.A de 24 hrs</h3>
-                        <p class="w-80 ">Mide automáticamente la presión arterial durante 24 horas para evaluar patrones
-                            día/noche y efectividad del tratamiento.</p>
-                    </div>
-                </div>
-                <div class="flex justify-center w-full">
-                    <a class="bg-red-600 hover:bg-red-700 duration-300 text-white p-4 rounded-3xl w-40 text-center mb-15"
-                        href="#procedimientos">Descubre Más.. </a>
+        <!-- PROCEDURES SECTION -->
+        <section id="procedimientos" class="min-h-screen flex flex-col justify-center bg-[#F8FAFC] py-12 md:py-16 relative overflow-hidden">
+            <div class="max-w-5xl mx-auto px-6 md:px-10 relative z-10">
+                <div class="text-center max-w-2xl mx-auto mb-8 reveal">
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter mb-3">
+                        Procedimientos <span class="text-[#dd4d4d]">Médicos</span>
+                    </h2>
+                    <p class="text-slate-500 text-sm md:text-base font-medium leading-relaxed">
+                        Utilizamos equipamiento médico de última generación para brindarle un diagnóstico preciso y oportuno.
+                    </p>
                 </div>
 
-
-        </section>
-
-        <!-- UBICACIÓN -->
-        <section class="my-10">
-            <div class="flex flex-col items-center mt-10">
-                <h1 class="text-[1.5rem] md:text-3xl font-bold text-gray-900">Nuestra <span
-                        class="text-red-600">Ubicación</span></h1>
-                <div class="h-1 w-20 md:w-30 bg-red-600 mt-3"></div>
-            </div>
-            <div class="flex md:flex-row-reverse flex-col-reverse items-center flex-wrap content-center">
-                <div class="flex md:w-1/2 items-center px-4 p-0 md:p-10 w-full h-full ">
-                    <div
-                        class="flex flex-col w-full h-full md:h-[30rem] bg-white pl-12 md:pr-48 py-7 rounded-4xl shadow-md shadow-gray-300">
-                        <div>
-                            <h2 class="text-lg m:text-2xl font-bold text-gray-900 mn:text-center mb-7 text-left">
-                                Información de
-                                Contacto</h2>
-                        </div>
-                        <div class="">
-                            <!-- DIRECCIÓN -->
-                            <div class="mb-8 flex gap-6 items-start">
-                                <div class="bg-red-100 rounded-full w-10 h-10 md:h-11 md:w-11 justify-items-center ">
-                                    <svg class="w-6 h-6 md:w-7 md:h-7 text-red-600 mt-2" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z" />
-                                    </svg>
-
-                                </div>
-                                <div>
-                                    <h1 class="font-medium text-base md:text-[1.1rem] text-gray-900">Dirección</h1>
-                                    <p class="text-sm md:text-base text-gray-600">Río Chotano 641, Chiclayo 14008</p>
-                                </div>
-                            </div>
-                            <!-- HORARIO DE ATENCIÓN -->
-                            <div class="mb-8 flex gap-6 items-start">
-                                <div class="bg-red-100 rounded-full w-10 h-10 md:h-11 md:w-11 justify-items-center">
-                                    <svg class="w-6 h-6 md:w-7 md:h-7 text-red-600 mt-2" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
-                                        <path fill="currentColor"
-                                            d="M4 9.05H3v2h1v-2Zm16 2h1v-2h-1v2ZM10 14a1 1 0 1 0 0 2v-2Zm4 2a1 1 0 1 0 0-2v2Zm-3 1a1 1 0 1 0 2 0h-2Zm2-4a1 1 0 1 0-2 0h2Zm-2-5.95a1 1 0 1 0 2 0h-2Zm2-3a1 1 0 1 0-2 0h2Zm-7 3a1 1 0 0 0 2 0H6Zm2-3a1 1 0 1 0-2 0h2Zm8 3a1 1 0 1 0 2 0h-2Zm2-3a1 1 0 1 0-2 0h2Zm-13 3h14v-2H5v2Zm14 0v12h2v-12h-2Zm0 12H5v2h14v-2Zm-14 0v-12H3v12h2Zm0 0H3a2 2 0 0 0 2 2v-2Zm14 0v2a2 2 0 0 0 2-2h-2Zm0-12h2a2 2 0 0 0-2-2v2Zm-14-2a2 2 0 0 0-2 2h2v-2Zm-1 6h16v-2H4v2ZM10 16h4v-2h-4v2Zm3 1v-4h-2v4h2Zm0-9.95v-3h-2v3h2Zm-5 0v-3H6v3h2Zm10 0v-3h-2v3h2Z" />
-                                    </svg>
-
-                                </div>
-                                <div>
-                                    <h1 class="font-medium text-base md:text-[1.1rem] text-gray-900">Horario de Atención
-                                    </h1>
-                                    <p class="text-sm md:text-base text-gray-600">Lunes a Viernes: 8:00 am - 8:00
-                                        pm<br>Sábados: 8:00 am -
-                                        2:00 pm</p>
-                                </div>
-                            </div>
-                            <!-- TELÉFONO -->
-                            <div class="mb-8 flex gap-6 items-start">
-                                <div class="bg-red-100 rounded-full w-10 h-10 md:h-11 md:w-11 justify-items-center ">
-                                    <svg class="w-6 h-6 md:w-7 md:h-7 text-red-600 mt-2" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M18.427 14.768 17.2 13.542a1.733 1.733 0 0 0-2.45 0l-.613.613a1.732 1.732 0 0 1-2.45 0l-1.838-1.84a1.735 1.735 0 0 1 0-2.452l.612-.613a1.735 1.735 0 0 0 0-2.452L9.237 5.572a1.6 1.6 0 0 0-2.45 0c-3.223 3.2-1.702 6.896 1.519 10.117 3.22 3.221 6.914 4.745 10.12 1.535a1.601 1.601 0 0 0 0-2.456Z" />
-                                    </svg>
-
-
-                                </div>
-                                <div>
-                                    <h1 class="font-medium text-base md:text-[1.1rem] text-gray-900">Teléfono</h1>
-                                    <p class="text-sm md:text-base text-gray-600">+51 904 425 498<br>+51 922 187 254</p>
-                                </div>
-                            </div>
-                            <!-- CORREO -->
-                            <div class="mb-8 flex gap-6 items-start  ">
-                                <div class="bg-red-100 rounded-full w-10 h-10 md:h-11 md:w-11 justify-items-center">
-                                    <svg class="w-6 h-6 md:w-7 md:h-7 text-red-600 mt-2" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M11 16v-5.5A3.5 3.5 0 0 0 7.5 7m3.5 9H4v-5.5A3.5 3.5 0 0 1 7.5 7m3.5 9v4M7.5 7H14m0 0V4h2.5M14 7v3m-3.5 6H20v-6a3 3 0 0 0-3-3m-2 9v4m-8-6.5h1" />
-                                    </svg>
-
-                                </div>
-                                <div>
-                                    <h1 class="font-medium text-base md:text-[1.1rem] text-gray-900">Correo Electrónico
-                                    </h1>
-                                    <p class="text-sm md:text-base text-gray-600">cchapoban12@gmail.com</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- MAPA -->
-                <div class="w-full md:w-1/2 p-10 md:p-0 md:pl-20 items-center">
-                    <div id="map" class="w-full h-[20rem] md:h-[30rem] rounded-4xl z-0 shadow-md shadow-gray-300"></div>
-                </div>
-            </div>
-        </section>
-
-
-
-        <!-- PROCEDIMIENTOS -->
-        <section id="procedimientos" class=" md:flex-col z-20 flex py-20 px-4 bg-white">
-            <div class="md:w-auto md:px-20 w-full mx-auto">
-                <div class="text-center mb-12">
-
-                    <h3 class="text-[1.5rem] md:text-3xl font-bold m-4">Procedimientos <span
-                            class="text-red-500 text-bold text-[1.5rem] md:text-3xl">Médicos</span></h3>
-
-                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">Utilizamos equipamiento médico de última
-                        generación para brindarle un diagnóstico preciso y oportuno.</p>
-                </div>
-
-                <div class="flex flex-wrap justify-center mb-12 gap-2 md:gap-4">
-                    <button
-                        class="btn-procedimiento flex items-center px-4 py-3 rounded-full transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200">
-                        <span class="mr-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class=" w-6 h-6">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                            </svg>
-                        </span>
-                        <span class="ml-2">Electrocardiograma</span>
+                <!-- Tabs Navigation -->
+                <div class="flex flex-wrap justify-center gap-2 mb-8">
+                    <button class="btn-procedimiento active flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 border" data-target="proc-ecg">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        Electrocardiograma
                     </button>
-
-                    <button
-                        class=" btn-procedimiento flex items-center px-4 py-3 rounded-full transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200">
-                        <span class="mr-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="w-6 h-6">
-                                <path
-                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
-                                </path>
-                            </svg>
-                        </span>
-                        <span class="ml-2">Ecocadiograma</span>
+                    <button class="btn-procedimiento flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 border" data-target="proc-eco">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                        Ecocardiograma
                     </button>
-
-                    <button
-                        class="btn-procedimiento flex items-center px-4 py-3 rounded-full transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200">
-                        <span clas="mr-2">
-                            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-
-                        </span>
-                        <span class="ml-2">Holter de 24 o 48 horas</span>
+                    <button class="btn-procedimiento flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 border" data-target="proc-holter">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                        Holter 24/48h
                     </button>
-
-                    <button
-                        class="btn-procedimiento flex items-center px-4 py-3 rounded-full transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200">
-                        <span class="mr-2">
-                            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667" />
-                            </svg>
-
-                        </span>
-                        <span class="ml-2">M.A.P.A de 24 horas</span>
+                    <button class="btn-procedimiento flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 border" data-target="proc-mapa">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667"/></svg>
+                        M.A.P.A 24h
                     </button>
-
                 </div>
 
-                <div class="procedimiento-seccion flex flex-col md:flex-row gap-12 items-start px-5 md:px-0">
-
-                    <div class="w-full md:w-1/2 flex flex-col items-center gap-6">
-                        <img src="Resources/ELECTRO1.png" alt="Electrocardiograma"
-                            class="rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 w-full object-cover max-w-2xl">
-
-                        <img src="Resources/ELECTRO2.png" alt="Electrocardiograma"
-                            class="rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 w-full object-cover max-w-2xl">
-                    </div>
-
-                    <div class="w-full md:w-1/2 flex flex-col gap-9">
-                        <div class="bg-red-100 p-4 border-l-4 border-red-500 rounded-xl shadow-sm">
-                            <h3 class="text-xl font-bold text-red-600 mb-1">Electrocardiograma</h3>
-                            <p class="text-gray-700">Un electrocardiograma (ECG o EKG) es una prueba no invasiva que
-                                registra la actividad eléctrica del corazón.</p>
+                <!-- ECG Content -->
+                <div id="proc-ecg" class="procedimiento-seccion grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch">
+                    <div class="lg:col-span-5 flex flex-col gap-4">
+                        <div class="rounded-[1.2rem] overflow-hidden shadow-md flex-1 min-h-[150px]">
+                            <img src="Resources/ELECTRO1.png" alt="Electrocardiograma" class="w-full h-full object-cover" />
                         </div>
-
-                        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Para qué se utiliza?</h4>
+                        <div class="rounded-[1.2rem] overflow-hidden shadow-md flex-1 min-h-[150px]">
+                            <img src="Resources/ELECTRO2.png" alt="Electrocardiograma" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    <div class="lg:col-span-7 flex flex-col gap-4">
+                        <div class="bg-white rounded-xl p-4 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 border-l-4 border-l-[#dd4d4d]">
+                            <h3 class="text-lg font-black text-[#dd4d4d] mb-2">Electrocardiograma</h3>
+                            <p class="text-slate-600 font-medium leading-relaxed text-sm">Un electrocardiograma (ECG o EKG) es una prueba no invasiva que registra la actividad eléctrica del corazón.</p>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 flex-1">
+                            <h4 class="text-sm font-black text-slate-900 mb-4">¿Para qué se utiliza?</h4>
                             <ul class="space-y-3">
-                                <li class="flex items-start">
-                                    <svg ...
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">...</svg>
-                                    <span class="text-gray-700">Detectar problemas en el ritmo y frecuencia cardíaca:
-                                        Arritmias (latidos irregulares).</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Identificar daño cardíaco: Infartos, miocarditis,
-                                        pericarditis.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Evaluar el tamaño de las cámaras del corazón: Aumentos
-                                        en las aurículas o ventrículos.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Monitoreo después de un infarto o cirugía
-                                        cardíaca.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Evaluar el efecto de medicamentos en el corazón.</span>
-                                </li>
+                                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span class="text-slate-600 font-medium leading-relaxed text-sm">Detectar problemas en el ritmo y frecuencia cardíaca: Arritmias (latidos irregulares).</span></li>
+                                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span class="text-slate-600 font-medium leading-relaxed text-sm">Identificar daño cardíaco: Infartos, miocarditis, pericarditis.</span></li>
+                                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span class="text-slate-600 font-medium leading-relaxed text-sm">Evaluar el tamaño de las cámaras del corazón: Aumentos en las aurículas o ventrículos.</span></li>
+                                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span class="text-slate-600 font-medium leading-relaxed text-sm">Monitoreo después de un infarto o cirugía cardíaca.</span></li>
+                                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span class="text-slate-600 font-medium leading-relaxed text-sm">Evaluar el efecto de medicamentos en el corazón.</span></li>
                             </ul>
                         </div>
+                        <div class="bg-white rounded-xl p-4 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 border-l-4 border-l-[#dd4d4d]">
+                            <h4 class="text-sm font-black text-slate-900 mb-3">¿Cómo se realiza?</h4>
+                            <p class="text-slate-600 font-medium leading-relaxed text-sm">El paciente se acuesta cómodamente y se le colocan electrodos en el pecho, brazos y piernas. Se le pide que se relaje y respire normalmente mientras se registra la actividad eléctrica. La prueba es indolora y rápida.</p>
+                        </div>
+                    </div>
+                </div>
 
-                        <div class="bg-white border-l-4 border-red-500 p-4 rounded-xl shadow-sm">
-                            <h4 class="text-lg font-semibold text-gray-800 mb-2">¿Cómo se realiza?</h4>
-                            <p class="text-gray-700">
-                                El paciente se acuesta cómodamente y se le colocan electrodos en el pecho, brazos y
-                                piernas. Se le pide que se relaje y respire normalmente mientras se registra la
-                                actividad eléctrica. La prueba es indolora y rápida.
+                <!-- Ecocardiograma Content -->
+                <div id="proc-eco" class="procedimiento-seccion hidden grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch">
+                    <div class="lg:col-span-5 flex flex-col gap-4">
+                        <div class="rounded-[1.2rem] overflow-hidden shadow-md flex-1 min-h-[150px]">
+                            <img src="https://clinicaviver.com/wp-content/uploads/2021/02/unnamed-11.jpg" alt="Ecocardiograma" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="rounded-[1.2rem] overflow-hidden shadow-md flex-1 min-h-[150px]">
+                            <img src="Resources/ECO2.jpg" alt="Ecocardiograma" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    <div class="lg:col-span-7 flex flex-col gap-4">
+                        <div class="bg-white rounded-xl p-4 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 border-l-4 border-l-[#dd4d4d]">
+                            <h3 class="text-lg font-black text-[#dd4d4d] mb-2">Ecocardiograma</h3>
+                            <p class="text-slate-600 font-medium leading-relaxed text-sm">Un ecocardiograma Doppler es una prueba no invasiva que utiliza ultrasonido para evaluar la estructura y función del corazón, medir la velocidad y dirección del flujo sanguíneo.</p>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 flex-1">
+                            <h4 class="text-sm font-black text-slate-900 mb-4">¿Para qué se utiliza?</h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span class="text-slate-600 font-medium leading-relaxed text-sm">Diagnóstico de enfermedades cardíacas como insuficiencia cardíaca, problemas de válvulas, miocardiopatías y cardiopatías congénitas.</span></li>
+                                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span class="text-slate-600 font-medium leading-relaxed text-sm">Evaluación del flujo sanguíneo y la función de las válvulas.</span></li>
+                                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span class="text-slate-600 font-medium leading-relaxed text-sm">Monitoreo de la evolución de enfermedades cardíacas.</span></li>
+                            </ul>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 border-l-4 border-l-[#dd4d4d]">
+                            <h4 class="text-sm font-black text-slate-900 mb-3">Preparación y Duración</h4>
+                            <p class="text-slate-600 font-medium leading-relaxed text-sm">Generalmente, no requiere preparación especial. La prueba suele durar entre 20 y 30 minutos. Es no invasivo, no causa dolor ni requiere radiación.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Holter Content -->
+                <div id="proc-holter" class="procedimiento-seccion hidden grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch">
+                    <div class="lg:col-span-5 flex flex-col gap-4">
+                        <div class="rounded-[1.2rem] overflow-hidden shadow-md flex-1 min-h-[150px]">
+                            <img src="Resources/HOLTER1.png" alt="Holter" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="rounded-[1.2rem] overflow-hidden shadow-md flex-1 min-h-[150px]">
+                            <img src="Resources/HOLTER2.png" alt="Holter" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    <div class="lg:col-span-7 flex flex-col gap-4">
+                        <div class="bg-white rounded-xl p-4 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 border-l-4 border-l-[#dd4d4d]">
+                            <h3 class="text-lg font-black text-[#dd4d4d] mb-2">Holter de 24 o 48 Horas</h3>
+                            <p class="text-slate-600 font-medium leading-relaxed text-sm">Un Holter de 24 horas es un electrocardiograma portátil que registra la actividad eléctrica del corazón durante un período de 24 o 48 horas.</p>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 flex-1">
+                            <h4 class="text-sm font-black text-slate-900 mb-4">¿Para qué se utiliza?</h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span class="text-slate-600 font-medium leading-relaxed text-sm">Diagnosticar o monitorear problemas cardíacos como arritmias, palpitaciones, mareos o síncope que no es posible identificar con el ECG.</span></li>
+                            </ul>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 border-l-4 border-l-[#dd4d4d]">
+                            <h4 class="text-sm font-black text-slate-900 mb-3">¿Cómo funciona?</h4>
+                            <p class="text-slate-600 font-medium leading-relaxed text-sm">El dispositivo registra la actividad eléctrica del corazón mediante electrodos que se adhieren a la piel del pecho. Es un procedimiento seguro y no invasivo que permite detectar problemas que no aparecen en un ECG estándar.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAPA Content -->
+                <div id="proc-mapa" class="procedimiento-seccion hidden grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch">
+                    <div class="lg:col-span-5 flex flex-col gap-4">
+                        <div class="rounded-[1.2rem] overflow-hidden shadow-md flex-1 min-h-[150px]">
+                            <img src="https://cirugiacardiovascular.com.mx/wp-content/uploads/MAPA-24-horas-Guadalajara.jpg" alt="MAPA" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="rounded-[1.2rem] overflow-hidden shadow-md flex-1 min-h-[150px]">
+                            <img src="Resources/MAPA2.png" alt="MAPA" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    <div class="lg:col-span-7 flex flex-col gap-4">
+                        <div class="bg-white rounded-xl p-4 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 border-l-4 border-l-[#dd4d4d]">
+                            <h3 class="text-lg font-black text-[#dd4d4d] mb-2">M.A.P.A de 24 Horas</h3>
+                            <p class="text-slate-600 font-medium leading-relaxed text-sm">El Monitoreo Ambulatorio de la Presión Arterial (MAPA) es una prueba que registra la presión arterial de un paciente durante 24 horas.</p>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 flex-1">
+                            <h4 class="text-sm font-black text-slate-900 mb-4">¿Para qué se utiliza?</h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span class="text-slate-600 font-medium leading-relaxed text-sm">Evaluación precisa de la presión arterial en diferentes momentos del día.</span></li>
+                                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span class="text-slate-600 font-medium leading-relaxed text-sm">Diagnóstico y control de la hipertensión arterial.</span></li>
+                                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span class="text-slate-600 font-medium leading-relaxed text-sm">Identificar la hipertensión nocturna, relacionada con mayor riesgo cardiovascular.</span></li>
+                                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span class="text-slate-600 font-medium leading-relaxed text-sm">Evaluación de la respuesta a la medicación.</span></li>
+                            </ul>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 border-l-4 border-l-[#dd4d4d]">
+                            <h4 class="text-sm font-black text-slate-900 mb-3">¿Cómo se realiza?</h4>
+                            <p class="text-slate-600 font-medium leading-relaxed text-sm">El dispositivo mide automáticamente la presión arterial cada cierto tiempo (cada 15 minutos durante el día y cada 30 minutos durante la noche). Proporciona un registro completo durante un día entero.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- LOCATION SECTION -->
+        <section id="ubicacion" class="min-h-screen flex flex-col justify-center py-12 md:py-16 bg-white relative overflow-hidden">
+            <div class="max-w-5xl mx-auto px-6">
+                <div class="text-center mb-10 md:mb-14 reveal">
+                    <span class="inline-block px-3 py-1 rounded-full bg-rose-50 text-[#dd4d4d] font-bold tracking-widest uppercase text-[10px] mb-4">
+                        Visítanos
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter mb-4">
+                        Ubicación y <span class="text-[#dd4d4d]">Contacto</span>
+                    </h2>
+                    <p class="text-slate-500 text-sm md:text-base max-w-xl mx-auto font-medium">
+                        Encuéntranos en el corazón de Chiclayo. Instalaciones modernas y equipadas para tu bienestar cardiovascular.
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                    <!-- Map -->
+                    <div class="reveal-left lg:col-span-7 relative h-[300px] md:h-[400px] rounded-[2rem] overflow-hidden shadow-xl border border-slate-100">
+                        <div id="map" class="w-full h-full z-0"></div>
+                        <div class="absolute inset-0 rounded-[2rem] shadow-[inset_0_0_20px_rgba(0,0,0,0.05)] pointer-events-none z-10"></div>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="reveal-right lg:col-span-5 flex flex-col gap-6">
+                        <div class="flex items-start gap-4 group">
+                            <div class="w-11 h-11 rounded-xl bg-rose-50 flex items-center justify-center shrink-0 group-hover:bg-[#dd4d4d] transition-colors duration-300">
+                                <svg class="w-5 h-5 text-[#dd4d4d] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0115 0z"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-black text-slate-900 mb-1">Dirección</h4>
+                                <p class="text-slate-500 text-sm font-medium leading-relaxed">Río Chotano 641<br/>Chiclayo 14008</p>
+                            </div>
+                        </div>
+
+                        <div class="w-full h-px bg-slate-100"></div>
+
+                        <div class="flex items-start gap-4 group">
+                            <div class="w-11 h-11 rounded-xl bg-rose-50 flex items-center justify-center shrink-0 group-hover:bg-[#dd4d4d] transition-colors duration-300">
+                                <svg class="w-5 h-5 text-[#dd4d4d] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-black text-slate-900 mb-1">Horario</h4>
+                                <p class="text-slate-500 text-sm font-medium leading-relaxed">Lunes a Viernes: 8:00 am - 8:00 pm<br/>Sábados: 8:00 am - 2:00 pm</p>
+                            </div>
+                        </div>
+
+                        <div class="w-full h-px bg-slate-100"></div>
+
+                        <div class="flex items-start gap-4 group">
+                            <div class="w-11 h-11 rounded-xl bg-rose-50 flex items-center justify-center shrink-0 group-hover:bg-[#dd4d4d] transition-colors duration-300">
+                                <svg class="w-5 h-5 text-[#dd4d4d] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-black text-slate-900 mb-1">Contacto</h4>
+                                <p class="text-slate-500 text-sm font-medium leading-relaxed">+51 904 425 498<br/>+51 922 187 254<br/>cchapoban12@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- CONTACT FORM SECTION -->
+        <section id="contacto" class="min-h-screen flex flex-col justify-center py-12 md:py-16 bg-slate-900 relative">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="text-center mb-8 reveal">
+                    <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">
+                        Contáctame
+                    </h2>
+                    <div class="w-16 h-1 bg-[#dd4d4d] mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+                    <!-- Form -->
+                    <div class="reveal-left bg-white p-6 md:p-7 rounded-[1.5rem] shadow-xl flex flex-col">
+                        <h3 class="text-lg font-black text-slate-900 mb-5">Contacto</h3>
+                        <form id="contact-form" class="flex-1 flex flex-col">
+                            <div class="space-y-4 flex-1 flex flex-col">
+                                <div class="space-y-1.5">
+                                    <label class="text-[10px] font-bold text-slate-600 uppercase tracking-widest ml-1">Nombre Completo</label>
+                                    <input required id="form-nombre" name="name" type="text" placeholder="Ingresa tu nombre completo" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-[#dd4d4d] focus:ring-2 focus:ring-rose-100 outline-none transition-all bg-white font-medium text-xs" />
+                                </div>
+                                <div class="space-y-1.5">
+                                    <label class="text-[10px] font-bold text-slate-600 uppercase tracking-widest ml-1">Teléfono / WhatsApp</label>
+                                    <input required id="form-phone" name="phone" type="tel" placeholder="Ingresa tu número" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-[#dd4d4d] focus:ring-2 focus:ring-rose-100 outline-none transition-all bg-white font-medium text-xs" />
+                                </div>
+                                <div class="space-y-1.5 flex-1 flex flex-col">
+                                    <label class="text-[10px] font-bold text-slate-600 uppercase tracking-widest ml-1">Mensaje</label>
+                                    <textarea required id="form-consulta" name="message" placeholder="Describe brevemente tu consulta o necesidad" class="w-full flex-1 min-h-[80px] px-4 py-3 rounded-lg border border-slate-200 focus:border-[#dd4d4d] focus:ring-2 focus:ring-rose-100 outline-none transition-all bg-white font-medium text-xs resize-none"></textarea>
+                                </div>
+                            </div>
+                            <button id="btn-enviar" type="button" class="w-full bg-[#dd4d4d] text-white py-3 rounded-lg font-bold uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-[#b83333] transition-all shadow-lg shadow-rose-200 text-xs mt-5 active:scale-[0.98]">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>
+                                Enviar por WhatsApp
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="reveal-right bg-slate-800 p-6 md:p-7 rounded-[1.5rem] border border-slate-700 text-white flex flex-col justify-between">
+                        <h3 class="text-lg font-black mb-5">Por Qué Elegirnos</h3>
+
+                        <div class="space-y-5 mb-6">
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm mb-0.5">Atención Personalizada</h4>
+                                    <p class="text-slate-400 text-sm leading-relaxed">Cada paciente recibe una atención única adaptada a sus necesidades específicas.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm mb-0.5">Tecnología Avanzada</h4>
+                                    <p class="text-slate-400 text-sm leading-relaxed">Contamos con equipos de última generación para diagnósticos precisos.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm mb-0.5">Seguimiento Continuo</h4>
+                                    <p class="text-slate-400 text-sm leading-relaxed">Mantenemos comunicación constante para asegurar tu mejoría y resolver dudas.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-[#dd4d4d] pl-4 mb-6">
+                            <p class="italic text-slate-300 text-sm leading-relaxed">
+                                "Tu salud no espera. Visítanos hoy para cuidar tu bienestar con atención profesional y personalizada."
                             </p>
                         </div>
-                    </div>
-                </div>
 
-                <div class="procedimiento-seccion flex flex-col md:flex-row gap-12 items-start px-5 md:px-0">
-                    <div class="w-full flex-col lg:w-1/2 flex justify-center items-center gap-3">
-                        <img class="size-auto rounded-3xl shadow-md"
-                            src="https://clinicaviver.com/wp-content/uploads/2021/02/unnamed-11.jpg" alt="Ecocadiograma"
-                            class="rounded-xl hover:shadow-lg max-w-md object-cover">
-                        <img class="size-auto rounded-3xl shadow-md" src="Resources/ECO2.jpg" alt="Ecocardiograma"
-                            class="rounded-xl hover:shadow-lg max-w-md">
-                    </div>
-
-                    <div class="w-full md:w-1/2 flex flex-col gap-9">
-
-                        <div class="bg-red-100 p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
-                            <h3 class="text-xl font-bold text-red-600 mb-1">Ecocardiograma</h3>
-                            <p class="text-gray-700">Un ecocardiograma Doppler es una prueba no invasiva que utiliza
-                                ultrasonido para evaluar la estructura y función del corazón, medir la velocidad y
-                                dirección del flujo sanguíneo, lo que ayuda a diagnosticar diversas enfermedades
-                                cardíacas. </p>
-                        </div>
-
-                        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Para qué se utiliza?</h4>
-                            <ul class="space-y-3">
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Diagnóstico de enfermedades cardíacas como insuficiencia
-                                        cardíaca, problemas de válvulas, miocardiopatías, cardiopatías congénitas, entre
-                                        otras.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Evaluación del flujo sanguíneo y la función de las
-                                        válvulas.</span>
-                                </li>
-                                <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Monitoreo de la evolución de enfermedades
-                                        cardíacas.</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-white p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">Preparación y Duración</h4>
-                            <p class="text-gray-700">Generalmente, no requiere preparación especial. En algunos casos,
-                                el médico puede recomendar ayuno o evitar ciertos medicamentos antes de la prueba. La
-                                prueba suele durar entre 20 y 30 minutos.</p>
-                            <div class="mt-4">
-                                <h5 class="font-medium text-gray-800 mb-2">Beneficios:</h5>
-                                <ul class="space-y-1 list-disc pl-5">
-                                    <li class="text-gray-700">No es invasivo, no causa dolor ni requiere radiación.</li>
-                                    <li class="text-gray-700">Ayuda a diagnosticar y monitorizar enfermedades cardíacas.
-                                    </li>
-                                    <li class="text-gray-700">Es una herramienta fundamental para la evaluación
-                                        cardiovascular.</li>
-                                </ul>
+                        <div class="bg-slate-900/50 rounded-2xl p-6 space-y-3 border border-slate-700">
+                            <div class="flex items-center gap-4">
+                                <svg class="w-5 h-5 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+                                <div class="text-sm font-medium text-slate-300">
+                                    <p>+51 904 425 498</p>
+                                    <p>+51 922 187 254</p>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="procedimiento-seccion flex flex-col md:flex-row gap-12 items-start px-5 md:px-0">
-                    <div class="w-full flex-col lg:w-1/2 flex justify-center items-center gap-3">
-                        <img class=" size-auto rounded-3xl shadow-md" src="Resources/HOLTER1.png" alt="Holter"
-                            class="rounded-xl hover:shadow-lg max-w-md object-cover">
-                        <img class=" size-auto rounded-3xl shadow-md" src="Resources/HOLTER2.png" alt="Holter"
-                            class="rounded-xl hover:shadow-lg max-w-md">
-                    </div>
-
-                    <div class="w-full lg:w-1/2 flex flex-col gap-9">
-
-                        <div class="bg-red-100 p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
-                            <h3 class="text-xl font-bold text-red-600 mb-1">Holter de 24 o 48 Horas</h3>
-                            <p class="text-gray-700">Un Holter de 24 horas es un electrocardiograma portátil que
-                                registra la actividad eléctrica del corazón durante un período de 24 o 48 horas.</p>
-                        </div>
-
-                        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Para qué se utiliza?</h4>
-                            <ul class="space-y-3">
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Diagnosticar o monitorear problemas cardíacos, como
-                                        arritmias, palpitaciones, mareos o síncope (pérdida de conciencia) que no es
-                                        posible identificar con el electrocardiograma.</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-white p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Cómo funciona?</h4>
-                            <p class="text-gray-700">El dispositivo registra la actividad eléctrica del corazón mediante
-                                electrodos que se adhieren a la piel del pecho. Es importante no bañarse ni ducharse
-                                durante el período de registro, ya que el agua puede afectar la adherencia de los
-                                electrodos. También se recomienda no aplicar cremas o lociones en el pecho antes de la
-                                colocación de los electrodos.</p>
-                            <div class="mt-4">
-                                <h5 class="font-medium text-gray-800 mb-2">Beneficios:</h5>
-                                <ul class="space-y-1 list-disc pl-5">
-                                    <li class="text-gray-700">Es un procedimiento seguro y no invasivo.</li>
-                                    <li class="text-gray-700">Permite detectar problemas que no aparecen en un ECG
-                                        estándar.</li>
-                                    <li class="text-gray-700">Proporciona información continua durante las actividades
-                                        diarias normales.</li>
-                                </ul>
+                            <div class="flex items-center gap-4">
+                                <svg class="w-5 h-5 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                                <p class="text-sm font-medium text-slate-300">cchapoban12@gmail.com</p>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="procedimiento-seccion flex flex-col md:flex-row gap-12 items-start px-5 md:px-0">
-                    <div class="w-full flex-col lg:w-1/2 flex justify-center items-center gap-3">
-                        <img class="size-auto rounded-3xl shadow-md"
-                            src="https://cirugiacardiovascular.com.mx/wp-content/uploads/MAPA-24-horas-Guadalajara.jpg"
-                            alt="MAPA" class="rounded-xl hover:shadow-lg max-w-md object-cover">
-                        <img class="size-auto rounded-3xl shadow-md" src="Resources/MAPA2.png" alt="MAPA"
-                            class="rounded-xl hover:shadow-lg max-w-md">
-                    </div>
-
-                    <div class="w-full lg:w-1/2 flex flex-col gap-9">
-
-                        <div class="bg-red-100 p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
-                            <h3 class="text-xl font-bold text-red-600 mb-1">M.A.P.A de 24 Horas</h3>
-                            <p class="text-gray-700">El Monitoreo Ambulatorio de la Presión Arterial (MAPA) es una
-                                prueba que registra la presión arterial de un paciente durante 24 horas.</p>
-                        </div>
-
-                        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Para qué se utiliza?</h4>
-                            <ul class="space-y-3">
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Evaluación precisa de la presión arterial en diferentes
-                                        momentos del día.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Diagnóstico y control de la hipertensión
-                                        arterial.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Identificar la hipertensión nocturna, relacionada con
-                                        mayor riesgo cardiovascular.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-check-circle text-red-500 w-5 h-5 mr-2 flex-shrink-0 mt-0.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Evaluación de la respuesta a la medicación.</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-white p-4 border-l-3 border-red-500 rounded-xl shadow-sm">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">¿Cómo se realiza?</h4>
-                            <p class="text-gray-700">El dispositivo mide automáticamente la presión arterial cada cierto
-                                tiempo (por ejemplo, cada 15 minutos durante el día y cada 30 minutos durante la noche).
-                            </p>
-                            <div class="mt-4">
-                                <h5 class="font-medium text-gray-800 mb-2">Beneficios:</h5>
-                                <ul class="space-y-1 list-disc pl-5">
-                                    <li class="text-gray-700">Proporciona un registro completo de la presión arterial
-                                        durante un día entero.</li>
-                                    <li class="text-gray-700">Detecta variaciones que no se observan en mediciones
-                                        ocasionales en consulta.</li>
-                                    <li class="text-gray-700">Ayuda a personalizar el tratamiento de la presión
-                                        arterial.</li>
-                                </ul>
+                            <div class="flex items-center gap-4">
+                                <svg class="w-5 h-5 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0115 0z"/></svg>
+                                <p class="text-sm font-medium text-slate-300">Río Chotano 641, Chiclayo 14008</p>
                             </div>
                         </div>
                     </div>
@@ -805,254 +758,280 @@
         </section>
 
 
-        <!-- SACAR CITA -->
-        <section id="formulario" class="flex bg-red-700 bg mt-2 text-white w-full justify-center py-8">
-            <div class="w-full max-w-6xl mx-4 py-5">
-                <div class="flex flex-col items-center mb-8">
-                    <h1 class="text-3xl font-bold ">Agenda Tu Consulta</h1>
-                    <div class="h-1 w-32 bg-white mt-3"></div>
-                </div>
-
-                <div class="flex flex-col md:flex-row gap-6 py-4">
-
-                    <div class="w-full md:w-1/2 bg-white p-6 rounded-lg h-150">
-                        <h2 class="text-2xl font-bold mb-6 text-gray-900">Solicita Tu Cita</h2>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Nombres y Apellidos</label>
-                            <input id="form-nombre" type="text" placeholder="Ingresa tu nombre completo"
-                                class="text-gray-600 w-full p-3 border rounded-lg border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">DNI</label>
-                            <input id="form-dni" type="text" inputmode="numeric" maxlength="8"
-                                placeholder="Ingresa tu número de DNI"
-                                class="text-gray-600 w-full p-3 border rounded-lg border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Procedimiento</label>
-                            <select id="opcion-select"
-                                class="text-gray-600 w-full p-3 border rounded-lg border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200">
-                                <option disabled selected>Elige el procedimiento</option>
-                                <option>Hipertensión Arterial</option>
-                                <option>Arritmias</option>
-                                <option>Insuficiencia Cardíaca</option>
-                                <option>Dislipidemia (Colesterol Alto)</option>
-                                <option>Dolor Torácico</option>
-                                <option>Infarto de Miocardio Previos</option>
-                                <option>Valvulopatías</option>
-                                <option>Cardiopatía Isquémica</option>
-                                <option>Soplos Cardíacos</option>
-                                <option>Cardiopatías Congénitas</option>
-                                <option>Mareos o Síncope</option>
-                                <option>Enfermedad Arterial Periférica</option>
-                                <option>Otro - Especificar en las consultas</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-6">
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Consulta o Mensaje</label>
-                            <textarea id="form-consulta" placeholder="Describe brevemente tu consulta o necesidad"
-                                class="text-gray-600 w-full p-3 h-24 border rounded-lg border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200"></textarea>
-                        </div>
-
-                        <button id="btn-enviar"
-                            class="w-full bg-red-600 hover:bg-red-700 rounded-lg p-3 text-white font-medium flex items-center justify-center duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path
-                                    d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-                            </svg>
-                            Enviar por WhatsApp
-                        </button>
-                    </div>
-
-                    <div class="w-full md:w-1/2 bg-white/15 p-6 rounded-lg">
-                        <h2 class="text-2xl font-bold mb-6 text-white">Por Qué Elegirnos</h2>
-                        <div class="mb-4 p-2 flex gap-5">
-                            <div
-                                class="flex justify-center items-center w-10 h-10 bg-white/20 rounded-full mt-1 min-h-10 min-w-10">
-                                <svg class="w-6 h-6 min-h-6 min-w-6 text-white " aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 5h6m-6 4h6M10 3v4h4V3h-4Z" />
-                                </svg>
+        <!-- FOOTER -->
+        <footer class="bg-slate-950 text-white pt-10 md:pt-12 pb-7 md:pb-8 px-4 sm:px-6 md:px-10 lg:px-20 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#dd4d4d] to-transparent opacity-20"></div>
+            <div class="max-w-5xl mx-auto">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8 mb-8 md:mb-10">
+                    <div class="space-y-3 col-span-2 lg:col-span-1">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 bg-[#dd4d4d] rounded-xl flex items-center justify-center text-white shadow-md shadow-rose-900/20 overflow-hidden">
+                                <img src="Resources/Solo logo Blanco.png" alt="Logo Dr. Chapoñan" class="w-[220%] h-[220%] object-contain" style="margin-top: -14%;" />
                             </div>
-                            <div>
-                                <h3 class="text-2x1 font-semibold text-w mb-1">Atención Personalizada</h3>
-                                <p class="text-gray-50 text-base">Cada paciente recibe una atención única adaptada a sus
-                                    necesidades específicas.</p>
+                            <div class="flex flex-col">
+                                <span class="font-black text-base tracking-tight">Dr. Chapoñan</span>
+                                <span class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">Cardiólogo Clínico</span>
                             </div>
                         </div>
-
-                        <div class="mb-4 p-2 flex gap-5">
-                            <div
-                                class="flex justify-center items-center w-10 h-10 bg-white/20 rounded-full mt-1 min-h-10 min-w-10">
-                                <svg class="w-6 h-6 min-h-6 min-w-6 text-white" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M20 14H4m6.5 3L8 20m5.5-3 2.5 3M4.88889 17H19.1111c.4909 0 .8889-.4157.8889-.9286V4.92857C20 4.41574 19.602 4 19.1111 4H4.88889C4.39797 4 4 4.41574 4 4.92857V16.0714c0 .5129.39797.9286.88889.9286ZM13 14v-3h4v3h-4Z" />
-                                </svg>
-
-                            </div>
-                            <div>
-                                <h3 class="text-2x1 font-semibold text-w mb-1">Tecnología Avanzada</h3>
-                                <p class="text-gray-50 text-base">Contamos con equipos de última generación para
-                                    diagnósticos
-                                    precisos.</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-4 p-2 flex gap-5">
-                            <div
-                                class="flex justify-center items-center w-10 h-10 bg-white/20 rounded-full mt-1 min-h-10 min-w-10">
-                                <svg class="w-6 h-6 min-h-6 min-w-6 text-white" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M15 9h.01M8.99 9H9m12 3a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM6.6 13a5.5 5.5 0 0 0 10.81 0H6.6Z" />
-                                </svg>
-
-                            </div>
-                            <div>
-                                <h3 class="text-2x1 font-semibold text-w mb-1">Seguimiento Continuo</h3>
-                                <p class="text-gray-50 text-base">Mantenemos comunicación constante para asegurar tu
-                                    mejoría y resolver dudas.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex mb-4 mt-6 text-left p-2">
-                            <div class="bg-white/50 h-16 w-2"></div>
-                            <p class="text-white/80 italic text-base px-4">"Tu salud no espera. Visitanos hoy para
-                                cuidar tu
-                                bienestar con atención profesional y personalizada."</p>
-                        </div>
-
-                        <div class="bg-white/30 p-4 rounded-lg mt-6">
-                            <div class="flex items-center mb-2 gap-3">
-                                <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="lucide lucide-phone w-5 h-5 text-white">
-                                        <path
-                                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                                        </path>
-                                    </svg>
-                                </div>
-                                <span class="text-white">+51 904 425 498<br>+51 922 187 254</span>
-                            </div>
-                            <div class="flex items-center mb-2 gap-3">
-                                <div>
-                                    <svg class="lucide lucide-phone w-5 h-5 text-white" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M21 8v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8m18 0-8.029-4.46a2 2 0 0 0-1.942 0L3 8m18 0-9 6.5L3 8" />
-                                    </svg>
-
-                                </div>
-                                <span class="text-white">cchapoban12@gmail.com</span>
-                            </div>
-                            <div class="flex items-center gap-3 ">
-                                <div>
-                                    <svg class="lucide lucide-phone w-5 h-5 text-white" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z" />
-                                    </svg>
-                                </div>
-                                <span class="text-white">Río Chotano 641, Chiclayo 14008</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <footer class="bg-gray-900 text-white py-8">
-            <div class="container mx-auto px-4 md:px-6">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6">
-                    <div>
-                        <div class="flex items-center gap-2 mb-4">
-                            <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                            </svg>
-                            <h3 class="font-medium">Dr. Cristian Chapoñan Bances</h3>
-                        </div>
-                        <p class="text-gray-400 text-sm mb-4">
-                            Atención cardiológica especializada con tecnología de vanguardia para el cuidado integral de
-                            tu corazón.
+                        <p class="text-slate-500 text-[11px] md:text-xs leading-relaxed">
+                            Atención cardiológica especializada con tecnología de vanguardia para el cuidado integral de tu corazón.
                         </p>
-
                     </div>
 
                     <div>
-                        <h3 class="font-medium text-lg mb-4">Enlaces Rápidos</h3>
-                        <ul class="space-y-2">
-                            <li><a href="#" class="text-gray-400 hover:text-white text-sm">Perfil Médico</a></li>
-                            <li><a href="#procedimientos"
-                                    class="text-gray-400 hover:text-white text-sm">Procedimientos</a></li>
+                        <h4 class="font-black text-xs uppercase tracking-[0.22em] md:tracking-[0.3em] mb-4 md:mb-6 text-slate-400">Enlaces</h4>
+                        <ul class="space-y-2.5 md:space-y-4">
+                            <li><a href="#home" class="text-slate-500 hover:text-white transition-all flex items-center gap-3 group"><div class="w-1.5 h-1.5 bg-[#dd4d4d] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>Inicio</a></li>
+                            <li><a href="#perfil" class="text-slate-500 hover:text-white transition-all flex items-center gap-3 group"><div class="w-1.5 h-1.5 bg-[#dd4d4d] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>Perfil Médico</a></li>
+                            <li><a href="#servicios" class="text-slate-500 hover:text-white transition-all flex items-center gap-3 group"><div class="w-1.5 h-1.5 bg-[#dd4d4d] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>Servicios</a></li>
+                            <li><a href="#procedimientos" class="text-slate-500 hover:text-white transition-all flex items-center gap-3 group"><div class="w-1.5 h-1.5 bg-[#dd4d4d] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>Procedimientos</a></li>
+                            <li><a href="#contacto" class="text-slate-500 hover:text-white transition-all flex items-center gap-3 group"><div class="w-1.5 h-1.5 bg-[#dd4d4d] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>Contacto</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <h3 class="font-medium text-lg mb-4">Procedimientos</h3>
-                        <ul class="space-y-2">
-                            <li><a href="#procedimientos"
-                                    class="text-gray-400 hover:text-white text-sm">Electrocardiograma</a></li>
-                            <li><a href="#procedimientos"
-                                    class="text-gray-400 hover:text-white text-sm">Ecocardiograma</a></li>
-                            <li><a href="#procedimientos" class="text-gray-400 hover:text-white text-sm">Holter 24 o 48
-                                    horas</a></li>
-                            <li><a href="#procedimientos" class="text-gray-400 hover:text-white text-sm">M.A.P.A 24
-                                    horas</a></li>
+                        <h4 class="font-black text-xs uppercase tracking-[0.22em] md:tracking-[0.3em] mb-4 md:mb-6 text-slate-400">Estudios</h4>
+                        <ul class="space-y-2.5 md:space-y-4">
+                            <li class="text-slate-500 flex items-center gap-3"><div class="w-1 h-1 bg-slate-800 rounded-full"></div>Electrocardiograma</li>
+                            <li class="text-slate-500 flex items-center gap-3"><div class="w-1 h-1 bg-slate-800 rounded-full"></div>Ecocardiograma</li>
+                            <li class="text-slate-500 flex items-center gap-3"><div class="w-1 h-1 bg-slate-800 rounded-full"></div>Holter 24/48h</li>
+                            <li class="text-slate-500 flex items-center gap-3"><div class="w-1 h-1 bg-slate-800 rounded-full"></div>M.A.P.A 24h</li>
                         </ul>
                     </div>
 
-                    <div>
-                        <h3 class="font-medium text-lg mb-4">Contacto</h3>
-                        <ul class="space-y-2">
-                            <li class="text-gray-400 text-sm">+51 904 425 498<br>+51 922 187 254</li>
-                            <li class="text-gray-400 text-sm">cchapoban12@gmail.com</li>
-                            <li class="text-gray-400 text-sm">Río Chotano 641, Chiclayo 14008</li>
+                    <div class="col-span-2 lg:col-span-1">
+                        <h4 class="font-black text-xs uppercase tracking-[0.22em] md:tracking-[0.3em] mb-4 md:mb-6 text-slate-400">Contacto</h4>
+                        <ul class="space-y-2.5 md:space-y-4">
+                            <li class="flex items-start gap-4 text-slate-500">
+                                <svg class="w-5 h-5 text-[#dd4d4d] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0115 0z"/></svg>
+                                <span>Río Chotano 641, Chiclayo 14008</span>
+                            </li>
+                            <li class="flex items-center gap-4 text-slate-500">
+                                <svg class="w-5 h-5 text-[#dd4d4d] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+                                <span>+51 904 425 498</span>
+                            </li>
+                            <li class="flex items-center gap-4 text-slate-500">
+                                <svg class="w-5 h-5 text-[#dd4d4d] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                                <span>cchapoban12@gmail.com</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="border-t border-gray-800 my-6"></div>
-
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="text-gray-400 text-xs">
-                        © 2026 Dr. Cristian Chapoñan Bances. Todos los derechos reservados. <a href="https://luminari.agency/" class="font-bold"> | Luminari Agency ®.</a>
-                    </div>
-                    <a href="#top" class="bg-red-600 hover:bg-red-700 rounded-full p-2 text-white mt-4 md:mt-0">
-                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd"
-                                d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
-                                clip-rule="evenodd"></path>
-                        </svg>
+                <div class="pt-8 md:pt-12 border-t border-slate-900 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6 text-slate-600 text-xs md:text-sm font-medium">
+                    <p class="leading-relaxed max-w-[32rem] break-words">
+                        &copy; 2026 Dr. Cristian Chapoñan Bances. Todos los derechos reservados.
+                        <a href="https://luminari.agency/" class="font-bold hover:text-white transition-colors">Luminari Agency &reg;.</a>
+                    </p>
+                    <a href="#home" class="bg-[#dd4d4d] hover:bg-[#b83333] rounded-full p-3 text-white transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>
                     </a>
                 </div>
             </div>
         </footer>
+
     </div>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-[100] hidden">
+        <!-- Backdrop -->
+        <div id="booking-backdrop" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
+
+        <!-- Modal Container -->
+        <div id="booking-container" class="absolute inset-0 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-full md:w-[95vw] lg:w-[1000px] h-full md:max-h-[85vh] md:h-auto bg-white md:rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden transition-all duration-300 scale-95 opacity-0">
+
+            <!-- LEFT SIDEBAR -->
+            <div class="w-full md:w-[280px] bg-slate-50 border-b md:border-b-0 md:border-r border-slate-200 p-5 md:p-6 flex flex-col shrink-0 relative overflow-hidden">
+                <!-- Mobile Close -->
+                <button onclick="closeBookingModal()" class="md:hidden absolute top-4 right-4 p-2 text-slate-400 hover:bg-slate-200 rounded-full transition-colors z-20">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+
+                <!-- Back Button -->
+                <button id="booking-back-btn" onclick="bookingPrevStep()" class="hidden w-9 h-9 mb-4 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-white hover:shadow-sm transition-all z-20">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+
+                <div class="relative z-10 py-5">
+                    <h4 class="text-slate-500 font-bold text-[10px] uppercase tracking-widest mb-1">Dr. Cristian Chapoñan</h4>
+                    <h2 class="text-xl font-black text-slate-800 mb-4 leading-tight">Agendar Cita</h2>
+
+                    <div class="space-y-3 text-slate-600 font-medium text-xs">
+                        <div class="flex items-center gap-2.5">
+                            <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            30 min aprox.
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0115 0z"/></svg>
+                            Rio Chotano 641, Chiclayo
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/></svg>
+                            S/. 100.00
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-4 border-t border-slate-200 space-y-2.5">
+                        <div id="sidebar-date" class="hidden flex items-center gap-2.5 text-[#dd4d4d] text-xs font-medium">
+                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                            <span id="sidebar-date-text"></span>
+                        </div>
+                        <div id="sidebar-time" class="hidden flex items-center gap-2.5 text-[#dd4d4d] text-xs font-medium">
+                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            <span id="sidebar-time-text"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Decorative -->
+                <div class="hidden md:block absolute -bottom-20 -left-20 w-72 h-72 bg-gradient-to-tr from-rose-200/40 to-blue-200/40 rounded-full blur-3xl z-0"></div>
+            </div>
+
+            <!-- RIGHT CONTENT -->
+            <div class="flex-1 bg-white relative flex flex-col h-full overflow-hidden">
+                <!-- Desktop Close -->
+                <button onclick="closeBookingModal()" class="hidden md:flex absolute top-6 right-6 p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 rounded-full transition-colors z-20">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+
+                <div class="flex-1 overflow-y-auto p-6 md:p-10">
+                    <!-- STEP 1: Calendar & Time -->
+                    <div id="booking-step-1" class="max-w-3xl mx-auto min-h-full flex flex-col justify-center">
+                        <h3 class="text-xl font-bold text-slate-800 mb-5">Selecciona una Fecha y Hora</h3>
+                        <div class="flex flex-col lg:flex-row gap-10">
+                            <!-- Calendar -->
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 id="calendar-month-title" class="text-base font-bold text-slate-800 capitalize"></h3>
+                                    <div class="flex gap-1">
+                                        <button onclick="calendarPrevMonth()" class="p-2 hover:bg-rose-50 hover:text-[#dd4d4d] rounded-full text-slate-400 transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                                        </button>
+                                        <button onclick="calendarNextMonth()" class="p-2 hover:bg-rose-50 hover:text-[#dd4d4d] rounded-full text-slate-400 transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-7 gap-y-2 text-center mb-4">
+                                    <div class="text-[11px] font-bold text-slate-400">LUN</div>
+                                    <div class="text-[11px] font-bold text-slate-400">MAR</div>
+                                    <div class="text-[11px] font-bold text-slate-400">MIE</div>
+                                    <div class="text-[11px] font-bold text-slate-400">JUE</div>
+                                    <div class="text-[11px] font-bold text-slate-400">VIE</div>
+                                    <div class="text-[11px] font-bold text-slate-400">SAB</div>
+                                    <div class="text-[11px] font-bold text-slate-400">DOM</div>
+                                </div>
+                                <div id="calendar-days" class="grid grid-cols-7 gap-y-2"></div>
+                            </div>
+
+                            <!-- Time Slots -->
+                            <div id="time-slots-container" class="w-full lg:w-[220px] shrink-0">
+                                <div id="time-slots-date" class="text-sm font-medium text-slate-800 mb-6 capitalize"></div>
+                                <div id="time-slots-list" class="flex flex-col gap-2 overflow-y-auto max-h-[300px] pr-2"></div>
+                                <button id="booking-step1-next" onclick="bookingNextStep()" class="hidden mt-8 w-full bg-[#dd4d4d] disabled:bg-slate-200 disabled:text-slate-400 text-white py-3 rounded-xl font-bold transition-all shadow-lg shadow-red-500/20 disabled:shadow-none text-sm" disabled>
+                                    Siguiente
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Patient Data -->
+                    <div id="booking-step-2" class="hidden max-w-xl mx-auto">
+                        <h3 class="text-xl font-bold text-slate-800 mb-6">Detalles del Paciente</h3>
+                        <div class="space-y-4">
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-slate-700">Nombre Completo *</label>
+                                <input id="booking-name" type="text" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-[#dd4d4d] focus:ring-1 focus:ring-[#dd4d4d] outline-none transition-all bg-white text-sm" />
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-bold text-slate-700">DNI *</label>
+                                    <input id="booking-dni" type="text" inputmode="numeric" maxlength="8" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-[#dd4d4d] focus:ring-1 focus:ring-[#dd4d4d] outline-none transition-all bg-white text-sm" />
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-bold text-slate-700">Teléfono / WhatsApp *</label>
+                                    <input id="booking-phone" type="tel" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-[#dd4d4d] focus:ring-1 focus:ring-[#dd4d4d] outline-none transition-all bg-white text-sm" />
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-slate-700">Procedimiento *</label>
+                                <select id="booking-procedure" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-[#dd4d4d] focus:ring-1 focus:ring-[#dd4d4d] outline-none transition-all bg-white text-sm text-slate-700">
+                                    <option value="" disabled selected>Selecciona un procedimiento</option>
+                                    <option>Electrocardiograma (ECG)</option>
+                                    <option>Ecocardiograma Doppler color</option>
+                                    <option>Holter 24/48h</option>
+                                    <option>MAPA 24h</option>
+                                    <option>Consulta cardiológica</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-slate-700">Mensaje Adicional</label>
+                                <textarea id="booking-message" rows="2" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#dd4d4d] focus:ring-1 focus:ring-[#dd4d4d] outline-none transition-all bg-white text-sm resize-none"></textarea>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-end">
+                            <button id="booking-step2-next" onclick="bookingStep2Next()" class="bg-[#dd4d4d] disabled:bg-slate-200 disabled:text-slate-400 text-white py-3 px-8 rounded-xl font-bold transition-all shadow-lg shadow-red-500/20 disabled:shadow-none text-sm" disabled>
+                                Programar Evento
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Payment -->
+                    <div id="booking-step-3" class="hidden max-w-md mx-auto flex flex-col items-center text-center py-10">
+                        <div class="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-800 mb-4">Confirma tu Reserva</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-8">
+                            Para asegurar tu horario, por favor realiza el pago de la consulta mediante el siguiente código QR (Yape / Plin).
+                        </p>
+                        <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-200 mb-8">
+                            <div class="w-48 h-48 bg-slate-50 rounded-2xl flex items-center justify-center border-2 border-dashed border-slate-300">
+                                <span class="text-slate-400 font-medium text-sm text-center">QR de Pago<br/>(Yape / Plin)</span>
+                            </div>
+                        </div>
+                        <button onclick="bookingNextStep()" class="w-full bg-[#dd4d4d] text-white py-4 rounded-xl font-bold transition-all shadow-lg shadow-red-500/20 text-sm">
+                            He realizado el pago
+                        </button>
+                    </div>
+
+                    <!-- STEP 4: Confirmation -->
+                    <div id="booking-step-4" class="hidden max-w-md mx-auto flex flex-col items-center text-center py-10">
+                        <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <h3 class="text-3xl font-black text-slate-800 mb-4">Estás programado</h3>
+                        <p class="text-slate-600 text-base leading-relaxed mb-8">
+                            Se ha enviado una invitación a tu calendario y los detalles a tu WhatsApp.
+                        </p>
+                        <div class="w-full bg-slate-50 border border-slate-100 rounded-2xl p-6 text-left space-y-4 mb-8">
+                            <h4 class="font-bold text-slate-800 border-b border-slate-200 pb-3">Resumen de la cita</h4>
+                            <div id="summary-name" class="flex items-center gap-3 text-sm text-slate-600">
+                                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+                                <span></span>
+                            </div>
+                            <div id="summary-procedure" class="flex items-center gap-3 text-sm text-slate-600">
+                                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                                <span></span>
+                            </div>
+                            <div id="summary-datetime" class="flex items-center gap-3 text-sm text-slate-600 font-medium">
+                                <svg class="w-4 h-4 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                                <span></span>
+                            </div>
+                        </div>
+                        <button onclick="closeBookingModal()" class="w-full bg-slate-800 text-white py-4 rounded-xl font-bold transition-all shadow-lg shadow-slate-800/20 text-sm hover:bg-slate-900">
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="transformation.js"></script>
     <script src="form.js"></script>
     <script src="mapa.js"></script>
+    <script src="booking.js"></script>
 </body>
 
 </html>

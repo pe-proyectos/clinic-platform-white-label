@@ -1,0 +1,21 @@
+{
+  "name": "clinic-platform-white-label",
+  "version": "1.0.0",
+  "description": "",
+  "main": "booking.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pe-proyectos/clinic-platform-white-label.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/pe-proyectos/clinic-platform-white-label/issues"
+  },
+  "homepage": "https://github.com/pe-proyectos/clinic-platform-white-label#readme"
+}
