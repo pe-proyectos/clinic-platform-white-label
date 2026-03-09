@@ -67,16 +67,21 @@ async function openBookingModal() {
     modal.classList.remove("hidden");
     document.body.style.overflow = "hidden";
 
-    // Animate in
+    // Show step immediately (before animation)
+    showStep(1);
+
+    // Animate in — double rAF for reliable batch
     requestAnimationFrame(function () {
-        backdrop.classList.remove("opacity-0");
-        backdrop.classList.add("opacity-100");
-        container.classList.remove("scale-95", "opacity-0");
-        container.classList.add("scale-100", "opacity-100");
+        requestAnimationFrame(function () {
+            backdrop.classList.remove("opacity-0");
+            backdrop.classList.add("opacity-100");
+            container.classList.remove("scale-95", "opacity-0");
+            container.classList.add("scale-100", "opacity-100");
+        });
     });
 
-    showStep(1);
-    renderCalendar();
+    // Defer calendar render so modal appears instantly
+    setTimeout(function () { renderCalendar(); }, 50);
 }
 
 function closeBookingModal() {
