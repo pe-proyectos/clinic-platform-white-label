@@ -4,7 +4,7 @@ const CONFIG = {
   apiUrl: 'https://citas.luminari.agency/api',
   
   // Doctor info
-  doctorSlug: 'dr-cristian-chaponan',
+  doctorSlug: 'dr-cristian-chaponan-zHZNAt',
   
   // Mercado Pago
   mpPublicKey: 'APP_USR-3a9bac55-2b1d-4f8f-a4d9-5a18fd9cdd32',
