@@ -273,7 +273,8 @@ async function createAppointment() {
             patientName: name,
             procedure: procedure,
             amount: amount,
-            patientEmail: `${dni}@paciente.com`
+            patientEmail: `${dni}@paciente.com`,
+            frontendUrl: window.location.origin
         })
     });
 
