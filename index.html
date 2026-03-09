@@ -988,11 +988,11 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="space-y-2">
                                     <label class="text-sm font-bold text-slate-700">DNI *</label>
-                                    <input id="booking-dni" type="text" inputmode="numeric" maxlength="8" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-[#dd4d4d] focus:ring-1 focus:ring-[#dd4d4d] outline-none transition-all bg-white text-sm" />
+                                    <input id="booking-dni" type="text" inputmode="numeric" maxlength="8" pattern="\d{8}" oninput="this.value=this.value.replace(/\D/g,'')" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-[#dd4d4d] focus:ring-1 focus:ring-[#dd4d4d] outline-none transition-all bg-white text-sm" />
                                 </div>
                                 <div class="space-y-2">
                                     <label class="text-sm font-bold text-slate-700">Teléfono / WhatsApp *</label>
-                                    <input id="booking-phone" type="tel" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-[#dd4d4d] focus:ring-1 focus:ring-[#dd4d4d] outline-none transition-all bg-white text-sm" />
+                                    <input id="booking-phone" type="tel" maxlength="9" inputmode="numeric" oninput="this.value=this.value.replace(/\D/g,'')" placeholder="999 999 999" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-[#dd4d4d] focus:ring-1 focus:ring-[#dd4d4d] outline-none transition-all bg-white text-sm" />
                                 </div>
                             </div>
                             <div class="space-y-2">

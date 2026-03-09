@@ -242,7 +242,7 @@ async function createAppointment() {
         },
         body: JSON.stringify({
             guestName: name,
-            guestEmail: `${dni}@paciente.com`, // Email dummy basado en DNI
+            guestEmail: `${dni.replace(/\D/g, '')}@paciente.com`, // Email dummy basado en DNI
             guestPhone: phone,
             notes: `Procedimiento: ${procedure}\nMensaje: ${message || 'N/A'}`,
             startDatetime: startDateTime.toISOString(),
@@ -670,18 +670,70 @@ async function renderTimeSlots() {
 // STEP 2 VALIDATION
 // ==========================================
 
+function showFieldError(id, message) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('border-red-400');
+    el.classList.remove('border-slate-200');
+    var errId = id + '-error';
+    var existing = document.getElementById(errId);
+    if (existing) { existing.textContent = message; existing.classList.remove('hidden'); return; }
+    var span = document.createElement('span');
+    span.id = errId;
+    span.className = 'text-red-500 text-xs mt-1 block';
+    span.textContent = message;
+    el.parentNode.appendChild(span);
+}
+
+function clearFieldError(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('border-red-400');
+    el.classList.add('border-slate-200');
+    var errEl = document.getElementById(id + '-error');
+    if (errEl) errEl.classList.add('hidden');
+}
+
 function validateStep2() {
     var name = document.getElementById("booking-name").value.trim();
     var dni = document.getElementById("booking-dni").value.trim();
     var phone = document.getElementById("booking-phone").value.trim();
     var procedure = document.getElementById("booking-procedure").value;
     var btn = document.getElementById("booking-step2-next");
+    var valid = true;
 
-    if (name && dni && phone && procedure) {
-        btn.disabled = false;
+    // Name: min 2 chars, letters and spaces only
+    if (!name || name.length < 2) {
+        if (name.length > 0) showFieldError('booking-name', 'Ingresa tu nombre completo (mín. 2 caracteres)');
+        valid = false;
     } else {
-        btn.disabled = true;
+        clearFieldError('booking-name');
     }
+
+    // DNI: exactly 8 digits
+    if (!dni || !/^\d{8}$/.test(dni)) {
+        if (dni.length > 0) showFieldError('booking-dni', 'El DNI debe tener exactamente 8 dígitos');
+        valid = false;
+    } else {
+        clearFieldError('booking-dni');
+    }
+
+    // Phone: 9 digits, starts with 9
+    if (!phone || !/^9\d{8}$/.test(phone)) {
+        if (phone.length > 0) showFieldError('booking-phone', 'Ingresa un celular válido (9 dígitos, empieza con 9)');
+        valid = false;
+    } else {
+        clearFieldError('booking-phone');
+    }
+
+    // Procedure: must be selected
+    if (!procedure) {
+        valid = false;
+    } else {
+        clearFieldError('booking-procedure');
+    }
+
+    btn.disabled = !valid;
 }
 
 function updateStep1Button() {
