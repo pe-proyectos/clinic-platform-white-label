@@ -779,8 +779,6 @@ function populateSummary() {
         : "";
     document.querySelector("#summary-datetime span").textContent = dateStr + " a las " + bookingState.selectedTime;
 
-    // Setup WhatsApp notification button
-    setupWhatsAppButton();
 }
 
 function setupWhatsAppButton() {
