@@ -257,6 +257,7 @@ async function createAppointment() {
     }
 
     bookingState.appointmentId = result.data.id;
+    localStorage.setItem('pendingAppointmentId', String(result.data.id));
 
     // Extract price from procedure text (e.g. "Consulta - S/. 150" → 150)
     var priceMatch = procedure.match(/S\/\.\s*(\d+)/);
@@ -750,6 +751,31 @@ function updateStep1Button() {
         btn.disabled = true;
     }
 }
+
+// Check for payment redirect from Mercado Pago
+document.addEventListener("DOMContentLoaded", function () {
+    var urlParams = new URLSearchParams(window.location.search);
+    var paymentStatus = urlParams.get('payment');
+    
+    if (paymentStatus === 'success') {
+        // Get appointmentId from localStorage
+        var savedAppointmentId = localStorage.getItem('pendingAppointmentId');
+        if (savedAppointmentId) {
+            // Confirm payment in backend
+            fetch(CONFIG.apiUrl + '/payments/confirm/' + savedAppointmentId, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            }).then(function(r) { return r.json(); }).then(function(result) {
+                console.log('Payment confirmed:', result);
+                localStorage.removeItem('pendingAppointmentId');
+            }).catch(function(err) {
+                console.error('Error confirming payment:', err);
+            });
+        }
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+});
 
 // Add listeners for validation
 document.addEventListener("DOMContentLoaded", function () {
