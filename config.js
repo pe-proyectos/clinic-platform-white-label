@@ -1,7 +1,7 @@
 // Configuration
 const CONFIG = {
   // Backend API
-  apiUrl: 'http://localhost:3001',
+  apiUrl: 'https://citas.luminari.agency/api',
   
   // Doctor info
   doctorSlug: 'dr-cristian-chaponan',
