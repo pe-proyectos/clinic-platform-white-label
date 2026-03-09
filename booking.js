@@ -258,6 +258,10 @@ async function createAppointment() {
 
     bookingState.appointmentId = result.data.id;
 
+    // Extract price from procedure text (e.g. "Consulta - S/. 150" → 150)
+    var priceMatch = procedure.match(/S\/\.\s*(\d+)/);
+    var amount = priceMatch ? parseInt(priceMatch[1]) : CONFIG.appointmentPrice;
+
     // Create payment preference
     const paymentResponse = await fetch(`${CONFIG.apiUrl}/payments/create-preference`, {
         method: 'POST',
@@ -268,7 +272,7 @@ async function createAppointment() {
             appointmentId: result.data.id,
             patientName: name,
             procedure: procedure,
-            amount: CONFIG.appointmentPrice,
+            amount: amount,
             patientEmail: `${dni}@paciente.com`
         })
     });
