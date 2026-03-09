@@ -98,6 +98,48 @@
             z-index: -1;
         }
 
+        /* Availability dot */
+        .availability-dot {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 6px;
+            height: 6px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+        }
+        @media (min-width: 768px) {
+            .availability-dot {
+                width: 8px;
+                height: 8px;
+                top: 4px;
+                right: 4px;
+            }
+        }
+
+        /* Time slots fade-in animation */
+        @keyframes slot-fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slot-animate {
+            animation: slot-fade-in 0.3s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* Time slots container transition */
+        #time-slots-list {
+            transition: opacity 0.2s ease-out;
+        }
+
         /* Floating animation */
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(var(--rotate, 0deg)); }
@@ -867,7 +909,7 @@
                         </div>
                         <div class="flex items-center gap-2.5">
                             <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/></svg>
-                            S/. 100.00
+                            Varía según consulta
                         </div>
                     </div>
 
@@ -912,23 +954,23 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="grid grid-cols-7 gap-y-2 text-center mb-4">
-                                    <div class="text-[11px] font-bold text-slate-400">LUN</div>
-                                    <div class="text-[11px] font-bold text-slate-400">MAR</div>
-                                    <div class="text-[11px] font-bold text-slate-400">MIE</div>
-                                    <div class="text-[11px] font-bold text-slate-400">JUE</div>
-                                    <div class="text-[11px] font-bold text-slate-400">VIE</div>
-                                    <div class="text-[11px] font-bold text-slate-400">SAB</div>
-                                    <div class="text-[11px] font-bold text-slate-400">DOM</div>
+                                <div class="grid grid-cols-7 gap-y-2 gap-x-1 text-center mb-4">
+                                    <div class="text-[10px] md:text-[11px] font-bold text-slate-400">LUN</div>
+                                    <div class="text-[10px] md:text-[11px] font-bold text-slate-400">MAR</div>
+                                    <div class="text-[10px] md:text-[11px] font-bold text-slate-400">MIE</div>
+                                    <div class="text-[10px] md:text-[11px] font-bold text-slate-400">JUE</div>
+                                    <div class="text-[10px] md:text-[11px] font-bold text-slate-400">VIE</div>
+                                    <div class="text-[10px] md:text-[11px] font-bold text-slate-400">SAB</div>
+                                    <div class="text-[10px] md:text-[11px] font-bold text-slate-400">DOM</div>
                                 </div>
-                                <div id="calendar-days" class="grid grid-cols-7 gap-y-2"></div>
+                                <div id="calendar-days" class="grid grid-cols-7 gap-1 md:gap-y-2"></div>
                             </div>
 
                             <!-- Time Slots -->
-                            <div id="time-slots-container" class="w-full lg:w-[220px] shrink-0">
-                                <div id="time-slots-date" class="text-sm font-medium text-slate-800 mb-6 capitalize"></div>
-                                <div id="time-slots-list" class="flex flex-col gap-2 overflow-y-auto max-h-[300px] pr-2"></div>
-                                <button id="booking-step1-next" onclick="bookingNextStep()" class="hidden mt-8 w-full bg-[#dd4d4d] disabled:bg-slate-200 disabled:text-slate-400 text-white py-3 rounded-xl font-bold transition-all shadow-lg shadow-red-500/20 disabled:shadow-none text-sm" disabled>
+                            <div id="time-slots-container" class="w-full lg:w-[220px] shrink-0 mt-6 lg:mt-0">
+                                <div id="time-slots-date" class="text-sm font-medium text-slate-800 mb-4 lg:mb-6 capitalize"></div>
+                                <div id="time-slots-list" class="flex flex-col gap-2 overflow-y-auto max-h-[250px] lg:max-h-[300px] pr-2"></div>
+                                <button id="booking-step1-next" onclick="bookingNextStep()" class="hidden mt-6 lg:mt-8 w-full bg-[#dd4d4d] disabled:bg-slate-200 disabled:text-slate-400 text-white py-3 rounded-xl font-bold transition-all shadow-lg shadow-red-500/20 disabled:shadow-none text-sm" disabled>
                                     Siguiente
                                 </button>
                             </div>
@@ -957,11 +999,12 @@
                                 <label class="text-sm font-bold text-slate-700">Procedimiento *</label>
                                 <select id="booking-procedure" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-[#dd4d4d] focus:ring-1 focus:ring-[#dd4d4d] outline-none transition-all bg-white text-sm text-slate-700">
                                     <option value="" disabled selected>Selecciona un procedimiento</option>
-                                    <option>Electrocardiograma (ECG)</option>
-                                    <option>Ecocardiograma Doppler color</option>
-                                    <option>Holter 24/48h</option>
-                                    <option>MAPA 24h</option>
-                                    <option>Consulta cardiológica</option>
+                                    <option>Consulta - S/. 150</option>
+                                    <option>Ecocardiografía doppler - S/. 200</option>
+                                    <option>Holter de 24h - S/. 150</option>
+                                    <option>Holter de 48h - S/. 250</option>
+                                    <option>MAPA de 24h - S/. 150</option>
+                                    <option>Electrocardiograma - S/. 70</option>
                                 </select>
                             </div>
                             <div class="space-y-2">
@@ -977,22 +1020,29 @@
                     </div>
 
                     <!-- STEP 3: Payment -->
-                    <div id="booking-step-3" class="hidden max-w-md mx-auto flex flex-col items-center text-center py-10">
-                        <div class="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
-                        </div>
-                        <h3 class="text-2xl font-black text-slate-800 mb-4">Confirma tu Reserva</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-8">
-                            Para asegurar tu horario, por favor realiza el pago de la consulta mediante el siguiente código QR (Yape / Plin).
-                        </p>
-                        <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-200 mb-8">
-                            <div class="w-48 h-48 bg-slate-50 rounded-2xl flex items-center justify-center border-2 border-dashed border-slate-300">
-                                <span class="text-slate-400 font-medium text-sm text-center">QR de Pago<br/>(Yape / Plin)</span>
+                    <div id="booking-step-3" class="hidden max-w-2xl mx-auto">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center mb-4 mx-auto">
+                                <svg class="w-8 h-8 text-[#dd4d4d]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
                             </div>
+                            <h3 class="text-2xl font-black text-slate-800 mb-2">Completa tu Pago</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Paga con tarjeta, Yape o PagoEfectivo de forma segura
+                            </p>
                         </div>
-                        <button onclick="bookingNextStep()" class="w-full bg-[#dd4d4d] text-white py-4 rounded-xl font-bold transition-all shadow-lg shadow-red-500/20 text-sm">
-                            He realizado el pago
-                        </button>
+                        
+                        <!-- Mercado Pago Payment Brick Container -->
+                        <div id="mp-checkout-container" class="w-full"></div>
+                        
+                        <div class="mt-6 text-center">
+                            <p class="text-xs text-slate-500 flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+                                Pago seguro procesado por Mercado Pago
+                            </p>
+                            <p class="text-xs text-slate-400 mt-2">
+                                Tu cita se confirmará inmediatamente al completar el pago
+                            </p>
+                        </div>
                     </div>
 
                     <!-- STEP 4: Confirmation -->
@@ -1028,6 +1078,8 @@
         </div>
     </div>
 
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script src="config.js"></script>
     <script src="transformation.js"></script>
     <script src="form.js"></script>
     <script src="mapa.js"></script>
