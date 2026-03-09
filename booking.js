@@ -293,7 +293,7 @@ function initMercadoPago() {
         return;
     }
 
-    container.innerHTML = '<div class="text-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#dd4d4d] mx-auto"></div><p class="text-slate-600 mt-4">Cargando método de pago...</p></div>';
+    container.innerHTML = '<div id="mp-loading" class="text-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#dd4d4d] mx-auto"></div><p class="text-slate-600 mt-4">Cargando método de pago...</p></div>';
 
     // Initialize Mercado Pago
     const mp = new MercadoPago(CONFIG.mpPublicKey, {
@@ -310,6 +310,10 @@ function initMercadoPago() {
             label: 'Pagar consulta'
         }
     });
+
+    // Remove loading spinner once checkout button renders
+    var loadingEl = document.getElementById('mp-loading');
+    if (loadingEl) loadingEl.remove();
 
     // Start polling payment status
     startPaymentPolling();
