@@ -339,7 +339,7 @@ function startPaymentPolling() {
             );
             const result = await response.json();
 
-            if (result.success && result.data.paymentStatus === 'PAID') {
+            if (result.success && result.data.paymentStatus.toLowerCase() === 'paid') {
                 clearInterval(paymentPollingInterval);
                 bookingNextStep(); // Go to confirmation
             }
