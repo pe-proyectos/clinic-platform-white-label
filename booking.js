@@ -615,7 +615,6 @@ async function renderTimeSlots() {
         );
         const result = await response.json();
 
-        console.log('📅 Slots recibidos del backend:', result.data.slots);
 
         list.style.opacity = '0';
         
@@ -630,9 +629,7 @@ async function renderTimeSlots() {
             }
 
             // Render slots with staggered animation
-            console.log('🎨 Renderizando', result.data.slots.length, 'slots');
             result.data.slots.forEach(function (slot, index) {
-                console.log('  ➡️ Slot', index + 1, ':', slot.startTime);
                 var isSelected = bookingState.selectedTime === slot.startTime;
 
                 var btn = document.createElement("button");
@@ -766,7 +763,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             }).then(function(r) { return r.json(); }).then(function(result) {
-                console.log('Payment confirmed:', result);
                 localStorage.removeItem('pendingAppointmentId');
             }).catch(function(err) {
                 console.error('Error confirming payment:', err);
