@@ -7,7 +7,7 @@ const CONFIG = {
   doctorSlug: 'dr-cristian-chaponan-zHZNAt',
   
   // Mercado Pago
-  mpPublicKey: 'APP_USR-3a9bac55-2b1d-4f8f-a4d9-5a18fd9cdd32',
+  mpPublicKey: 'APP_USR-197ff03b-6469-4a5b-ab7f-4231c3a4af6a',
   
   // Appointment
   appointmentPrice: 100, // S/. 100
