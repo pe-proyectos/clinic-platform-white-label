@@ -758,12 +758,15 @@ document.addEventListener("DOMContentLoaded", function () {
         // Get appointmentId from localStorage
         var savedAppointmentId = localStorage.getItem('pendingAppointmentId');
         if (savedAppointmentId) {
-            // Confirm payment in backend
+            // Verify payment with backend (checks MP API, doesn't blindly confirm)
             fetch(CONFIG.apiUrl + '/payments/confirm/' + savedAppointmentId, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             }).then(function(r) { return r.json(); }).then(function(result) {
-                localStorage.removeItem('pendingAppointmentId');
+                if (result.success && result.data && result.data.paymentStatus === 'paid') {
+                    localStorage.removeItem('pendingAppointmentId');
+                }
+                // If not paid yet, keep pendingAppointmentId — webhook will update it
             }).catch(function(err) {
                 console.error('Error confirming payment:', err);
             });
