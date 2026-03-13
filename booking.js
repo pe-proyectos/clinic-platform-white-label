@@ -288,6 +288,7 @@ async function createAppointment() {
     bookingState.preferenceId = paymentResult.data.preferenceId;
     bookingState.sandboxInitPoint = paymentResult.data.sandboxInitPoint;
     bookingState.initPoint = paymentResult.data.initPoint;
+    bookingState.selectedPrice = amount;
 }
 
 // ==========================================
@@ -308,22 +309,61 @@ function initMercadoPago() {
         locale: 'es-PE'
     });
 
-    // Create checkout
-    bookingState.checkoutPro = mp.checkout({
-        preference: {
-            id: bookingState.preferenceId
+    // Create Payment Brick
+    const bricksBuilder = mp.bricks();
+
+    bricksBuilder.create('payment', 'mp-checkout-container', {
+        initialization: {
+            amount: bookingState.selectedPrice || CONFIG.appointmentPrice,
+            preferenceId: bookingState.preferenceId
         },
-        render: {
-            container: '#mp-checkout-container',
-            label: 'Pagar consulta'
+        customization: {
+            paymentMethods: {
+                maxInstallments: 1
+            },
+            visual: {
+                style: {
+                    theme: 'default'
+                }
+            }
+        },
+        callbacks: {
+            onReady: () => {
+                var loadingEl = document.getElementById('mp-loading');
+                if (loadingEl) loadingEl.remove();
+            },
+            onSubmit: async ({ selectedPaymentMethod, formData }) => {
+                try {
+                    // Add external_reference for our appointment
+                    formData.external_reference = String(bookingState.appointmentId);
+
+                    const response = await fetch(`${CONFIG.apiUrl}/payments/process-payment`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success && result.data.paymentStatus === 'approved') {
+                        showStep(4);
+                    } else if (result.data && result.data.paymentStatus === 'pending') {
+                        alert('Pago pendiente de aprobación. Te notificaremos cuando se confirme.');
+                    } else {
+                        alert('El pago fue rechazado. Intenta con otro método de pago.');
+                    }
+                } catch (error) {
+                    console.error('Payment error:', error);
+                    alert('Error al procesar el pago. Intenta nuevamente.');
+                }
+            },
+            onError: (error) => {
+                console.error('Brick error:', error);
+            }
         }
     });
 
-    // Remove loading spinner once checkout button renders
-    var loadingEl = document.getElementById('mp-loading');
-    if (loadingEl) loadingEl.remove();
-
-    // Start polling payment status
+    // Start polling payment status as backup
     startPaymentPolling();
 }
 
