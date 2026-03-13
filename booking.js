@@ -301,13 +301,6 @@ function initMercadoPago() {
         return;
     }
 
-    // Use sandbox redirect for test mode, production redirect otherwise
-    var payUrl = bookingState.sandboxInitPoint || bookingState.initPoint;
-    if (payUrl) {
-        container.innerHTML = '<div class="text-center py-6"><a href="' + payUrl + '" class="inline-block bg-[#009ee3] hover:bg-[#007eb5] text-white font-semibold py-3 px-8 rounded-lg text-lg transition-colors">Pagar con Mercado Pago</a></div>';
-        return;
-    }
-
     container.innerHTML = '<div id="mp-loading" class="text-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#dd4d4d] mx-auto"></div><p class="text-slate-600 mt-4">Cargando método de pago...</p></div>';
 
     // Initialize Mercado Pago
