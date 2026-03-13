@@ -304,8 +304,8 @@ function initMercadoPago() {
 
     container.innerHTML = '<div id="mp-loading" class="text-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#dd4d4d] mx-auto"></div><p class="text-slate-600 mt-4">Cargando método de pago...</p></div>';
 
-    // Use sandbox URL for testing, production URL as fallback
-    var payUrl = bookingState.sandboxInitPoint || bookingState.initPoint;
+    // Use production URL (initPoint)
+    var payUrl = bookingState.initPoint;
 
     if (payUrl) {
         container.innerHTML = '<div class="text-center py-6">' +
