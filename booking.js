@@ -286,6 +286,8 @@ async function createAppointment() {
     }
 
     bookingState.preferenceId = paymentResult.data.preferenceId;
+    bookingState.sandboxInitPoint = paymentResult.data.sandboxInitPoint;
+    bookingState.initPoint = paymentResult.data.initPoint;
 }
 
 // ==========================================
@@ -296,6 +298,13 @@ function initMercadoPago() {
     var container = document.getElementById('mp-checkout-container');
     if (!container) {
         console.error('MP container not found');
+        return;
+    }
+
+    // Use sandbox redirect for test mode, production redirect otherwise
+    var payUrl = bookingState.sandboxInitPoint || bookingState.initPoint;
+    if (payUrl) {
+        container.innerHTML = '<div class="text-center py-6"><a href="' + payUrl + '" class="inline-block bg-[#009ee3] hover:bg-[#007eb5] text-white font-semibold py-3 px-8 rounded-lg text-lg transition-colors">Pagar con Mercado Pago</a></div>';
         return;
     }
 
