@@ -758,12 +758,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var paymentStatus = urlParams.get('payment');
     
     if (paymentStatus === 'failure' || paymentStatus === 'error') {
-        // Show info banner about retry
-        var banner = document.createElement('div');
-        banner.style.cssText = 'background:#FEF3C7;border:1px solid #F59E0B;color:#92400E;padding:14px 20px;border-radius:8px;margin:16px auto;max-width:600px;text-align:center;font-size:14px;';
-        banner.innerHTML = '⚠️ <strong>Tu pago no se procesó.</strong> Si deseas intentar de nuevo con el mismo horario, espera 15 minutos para que se libere automáticamente.';
-        var main = document.querySelector('main') || document.body;
-        main.insertBefore(banner, main.firstChild);
         // Clean URL
         window.history.replaceState({}, document.title, window.location.pathname);
     }
