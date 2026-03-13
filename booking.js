@@ -304,23 +304,23 @@ function initMercadoPago() {
 
     container.innerHTML = '<div id="mp-loading" class="text-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#dd4d4d] mx-auto"></div><p class="text-slate-600 mt-4">Cargando método de pago...</p></div>';
 
-    // Initialize Mercado Pago
-    const mp = new MercadoPago(CONFIG.mpPublicKey, {
-        locale: 'es-PE'
-    });
+    // Use sandbox URL for testing, production URL as fallback
+    var payUrl = bookingState.sandboxInitPoint || bookingState.initPoint;
 
-    // Create Checkout Pro (wallet button with redirect)
-    bookingState.checkoutPro = mp.checkout({
-        preference: {
-            id: bookingState.preferenceId
-        },
-        render: {
-            container: '#mp-checkout-container',
-            label: 'Pagar consulta'
-        }
-    });
+    if (payUrl) {
+        container.innerHTML = '<div class="text-center py-6">' +
+            '<a href="' + payUrl + '" class="cho-container inline-block bg-[#009ee3] hover:bg-[#007eb5] text-white font-bold py-4 px-10 rounded-lg text-lg transition-colors shadow-lg" style="text-decoration:none">' +
+            '💳 Pagar con Mercado Pago</a>' +
+            '<p class="text-slate-500 text-sm mt-3">Serás redirigido a Mercado Pago para completar el pago</p></div>';
+    } else {
+        // Fallback to SDK checkout
+        const mp = new MercadoPago(CONFIG.mpPublicKey, { locale: 'es-PE' });
+        bookingState.checkoutPro = mp.checkout({
+            preference: { id: bookingState.preferenceId },
+            render: { container: '#mp-checkout-container', label: 'Pagar consulta' }
+        });
+    }
 
-    // Remove loading spinner once checkout button renders
     var loadingEl = document.getElementById('mp-loading');
     if (loadingEl) loadingEl.remove();
 
