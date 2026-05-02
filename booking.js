@@ -1,5 +1,6 @@
 // ==========================================
-// BOOKING MODAL - Integrado con Backend + Mercado Pago
+// BOOKING MODAL - Sin Mercado Pago
+// Métodos de pago: Yape QR | Presencial
 // ==========================================
 
 var bookingState = {
@@ -11,10 +12,9 @@ var bookingState = {
     doctorId: null,
     doctorName: '',
     appointmentId: null,
-    preferenceId: null,
-    checkoutPro: null,
-    availableDates: {}, // Cache de días con disponibilidad
-    isTransitioning: false // Prevent double-clicks during transitions
+    isTransitioning: false,
+    availableDates: {},
+    paymentMethod: null // 'yape' | 'presencial'
 };
 
 var MONTH_NAMES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -35,13 +35,12 @@ async function openBookingModal() {
     bookingState.currentMonth = new Date().getMonth();
     bookingState.currentYear = new Date().getFullYear();
     bookingState.appointmentId = null;
-    bookingState.preferenceId = null;
+    bookingState.paymentMethod = null;
 
     // Load doctor info
     try {
         const response = await fetch(`${CONFIG.apiUrl}/book/${CONFIG.doctorSlug}`);
         const result = await response.json();
-        
         if (result.success) {
             bookingState.doctorId = result.data.id;
             bookingState.doctorName = result.data.name;
@@ -67,10 +66,8 @@ async function openBookingModal() {
     modal.classList.remove("hidden");
     document.body.style.overflow = "hidden";
 
-    // Show step immediately (before animation)
     showStep(1);
 
-    // Animate in — double rAF for reliable batch
     requestAnimationFrame(function () {
         requestAnimationFrame(function () {
             backdrop.classList.remove("opacity-0");
@@ -80,7 +77,6 @@ async function openBookingModal() {
         });
     });
 
-    // Defer calendar render so modal appears instantly
     setTimeout(function () { renderCalendar(); }, 50);
 }
 
@@ -88,6 +84,16 @@ function closeBookingModal() {
     var modal = document.getElementById("booking-modal");
     var backdrop = document.getElementById("booking-backdrop");
     var container = document.getElementById("booking-container");
+
+    // Si cierra en paso 3 sin haber confirmado, cancela la cita en el backend
+    if (bookingState.step === 3 && bookingState.appointmentId && bookingState.doctorId) {
+        fetch(
+            CONFIG.apiUrl + '/clients/' + bookingState.doctorId + '/bookings/' + bookingState.appointmentId + '/cancel',
+            { method: 'PATCH', headers: { 'Content-Type': 'application/json' } }
+        ).catch(function (err) {
+            console.error('Error cancelando cita:', err);
+        });
+    }
 
     backdrop.classList.remove("opacity-100");
     backdrop.classList.add("opacity-0");
@@ -97,28 +103,17 @@ function closeBookingModal() {
     setTimeout(function () {
         modal.classList.add("hidden");
         document.body.style.overflow = "";
-        
-        // Cleanup Mercado Pago checkout
-        if (bookingState.checkoutPro) {
-            document.getElementById('mp-checkout-container').innerHTML = '';
-            bookingState.checkoutPro = null;
-        }
-        
-        if (paymentPollingInterval) {
-            clearInterval(paymentPollingInterval);
-            paymentPollingInterval = null;
-        }
+        bookingState.appointmentId = null;
+        bookingState.paymentMethod = null;
     }, 300);
 }
 
-// Close on backdrop click
 document.addEventListener("click", function (e) {
     if (e.target && e.target.id === "booking-backdrop") {
         closeBookingModal();
     }
 });
 
-// Close on Escape
 document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
         var modal = document.getElementById("booking-modal");
@@ -144,7 +139,7 @@ function showStep(step) {
         }
     }
 
-    // Back button
+    // Back button: visible en pasos 2 y 3, no en 1 ni 4
     var backBtn = document.getElementById("booking-back-btn");
     if (step > 1 && step < 4) {
         backBtn.classList.remove("hidden");
@@ -154,13 +149,9 @@ function showStep(step) {
         backBtn.classList.remove("flex");
     }
 
-    // Sidebar info
     updateSidebar();
 
-    // Setup specific step
-    if (step === 3) {
-        initMercadoPago();
-    } else if (step === 4) {
+    if (step === 4) {
         populateSummary();
     }
 }
@@ -177,39 +168,36 @@ function bookingPrevStep() {
     }
 }
 
+// ==========================================
+// STEP 2 → STEP 3: Crear cita en backend
+// ==========================================
+
 async function bookingStep2Next() {
     validateStep2();
     var btn = document.getElementById("booking-step2-next");
-    if (!btn || btn.disabled) {
-        return;
-    }
+    if (!btn || btn.disabled) return;
 
     btn.disabled = true;
     btn.textContent = 'Creando cita...';
 
     try {
         await createAppointment();
-        bookingNextStep();
+        bookingNextStep(); // Ir al paso 3: elegir método de pago
     } catch (error) {
         console.error('Error creating appointment:', error);
-        
-        // User-friendly error messages
         var errorMsg = 'Error al crear la cita. Por favor intenta de nuevo.';
-        
         if (error.message.includes('Unique constraint failed')) {
             errorMsg = 'Este horario ya no está disponible. Por favor elige otro.';
-            // Refresh slots to show updated availability
             renderTimeSlots();
         } else if (error.message.includes('no está dentro de la disponibilidad')) {
             errorMsg = 'El horario seleccionado no está dentro del horario de atención.';
         } else if (error.message.includes('no está disponible')) {
             errorMsg = 'Este horario ya está ocupado. Por favor elige otro.';
         }
-        
         alert(errorMsg);
     } finally {
         btn.disabled = false;
-        btn.textContent = 'Programar Evento';
+        btn.textContent = 'Continuar';
     }
 }
 
@@ -224,132 +212,157 @@ async function createAppointment() {
     var procedure = document.getElementById("booking-procedure").value;
     var message = document.getElementById("booking-message").value.trim();
 
-    // Calculate start and end datetime (local time)
     var year = bookingState.selectedDate.getFullYear();
     var month = bookingState.selectedDate.getMonth();
     var day = bookingState.selectedDate.getDate();
-    var [hours, minutes] = bookingState.selectedTime.split(':');
-    
-    var startDateTime = new Date(year, month, day, parseInt(hours), parseInt(minutes), 0, 0);
+    var timeParts = bookingState.selectedTime.split(':');
+    var hours = parseInt(timeParts[0]);
+    var minutes = parseInt(timeParts[1]);
+
+    var startDateTime = new Date(year, month, day, hours, minutes, 0, 0);
     var endDateTime = new Date(startDateTime);
     endDateTime.setMinutes(endDateTime.getMinutes() + CONFIG.appointmentDuration);
 
-    // Create appointment via backend
     const response = await fetch(`${CONFIG.apiUrl}/book/${CONFIG.doctorSlug}`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             guestName: name,
-            guestEmail: `${dni.replace(/\D/g, '')}@paciente.com`, // Email dummy basado en DNI
+            guestEmail: dni.replace(/\D/g, '') + '@paciente.com',
             guestPhone: phone,
-            notes: `Procedimiento: ${procedure}\nMensaje: ${message || 'N/A'}`,
+            notes: 'Procedimiento: ' + procedure + '\nMensaje: ' + (message || 'N/A'),
             startDatetime: startDateTime.toISOString(),
             endDatetime: endDateTime.toISOString()
         })
     });
 
     const result = await response.json();
-    
     if (!result.success) {
         throw new Error(result.error || 'Error creating appointment');
     }
 
     bookingState.appointmentId = result.data.id;
-    localStorage.setItem('pendingAppointmentId', String(result.data.id));
-
-    // Extract price from procedure text (e.g. "Consulta - S/. 150" → 150)
-    var priceMatch = procedure.match(/S\/\.\s*(\d+)/);
-    var amount = priceMatch ? parseInt(priceMatch[1]) : CONFIG.appointmentPrice;
-
-    // Create payment preference
-    const paymentResponse = await fetch(`${CONFIG.apiUrl}/payments/create-preference`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            appointmentId: result.data.id,
-            patientName: name,
-            procedure: procedure,
-            amount: amount,
-            patientEmail: `${dni}@paciente.com`,
-            frontendUrl: window.location.origin
-        })
-    });
-
-    const paymentResult = await paymentResponse.json();
-    
-    if (!paymentResult.success) {
-        throw new Error(paymentResult.error || 'Error creating payment');
-    }
-
-    bookingState.preferenceId = paymentResult.data.preferenceId;
-    bookingState.sandboxInitPoint = paymentResult.data.sandboxInitPoint;
-    bookingState.initPoint = paymentResult.data.initPoint;
-    bookingState.selectedPrice = amount;
 }
 
 // ==========================================
-// MERCADO PAGO CHECKOUT PRO
+// PASO 3: SELECCIÓN DE MÉTODO DE PAGO
 // ==========================================
 
-function initMercadoPago() {
-    var container = document.getElementById('mp-checkout-container');
-    if (!container) {
-        console.error('MP container not found');
-        return;
+function selectPaymentMethod(method) {
+    bookingState.paymentMethod = method;
+
+    // Ocultar ambas secciones primero
+    document.getElementById('payment-yape-section').classList.add('hidden');
+    document.getElementById('payment-presencial-section').classList.add('hidden');
+
+    // Quitar selección activa de los dos botones
+    document.getElementById('btn-yape').classList.remove('ring-2', 'ring-[#dd4d4d]', 'border-[#dd4d4d]', 'bg-rose-50');
+    document.getElementById('btn-presencial').classList.remove('ring-2', 'ring-[#dd4d4d]', 'border-[#dd4d4d]', 'bg-rose-50');
+
+    if (method === 'yape') {
+        document.getElementById('btn-yape').classList.add('ring-2', 'ring-[#dd4d4d]', 'border-[#dd4d4d]', 'bg-rose-50');
+        document.getElementById('payment-yape-section').classList.remove('hidden');
+    } else if (method === 'presencial') {
+        document.getElementById('btn-presencial').classList.add('ring-2', 'ring-[#dd4d4d]', 'border-[#dd4d4d]', 'bg-rose-50');
+        document.getElementById('payment-presencial-section').classList.remove('hidden');
     }
-
-    container.innerHTML = '<div id="mp-loading" class="text-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#dd4d4d] mx-auto"></div><p class="text-slate-600 mt-4">Cargando método de pago...</p></div>';
-
-    // Initialize Mercado Pago
-    const mp = new MercadoPago(CONFIG.mpPublicKey, {
-        locale: 'es-PE'
-    });
-
-    // Create Checkout Pro (wallet button with redirect)
-    bookingState.checkoutPro = mp.checkout({
-        preference: {
-            id: bookingState.preferenceId
-        },
-        render: {
-            container: '#mp-checkout-container',
-            label: 'Pagar consulta'
-        }
-    });
-
-    // Remove loading spinner once checkout button renders
-    var loadingEl = document.getElementById('mp-loading');
-    if (loadingEl) loadingEl.remove();
-
-    // Start polling payment status
-    startPaymentPolling();
 }
 
-var paymentPollingInterval = null;
+// Confirmar pago presencial → WhatsApp + paso 4
+async function confirmPresencial() {
+    bookingState.paymentMethod = 'presencial';
 
-function startPaymentPolling() {
-    if (paymentPollingInterval) {
-        clearInterval(paymentPollingInterval);
-    }
+    // Deshabilitar botón para evitar doble clic
+    var btn = document.querySelector('button[onclick="confirmPresencial()"]');
+    if (btn) btn.disabled = true;
 
-    paymentPollingInterval = setInterval(async () => {
-        try {
-            const response = await fetch(
-                `${CONFIG.apiUrl}/payments/status/${bookingState.appointmentId}`
-            );
-            const result = await response.json();
+    await confirmBookingBackend('presencial');
+    sendPresencialWhatsApp();
+    showStep(4);
+}
 
-            if (result.success && result.data.paymentStatus.toLowerCase() === 'paid') {
-                clearInterval(paymentPollingInterval);
-                bookingNextStep(); // Go to confirmation
+// ==========================================
+// WHATSAPP NOTIFICATIONS
+// ==========================================
+
+async function confirmBookingBackend(method) {
+    if (!bookingState.appointmentId || !bookingState.doctorId) return;
+    try {
+        const response = await fetch(
+            `${CONFIG.apiUrl}/book/${CONFIG.doctorSlug}/${bookingState.appointmentId}/confirm`,
+            {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ method })
             }
-        } catch (error) {
-            console.error('Error checking payment status:', error);
+        );
+        const result = await response.json();
+        if (!result.success) {
+            console.error('Error confirmando cita en el backend:', result.error);
         }
-    }, 3000); // Check every 3 seconds
+    } catch (err) {
+        console.error('Error confirmando cita:', err);
+    }
+}
+
+function buildWhatsAppMessage(method) {
+    var name = document.getElementById("booking-name").value.trim();
+    var dni = document.getElementById("booking-dni").value.trim();
+    var phone = document.getElementById("booking-phone").value.trim();
+    var procedure = document.getElementById("booking-procedure").value;
+
+    var dateText = bookingState.selectedDate
+        ? bookingState.selectedDate.toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" })
+        : "Sin fecha";
+    dateText = dateText.charAt(0).toUpperCase() + dateText.slice(1);
+    var timeText = bookingState.selectedTime || "Sin hora";
+
+    var e = {
+        wave: "👋",
+        person: "👤",
+        id: "🆔",
+        phone: "📱",
+        cal: "📅",
+        clock: "⏰",
+        doctor: "🩺",
+        card: "💳",
+    };
+
+    var msg = "Buen día Doctor Cristian, acabo de reservar una cita en su plataforma web. " + e.wave + "\n\n"
+        + "*Mis datos:*\n"
+        + e.person + " Nombre: " + name + "\n"
+        + e.id + " DNI: " + dni + "\n"
+        + e.phone + " Celular: " + phone + "\n\n"
+        + "*Detalles de la reserva:*\n"
+        + e.cal + " Fecha: " + dateText + "\n"
+        + e.clock + " Hora: " + timeText + " hrs\n"
+        + e.doctor + " Procedimiento: " + procedure + "\n\n"
+        + (method === 'yape'
+            ? e.card + " He seleccionado pagar mediante Yape. Adjunto la captura de pantalla de mi comprobante."
+            : e.card + " He seleccionado pagar de forma presencial. Realizaré el pago en el consultorio el día de mi cita.");
+
+    return msg;
+}
+
+async function sendYapeWhatsApp() {
+    var btn = document.querySelector('button[onclick="sendYapeWhatsApp()"]');
+    if (btn) btn.disabled = true;
+
+    await confirmBookingBackend('yape');
+
+    var msg = buildWhatsAppMessage('yape');
+    var url = `https://api.whatsapp.com/send?phone=${CONFIG.whatsappNumber}&text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+
+    setTimeout(function () {
+        showStep(4);
+    }, 800);
+}
+
+function sendPresencialWhatsApp() {
+    var msg = buildWhatsAppMessage('presencial');
+    var url = `https://api.whatsapp.com/send?phone=${CONFIG.whatsappNumber}&text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
 }
 
 // ==========================================
@@ -384,48 +397,40 @@ function updateSidebar() {
 }
 
 // ==========================================
-// CALENDAR RENDERING (RESPONSIVE IMPROVED + AVAILABILITY DOTS)
+// CALENDAR RENDERING
 // ==========================================
 
 async function renderCalendar() {
     bookingState.isTransitioning = true;
-    
+
     var year = bookingState.currentYear;
     var month = bookingState.currentMonth;
 
-    // Title
     document.getElementById("calendar-month-title").textContent = MONTH_NAMES[month] + " " + year;
 
     var container = document.getElementById("calendar-days");
-    
-    // Lock height to prevent collapse during transition
+
     var currentHeight = container.offsetHeight;
-    if (currentHeight > 0) {
-        container.style.minHeight = currentHeight + 'px';
-    }
-    
-    // Smooth fade transition
+    if (currentHeight > 0) container.style.minHeight = currentHeight + 'px';
+
     container.style.transition = 'opacity 0.2s ease-in-out';
     container.style.opacity = '0.4';
-    
-    await new Promise(resolve => setTimeout(resolve, 200));
-    
+
+    await new Promise(function (r) { setTimeout(r, 200); });
+
     container.innerHTML = '';
 
-    // Fetch available dates for this month
     var startDate = new Date(year, month, 1);
     var endDate = new Date(year, month + 1, 0);
-    
+
     try {
         const response = await fetch(
-            `${CONFIG.apiUrl}/book/${CONFIG.doctorSlug}/dates?startDate=${formatDate(startDate)}&endDate=${formatDate(endDate)}`
+            CONFIG.apiUrl + '/book/' + CONFIG.doctorSlug + '/dates?startDate=' + formatDate(startDate) + '&endDate=' + formatDate(endDate)
         );
         const result = await response.json();
-        
         if (result.success) {
-            // Store availability info
             bookingState.availableDates = {};
-            result.data.forEach(day => {
+            result.data.forEach(function (day) {
                 bookingState.availableDates[day.date] = day.hasSlots;
             });
         }
@@ -433,15 +438,12 @@ async function renderCalendar() {
         console.error('Error loading availability:', error);
     }
 
-    // Render calendar
     container.innerHTML = "";
 
-    // Days
     var daysInMonth = new Date(year, month + 1, 0).getDate();
     var firstDay = new Date(year, month, 1).getDay();
     var blanks = firstDay === 0 ? 6 : firstDay - 1;
 
-    // Blank cells
     for (var b = 0; b < blanks; b++) {
         var blank = document.createElement("div");
         blank.className = "aspect-square";
@@ -451,7 +453,6 @@ async function renderCalendar() {
     var today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // Day cells
     for (var d = 1; d <= daysInMonth; d++) {
         var dayDate = new Date(year, month, d);
         var dateStr = formatDate(dayDate);
@@ -481,7 +482,7 @@ async function renderCalendar() {
             btn.addEventListener("click", function () {
                 bookingState.selectedDate = new Date(year, month, day);
                 bookingState.selectedTime = null;
-                updateCalendarSelection(); // Solo actualizar selección
+                updateCalendarSelection();
                 renderTimeSlots();
                 updateSidebar();
             });
@@ -491,44 +492,36 @@ async function renderCalendar() {
         container.appendChild(wrapper);
     }
 
-    // Fade in the calendar
-    requestAnimationFrame(function() {
+    requestAnimationFrame(function () {
         container.style.opacity = '1';
-        // Remove height lock after transition
-        setTimeout(function() {
+        setTimeout(function () {
             container.style.minHeight = '';
             bookingState.isTransitioning = false;
         }, 200);
     });
 
-    // Show/hide time slots
     if (bookingState.selectedDate) {
         renderTimeSlots();
     }
 }
 
-// Helper: format date as YYYY-MM-DD
 function formatDate(date) {
     var year = date.getFullYear();
     var month = String(date.getMonth() + 1).padStart(2, '0');
     var day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    return year + '-' + month + '-' + day;
 }
 
-// Update calendar selection (without full re-render)
 function updateCalendarSelection() {
     var container = document.getElementById("calendar-days");
     var buttons = container.querySelectorAll('button');
-    
-    buttons.forEach(function(btn) {
+    buttons.forEach(function (btn) {
         if (btn.disabled) return;
-        
         var day = parseInt(btn.textContent);
         var isSelected = bookingState.selectedDate &&
             bookingState.selectedDate.getDate() === day &&
             bookingState.selectedDate.getMonth() === bookingState.currentMonth &&
             bookingState.selectedDate.getFullYear() === bookingState.currentYear;
-        
         if (isSelected) {
             btn.className = "w-full aspect-square max-w-[36px] md:max-w-[44px] rounded-full flex items-center justify-center text-[11px] md:text-sm font-bold bg-[#dd4d4d] text-white shadow-md shadow-red-500/30";
         } else {
@@ -537,15 +530,12 @@ function updateCalendarSelection() {
     });
 }
 
-// Update time slot selection (without full re-render)
 function updateTimeSlotSelection() {
     var list = document.getElementById("time-slots-list");
     var buttons = list.querySelectorAll('button');
-    
-    buttons.forEach(function(btn) {
+    buttons.forEach(function (btn) {
         var time = btn.textContent;
         var isSelected = bookingState.selectedTime === time;
-        
         if (isSelected) {
             btn.className = "w-full py-2.5 md:py-3 rounded-lg border font-bold text-xs md:text-sm transition-all flex items-center justify-center bg-[#dd4d4d] border-[#dd4d4d] text-white";
         } else {
@@ -556,7 +546,6 @@ function updateTimeSlotSelection() {
 
 function calendarNextMonth() {
     if (bookingState.isTransitioning) return;
-    
     bookingState.currentMonth++;
     if (bookingState.currentMonth > 11) {
         bookingState.currentMonth = 0;
@@ -567,7 +556,6 @@ function calendarNextMonth() {
 
 function calendarPrevMonth() {
     if (bookingState.isTransitioning) return;
-    
     bookingState.currentMonth--;
     if (bookingState.currentMonth < 0) {
         bookingState.currentMonth = 11;
@@ -577,7 +565,7 @@ function calendarPrevMonth() {
 }
 
 // ==========================================
-// TIME SLOTS (DYNAMIC FROM BACKEND)
+// TIME SLOTS
 // ==========================================
 
 async function renderTimeSlots() {
@@ -587,19 +575,23 @@ async function renderTimeSlots() {
 
     var wasHidden = container.classList.contains("hidden");
     container.classList.remove("hidden");
-    
-    // Fade in container if it was hidden
+
     if (wasHidden) {
         container.style.opacity = '0';
-        requestAnimationFrame(function() {
+        requestAnimationFrame(function () {
             container.style.transition = 'opacity 0.3s ease-out';
             container.style.opacity = '1';
         });
     }
 
+    var sidebarTitle = document.querySelector("#booking-container h2");
+    if (sidebarTitle) {
+        sidebarTitle.textContent = bookingState.step === 4 ? "Cita Confirmada" : "Agendar Cita";
+    }
+
     if (!bookingState.selectedDate) {
         dateLabel.textContent = "Selecciona una fecha";
-        list.innerHTML = '<p class="text-slate-400 text-sm text-center py-8">Elige un dia en el calendario</p>';
+        list.innerHTML = '<p class="text-slate-400 text-sm text-center py-8">Elige un día en el calendario</p>';
         updateStep1Button();
         return;
     }
@@ -610,18 +602,16 @@ async function renderTimeSlots() {
 
     list.innerHTML = '<div class="text-center py-4"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#dd4d4d] mx-auto"></div></div>';
 
-    // Fetch available slots from backend
     try {
-        const dateStr = formatDate(bookingState.selectedDate);
+        var dateStr = formatDate(bookingState.selectedDate);
         const response = await fetch(
-            `${CONFIG.apiUrl}/book/${CONFIG.doctorSlug}/slots?date=${dateStr}`
+            CONFIG.apiUrl + '/book/' + CONFIG.doctorSlug + '/slots?date=' + dateStr
         );
         const result = await response.json();
 
-
         list.style.opacity = '0';
-        
-        setTimeout(function() {
+
+        setTimeout(function () {
             list.innerHTML = "";
 
             if (!result.success || !result.data.slots || result.data.slots.length === 0) {
@@ -631,10 +621,8 @@ async function renderTimeSlots() {
                 return;
             }
 
-            // Render slots with staggered animation
             result.data.slots.forEach(function (slot, index) {
                 var isSelected = bookingState.selectedTime === slot.startTime;
-
                 var btn = document.createElement("button");
                 btn.textContent = slot.startTime;
 
@@ -644,7 +632,6 @@ async function renderTimeSlots() {
                     btn.className = "slot-animate w-full py-2.5 md:py-3 rounded-lg border font-bold text-xs md:text-sm transition-all flex items-center justify-center border-slate-200 text-[#dd4d4d] hover:border-[#dd4d4d] hover:border-2";
                 }
 
-                // Staggered animation delay
                 btn.style.animationDelay = (index * 0.05) + 's';
 
                 btn.addEventListener("click", function () {
@@ -703,7 +690,6 @@ function validateStep2() {
     var btn = document.getElementById("booking-step2-next");
     var valid = true;
 
-    // Name: min 2 chars, letters and spaces only
     if (!name || name.length < 2) {
         if (name.length > 0) showFieldError('booking-name', 'Ingresa tu nombre completo (mín. 2 caracteres)');
         valid = false;
@@ -711,7 +697,6 @@ function validateStep2() {
         clearFieldError('booking-name');
     }
 
-    // DNI: exactly 8 digits
     if (!dni || !/^\d{8}$/.test(dni)) {
         if (dni.length > 0) showFieldError('booking-dni', 'El DNI debe tener exactamente 8 dígitos');
         valid = false;
@@ -719,7 +704,6 @@ function validateStep2() {
         clearFieldError('booking-dni');
     }
 
-    // Phone: 9 digits, starts with 9
     if (!phone || !/^9\d{8}$/.test(phone)) {
         if (phone.length > 0) showFieldError('booking-phone', 'Ingresa un celular válido (9 dígitos, empieza con 9)');
         valid = false;
@@ -727,7 +711,6 @@ function validateStep2() {
         clearFieldError('booking-phone');
     }
 
-    // Procedure: must be selected
     if (!procedure) {
         valid = false;
     } else {
@@ -739,10 +722,7 @@ function validateStep2() {
 
 function updateStep1Button() {
     var btn = document.getElementById("booking-step1-next");
-    if (!btn) {
-        return;
-    }
-
+    if (!btn) return;
     if (bookingState.selectedDate && bookingState.selectedTime) {
         btn.classList.remove("hidden");
         btn.disabled = false;
@@ -751,50 +731,6 @@ function updateStep1Button() {
         btn.disabled = true;
     }
 }
-
-// Check for payment redirect from Mercado Pago
-document.addEventListener("DOMContentLoaded", function () {
-    var urlParams = new URLSearchParams(window.location.search);
-    var paymentStatus = urlParams.get('payment');
-    
-    if (paymentStatus === 'failure' || paymentStatus === 'error') {
-        // Clean URL
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-
-    if (paymentStatus === 'success') {
-        // Get appointmentId from localStorage
-        var savedAppointmentId = localStorage.getItem('pendingAppointmentId');
-        if (savedAppointmentId) {
-            // Verify payment with backend (checks MP API, doesn't blindly confirm)
-            fetch(CONFIG.apiUrl + '/payments/confirm/' + savedAppointmentId, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
-            }).then(function(r) { return r.json(); }).then(function(result) {
-                if (result.success && result.data && result.data.paymentStatus === 'paid') {
-                    localStorage.removeItem('pendingAppointmentId');
-                }
-                // If not paid yet, keep pendingAppointmentId — webhook will update it
-            }).catch(function(err) {
-                console.error('Error confirming payment:', err);
-            });
-        }
-        // Clean URL
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-});
-
-// Add listeners for validation
-document.addEventListener("DOMContentLoaded", function () {
-    var fields = ["booking-name", "booking-dni", "booking-phone", "booking-procedure"];
-    fields.forEach(function (id) {
-        var el = document.getElementById(id);
-        if (el) {
-            el.addEventListener("input", validateStep2);
-            el.addEventListener("change", validateStep2);
-        }
-    });
-});
 
 // ==========================================
 // SUMMARY (STEP 4)
@@ -807,54 +743,44 @@ function populateSummary() {
     document.querySelector("#summary-name span").textContent = name;
     document.querySelector("#summary-procedure span").textContent = procedure;
 
-    var dateStr = bookingState.selectedDate
-        ? bookingState.selectedDate.toLocaleDateString("es-ES", { weekday: "long", month: "long", day: "numeric" })
-        : "";
-    document.querySelector("#summary-datetime span").textContent = dateStr + " a las " + bookingState.selectedTime;
+    // Date/time population removed to avoid redundancy with sidebar
 
-}
+    // Mostrar método de pago en el resumen
+    var methodEl = document.getElementById("summary-payment-method");
+    if (methodEl) {
+        if (bookingState.paymentMethod === 'yape') {
+            methodEl.textContent = "Yape (pendiente de confirmación)";
+        } else {
+            methodEl.textContent = "Pago presencial en consultorio";
+        }
+    }
 
-function setupWhatsAppButton() {
-    var closeBtn = document.querySelector('#booking-step-4 button');
-    if (closeBtn) {
-        closeBtn.onclick = function() {
-            sendWhatsAppNotification();
-            closeBookingModal();
-        };
-        closeBtn.textContent = 'Notificar al Doctor';
-        closeBtn.className = 'w-full bg-green-600 text-white py-4 rounded-xl font-bold transition-all shadow-lg text-sm hover:bg-green-700 flex items-center justify-center gap-2';
-        closeBtn.innerHTML = `
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            Notificar al Doctor
-        `;
+    // Mostrar mensaje según método elegido
+    var msgPresencial = document.getElementById("summary-msg-presencial");
+    var msgYape = document.getElementById("summary-msg-yape");
+
+    if (msgPresencial && msgYape) {
+        if (bookingState.paymentMethod === 'presencial') {
+            msgPresencial.classList.remove('hidden');
+            msgYape.classList.add('hidden');
+        } else {
+            msgYape.classList.remove('hidden');
+            msgPresencial.classList.add('hidden');
+        }
     }
 }
 
-function sendWhatsAppNotification() {
-    var name = document.getElementById("booking-name").value;
-    var dni = document.getElementById("booking-dni").value;
-    var phone = document.getElementById("booking-phone").value;
-    var procedure = document.getElementById("booking-procedure").value;
+// ==========================================
+// LISTENERS
+// ==========================================
 
-    var dateText = bookingState.selectedDate
-        ? bookingState.selectedDate.toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long", year: "numeric" })
-        : "Sin fecha";
-    var timeText = bookingState.selectedTime ? bookingState.selectedTime : "Sin hora";
-
-    var fullMessage = [
-        "✅ *Nueva cita confirmada y pagada*",
-        "",
-        "📅 *Fecha:* " + dateText,
-        "🕐 *Hora:* " + timeText,
-        "",
-        "👤 *Paciente:* " + name,
-        "🆔 *DNI:* " + dni,
-        "📱 *Teléfono:* " + phone,
-        "🏥 *Procedimiento:* " + procedure,
-        "",
-        "💳 *Estado:* Pago confirmado"
-    ].join("\n");
-
-    var url = "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(fullMessage);
-    window.open(url, "_blank");
-}
+document.addEventListener("DOMContentLoaded", function () {
+    var fields = ["booking-name", "booking-dni", "booking-phone", "booking-procedure"];
+    fields.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) {
+            el.addEventListener("input", validateStep2);
+            el.addEventListener("change", validateStep2);
+        }
+    });
+});
