@@ -19,6 +19,18 @@ var bookingState = {
 
 var MONTH_NAMES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
+function resetBookingActionButtons() {
+    var yapeBtn = document.querySelector('button[onclick="sendYapeWhatsApp()"]');
+    if (yapeBtn) {
+        yapeBtn.disabled = false;
+    }
+
+    var presencialBtn = document.querySelector('button[onclick="confirmPresencial()"]');
+    if (presencialBtn) {
+        presencialBtn.disabled = false;
+    }
+}
+
 // ==========================================
 // MODAL OPEN / CLOSE
 // ==========================================
@@ -61,6 +73,7 @@ async function openBookingModal() {
     document.getElementById("booking-phone").value = "";
     document.getElementById("booking-procedure").selectedIndex = 0;
     document.getElementById("booking-message").value = "";
+    resetBookingActionButtons();
 
     // Show modal
     modal.classList.remove("hidden");
