@@ -58,12 +58,8 @@ Frontend estará en: http://localhost:5500
 - Click "Siguiente"
 
 ### Paso 3 - Llenar datos:
-- Nombre: Juan Pérez
-- DNI: 12345678
-- Teléfono: 987654321
-- Procedimiento: Electrocardiograma
+ Procedimiento: Electrocardiograma
 - Click "Programar Evento"
-
 ### Paso 4 - Pagar (PRUEBA):
 - Aparecerá checkout de Mercado Pago
 - Usar **tarjetas de prueba** de Mercado Pago:
