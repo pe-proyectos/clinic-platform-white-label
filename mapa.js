@@ -1,4 +1,4 @@
-﻿var mapita = L.map('map').setView([-6.785683, -79.839628], 17);
+var mapita = L.map('map').setView([-6.7841783, -79.8431823], 17);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     maxZoom: 19,
@@ -14,7 +14,7 @@ var customIcon = L.divIcon({
     iconAnchor: [20, 20],
 });
 
-var marker = L.marker([-6.785683, -79.839628], { icon: customIcon, draggable: false }).addTo(mapita);
+var marker = L.marker([-6.7841783, -79.8431823], { icon: customIcon, draggable: false }).addTo(mapita);
 
 marker.bindPopup(
     '<div style="padding: 8px 10px; text-align: center; min-width: 156px; font-family: Inter, ui-sans-serif, system-ui, sans-serif;">' +

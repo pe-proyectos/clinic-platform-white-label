@@ -11,5 +11,5 @@ const CONFIG = {
   appointmentDuration: 30, // 30 minutos
 
   // WhatsApp
-  whatsappNumber: '51922187254'
+  whatsappNumber: '51904425498'
 }

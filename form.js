@@ -10,7 +10,7 @@ document.getElementById("btn-enviar").addEventListener("click", function () {
 
     var mensaje = "Hola, soy " + nombre + ".%0AMi número es: " + phone + ".%0AConsulta: " + consulta;
 
-    var numeroWhatsApp = "922187254";
+    var numeroWhatsApp = "904425498";
 
     var url = "https://api.whatsapp.com/send?phone=" + numeroWhatsApp + "&text=" + mensaje;
 
