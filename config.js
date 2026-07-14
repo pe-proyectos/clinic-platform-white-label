@@ -1,7 +1,7 @@
 // Configuration
 const CONFIG = {
   // Backend API
-  apiUrl: 'https://citas.luminari.agency/api',
+  apiUrl: 'https://citasapp.xvega.dev/api',
 
   // Doctor info
   doctorSlug: 'dr-cristian-chaponan-zHZNAt',
